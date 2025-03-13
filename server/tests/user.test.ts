@@ -27,8 +27,8 @@ describe("User Action Endpoints", () => {
       pseudo: "johndoe",
       zip_code: 69120,
       city: "New City",
-      password: "Erico",
-      passwordConfirm: "Erico",
+      password: "Johndoe69120@",
+      passwordConfirm: "Johndoe69120@",
       is_gcu_accepted: true, // Acceptation des conditions d'utilisation (false par défaut)
       is_admin: false,
     };
