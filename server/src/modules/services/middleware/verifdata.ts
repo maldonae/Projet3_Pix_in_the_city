@@ -52,16 +52,14 @@ const verifyformdata: RequestHandler = (req, res, next) => {
       .send({ error: "Les mots de passe saisis doivent être identiques." });
     return;
   }
-  // Vérifie si le mot de passe est égale au mot de passe de confimration
+  // Vérifie si le mot de passe contient au moins un caractère spéciale, une lettre majuscule et un chiffre
   const passwordVerifRegex =
     /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).+$/;
   if (!passwordVerifRegex.test(password)) {
-    res
-      .status(403)
-      .send({
-        error:
-          "Le mot de passe doit contenir au moins une lettre majuscule, un chiffre et un caractère spécial.",
-      });
+    res.status(403).send({
+      error:
+        "Le mot de passe doit contenir au moins une lettre majuscule, un chiffre et un caractère spécial.",
+    });
     return;
   }
 
