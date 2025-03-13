@@ -40,6 +40,8 @@ function NewUserForm({ children, defaultValue, onSubmit }: CreaProfilType) {
   const [isGCUAccepted, setIsGCUAccepted] = useState(
     defaultValue.is_gcu_accepted,
   );
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
 
   return (
     <section className="create-profil-container">
@@ -65,6 +67,29 @@ function NewUserForm({ children, defaultValue, onSubmit }: CreaProfilType) {
             toast.error("Vous devez accepter les CGU avant de soumettre.");
             return;
           }
+          // Vérifie si le mot de passe est égale au mot de passe de confimration
+          if (password !== passwordConfirm) {
+            toast.error("Les mots de passe saisis doivent être identiques.");
+            return;
+          }
+          // Vérifie si le mot de passe est égale au mot de passe de confimration
+          if (password !== passwordConfirm) {
+            toast.error("Les mots de passe saisis doivent être identiques.");
+            return;
+          }
+          // Vérifie si le mot de passe fait minimum 12 caractères
+          if (password.length < 12) {
+            toast.error("Le mot de passe doit faire 12 caractères minimum.");
+            return;
+          }
+          const passwordRegex =
+            /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).+$/;
+          if (!passwordRegex.test(password)) {
+            toast.error(
+              "Le mot de passe doit contenir au moins une lettre majuscule, un chiffre et un caractère spécial.",
+            );
+            return;
+          }
 
           // Vérifie que tous les champs obligatoires sont remplis
           if (
@@ -78,21 +103,26 @@ function NewUserForm({ children, defaultValue, onSubmit }: CreaProfilType) {
             toast.error("Veuillez remplir tous les champs obligatoires.");
             return;
           }
-
-          onSubmit({
-            firstname,
-            lastname,
-            pseudo,
-            email,
-            zip_code: zip_code || null, // optionnel
-            city: city || null,
-            password,
-            passwordConfirm,
-            is_gcu_accepted: isGCUAccepted,
-            is_admin,
+          // Afficher le succès et soumettre après un court délai
+          toast.success("Profil créé avec succès !", {
+            autoClose: 1000,
+            position: "bottom-center",
           });
 
-          toast.success("Profil créé avec succès !");
+          setTimeout(() => {
+            onSubmit({
+              firstname,
+              lastname,
+              pseudo,
+              email,
+              zip_code,
+              city,
+              password,
+              passwordConfirm,
+              is_gcu_accepted: isGCUAccepted,
+              is_admin,
+            });
+          }, 1500);
         }}
       >
         <label className="form-fields" htmlFor="firstname">
@@ -165,27 +195,34 @@ function NewUserForm({ children, defaultValue, onSubmit }: CreaProfilType) {
           defaultValue={defaultValue.city ?? ""}
         />
 
-        <label className="form-fields" htmlFor="hashed_password">
-          Mot de passe *
+        <label className="form-fields" htmlFor="password">
+          Mot de passe *{" "}
+          <button type="button" onClick={() => setShowPassword(!showPassword)}>
+            {showPassword ? "🙈" : "👁"}
+          </button>
         </label>
+
         <input
-          className="form-fields"
           id="password"
-          type="password"
+          type={showPassword ? "text" : "password"}
           name="password"
-          placeholder="Entrez votre mot de passe"
           defaultValue={defaultValue.password}
         />
 
         <label className="form-fields" htmlFor="passwordConfirm">
-          Confirmer le mot de passe *
+          Confirmer le mot de passe *{" "}
+          <button
+            type="button"
+            onClick={() => setShowPasswordConfirm(!showPasswordConfirm)}
+          >
+            {showPasswordConfirm ? "🙈" : "👁"}
+          </button>
         </label>
+
         <input
-          className="form-fields"
           id="passwordConfirm"
-          type="password"
+          type={showPasswordConfirm ? "text" : "password"}
           name="passwordConfirm"
-          placeholder="Confirmez votre mot de passe"
           defaultValue={defaultValue.passwordConfirm}
         />
 
@@ -230,7 +267,7 @@ function NewUserForm({ children, defaultValue, onSubmit }: CreaProfilType) {
             <p>RETOUR VERS LE HAUT</p>
           </button>
         </div>
-        <ToastContainer />
+        <ToastContainer position="bottom-center" />
       </form>
     </section>
   );
