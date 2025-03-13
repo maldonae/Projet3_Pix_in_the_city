@@ -10,9 +10,6 @@ type User = {
   email: string;
   zip_code?: string; // optionnel
   city?: string; // optionnel
-  // hashed_password: string;
-  // is_gcu_accepted: boolean;
-  is_admin: boolean;
 };
 
 // Interface définissant les props du formulaire de modification d'utilisateur
@@ -45,7 +42,6 @@ function EditUserForm({
             email: formData.get("email") as string,
             zip_code: formData.get("zip_code")?.toString(),
             city: formData.get("city")?.toString(),
-            is_admin: formData.get("is_admin") === "true",
           });
         }}
       >
