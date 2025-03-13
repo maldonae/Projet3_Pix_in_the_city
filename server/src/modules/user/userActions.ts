@@ -107,6 +107,7 @@ const destroy: RequestHandler = async (req, res, next) => {
     // Vérifie si l'utilisateur existait bien avant suppression
     if (!deleteResult || deleteResult === 0) {
       res.status(404).json({ message: "User not found" });
+      return;
     }
 
     // Suppression réussie → Efface le cookie d'authentification
@@ -117,6 +118,7 @@ const destroy: RequestHandler = async (req, res, next) => {
     });
 
     res.status(200).json({ message: "User deleted and logged out" });
+    return;
   } catch (err) {
     // Passe les erreurs au middleware de gestion des erreurs
     next(err);
