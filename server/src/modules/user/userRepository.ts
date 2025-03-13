@@ -73,11 +73,11 @@ class UserRepository {
   // The U of CRUD - Update operation
 
   async update(user: User) {
-    const { firstname, lastname, pseudo, email, zip_code, city, is_admin, id } =
+    const { firstname, lastname, pseudo, email, zip_code, city, id } =
       user;
 
     const query =
-      "UPDATE user SET firstname = ?, lastname = ?, pseudo = ?, email = ?, zip_code = ?, city = ?,  is_admin = ? WHERE id = ?";
+      "UPDATE user SET firstname = ?, lastname = ?, pseudo = ?, email = ?, zip_code = ?, city = ? WHERE id = ?";
     const values = [
       firstname,
       lastname,
@@ -85,7 +85,6 @@ class UserRepository {
       email,
       zip_code,
       city,
-      is_admin,
       id,
     ];
 
