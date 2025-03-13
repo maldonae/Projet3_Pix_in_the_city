@@ -1,0 +1,68 @@
+@font-face {
+  font-family: "pixeleum";
+  src: url("../../assets/fonts/pixeleum-48.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "roboto";
+  src: url("../../assets/fonts/roboto.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "roboto_bold";
+  src: url("../../assets/fonts/roboto_bold.ttf") format("truetype");
+}
+
+.leaflet-popup-content-wrapper {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  border: 2px solid #ed2ea5;
+}
+.popup-streetart strong {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 5px;
+  font-family: "pixeleum", sans-serif;
+  color: #ed2ea5;
+  text-align: center;
+  text-transform: uppercase;
+}
+.popup-streetart {
+  font-family: "Roboto", sans-serif;
+}
+
+.popup-streetart .title,
+.popup-streetart .artist {
+  font-family: "pixeleum", sans-serif;
+  color: #ed2ea5;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.popup-streetart img {
+  display: block;
+  margin: 10px auto;
+  border-radius: 5px;
+  max-width: 150px;
+  max-height: 150px;
+}
+
+.popup-streetart p {
+  margin: 5px 0;
+  font-size: 12px;
+  color: #000000;
+}
+
+.popup-streetart .artist {
+  color: #6e7dc9;
+}
+
+.popup-streetart .date {
+  color: #6e7dc9;
+}
+
+.popup-streetart p:nth-of-type(3) {
+  color: #6e7dc9;
+}

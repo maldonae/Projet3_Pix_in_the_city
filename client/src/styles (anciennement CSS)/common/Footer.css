@@ -1,0 +1,123 @@
+/* -------------------------------------------
+   POLICES
+------------------------------------------- */
+@font-face {
+  font-family: "pixeleum";
+  src: url("../../assets/fonts/pixeleum-48.ttf") format("truetype");
+}
+
+/* -------------------------------------------
+   FOOTER STYLES
+------------------------------------------- */
+footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 11%;
+  padding-top: 0.5em;
+  padding-bottom: 2.3em;
+  z-index: 1000;
+  background-image: url("../../assets/images/backgroundstreet.jpg");
+  background-position: 0em -37em fixed;
+  background-size: cover;
+}
+
+/* -------------------------------------------
+   BOUTONS FOOTER
+------------------------------------------- */
+.button_footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 20%;
+  background-color: transparent;
+  border: none;
+  padding: 1em 0;
+  padding-top: 1.5em;
+  color: white;
+  font-family: "pixeleum", sans-serif;
+  text-align: center;
+}
+
+.button_footer p {
+  margin: 0;
+  line-height: 1;
+  font-size: 0.8em;
+}
+
+/* -------------------------------------------
+   IMAGES DES BOUTONS
+------------------------------------------- */
+img.icon_footer {
+  width: 140%;
+  height: auto;
+  margin-bottom: 0.5em;
+}
+
+/* -------------------------------------------
+   BOUTON CAMÉRA
+------------------------------------------- */
+.button_camera {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 10vw;
+  height: 10vw;
+  max-width: 8.5em;
+  max-height: 8.5em;
+  min-width: 6em;
+  min-height: 6em;
+  border: 1px solid lightyellow;
+  border-radius: 50%;
+  background-image: url("../../assets/images/footer_icons/icon_camera_background.png");
+  background-size: cover;
+  background-position: bottom;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+}
+
+.button_camera:hover {
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.8), 0 0 50px
+    rgba(255, 255, 255, 0.5);
+}
+
+.button_camera:active {
+  transform: scale(0.95);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+}
+
+img.icon_camera {
+  width: 70%;
+}
+
+/* -------------------------------------------
+   MEDIA QUERIES
+------------------------------------------- */
+/* Pour les tablettes (768px à 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  footer {
+    background: url("../../assets/images/backgroundcity.jpg") center / cover
+      fixed;
+  }
+
+  .button_footer {
+    width: 10%;
+    margin-top: -4%;
+  }
+
+  .button_camera {
+    margin-top: -7%;
+  }
+}
+
+/* Cache le footer sur les écrans de bureau (1025px et plus) */
+@media (min-width: 1025px) {
+  footer {
+    display: none;
+  }
+}

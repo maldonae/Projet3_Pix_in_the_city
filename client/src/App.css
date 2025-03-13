@@ -1,0 +1,15 @@
+.app-container {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+}
+
+@media (max-width: 1025px) {
+  .main-content {
+    margin-left: 0;
+  }
+}

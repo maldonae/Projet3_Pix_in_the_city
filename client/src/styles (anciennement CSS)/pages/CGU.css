@@ -1,0 +1,65 @@
+@font-face {
+  font-family: "Roboto";
+  src: url("../../assets/fonts/roboto.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto Bold";
+  src: url("../../assets/fonts/roboto_bold.ttf") format("truetype");
+}
+
+/* Global Styles */
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.main-content {
+  background: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* CGU Title */
+#titre_cgu {
+  color: #ed2ea5;
+  font-size: 1.5em;
+  margin-top: 10%;
+}
+
+/* CGU Text */
+.cgu_text,
+.h2_cgu {
+  font-family: "Roboto", sans-serif;
+  color: black;
+  text-align: left;
+  padding: 1em;
+}
+
+.cgu_text {
+  margin-top: 7em;
+  padding-bottom: 8em;
+}
+
+/* Tablet (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .cgu_text {
+    padding-left: 3.5em;
+    margin-top: 11%;
+    padding-bottom: 15em;
+    background: white;
+  }
+}
+
+/* Desktop (1025px and above) */
+@media (min-width: 1025px) {
+  .cgu_text {
+    padding-left: 23%;
+    background: white;
+    margin-top: 0;
+  }
+
+  .main-content {
+    background-color: black;
+  }
+}

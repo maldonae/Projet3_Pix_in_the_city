@@ -1,0 +1,134 @@
+@font-face {
+  font-family: "roboto";
+  src: url("../../assets/fonts/roboto.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "pixeleum";
+  src: url("../../assets/fonts/pixeleum-48.ttf") format("truetype");
+}
+
+/* --------------------- */
+/* Styles Généraux       */
+/* --------------------- */
+
+.container-carte {
+  padding: 3.4em 0;
+  text-align: center;
+  margin-bottom: 6em;
+  display: block;
+}
+
+.titre-photos {
+  font-family: "roboto_bold", sans-serif;
+}
+
+.content-photos {
+  font-family: "roboto", sans-serif;
+}
+
+/* --------------------- */
+/* Styles Images         */
+/* --------------------- */
+
+.carte-leaflet,
+.streetArtPhotos img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* --------------------- */
+/* Styles Leaflet        */
+/* --------------------- */
+
+.leaflet-container {
+  position: fixed;
+  padding-top: 40em;
+  margin-top: -1em;
+}
+
+.leaflet-container.leaflet-touch-drag.leaflet-touch-zoom {
+  position: fixed;
+  width: 100%;
+  height: -webkit-fill-available;
+  margin-top: 0;
+}
+
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar {
+  position: fixed;
+  bottom: 12em;
+  right: 1em;
+  z-index: 1000;
+  border: none;
+}
+
+.leaflet-touch .leaflet-bar a:first-child,
+.leaflet-touch .leaflet-bar a:last-child {
+  background: #2c0d2a;
+  color: white;
+  border-radius: 50% 50%;
+  border: white solid 2px;
+  width: 2em;
+  height: 2em;
+  font-size: 2.5em;
+  text-align: center;
+  padding-top: 19%;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.leaflet-touch .leaflet-bar a:first-child:hover,
+.leaflet-touch .leaflet-bar a:last-child:hover {
+  background: white;
+  color: #2c0d2a;
+  border-color: #2c0d2a;
+}
+
+/* --------------------- */
+/* Responsive (Tablette) */
+/* --------------------- */
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .leaflet-container.leaflet-touch-drag.leaflet-touch-zoom {
+    margin-top: 5%;
+  }
+
+  .leaflet-touch .leaflet-control-layers,
+  .leaflet-touch .leaflet-bar {
+    bottom: 25em;
+  }
+}
+
+/* --------------------- */
+/* Responsive (Desktop)  */
+/* --------------------- */
+
+@media (min-width: 1025px) {
+  .leaflet-container {
+    overflow: hidden;
+    position: fixed;
+    left: 20%;
+    width: 80%;
+    padding-top: 60em;
+    margin-top: 0;
+  }
+
+  .container-carte {
+    padding: 0;
+  }
+
+  .leaflet-container.leaflet-touch-drag.leaflet-touch-zoom {
+    padding-bottom: 4em;
+  }
+
+  .carte-leaflet {
+    margin-top: 0;
+  }
+
+  .leaflet-touch .leaflet-control-layers,
+  .leaflet-touch .leaflet-bar {
+    bottom: 30em;
+  }
+}

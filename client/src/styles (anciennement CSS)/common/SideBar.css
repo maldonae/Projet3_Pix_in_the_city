@@ -1,0 +1,227 @@
+/* Par défaut, la sidebar est cachée */
+.sidebar {
+  display: none;
+  position: fixed; /* Pour que la sidebar soit fixe */
+  top: 0;
+  left: 0;
+  width: 20%;
+  height: 100%;
+  background-image: url("../../assets/images/backgroundwall.jpg");
+  color: white;
+  padding-top: 20px;
+  z-index: 1000;
+  flex-direction: column;
+}
+
+@media (min-width: 1025px) {
+  .sidebar {
+    display: flex;
+  }
+
+  .container-carte {
+    display: flex;
+  }
+
+  .main-content {
+    margin-left: 20%;
+    padding: 20px;
+  }
+
+  .sidebar,
+  .main-content {
+    box-sizing: border-box;
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding-bottom: 20px;
+  }
+}
+
+.sidebar-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2em;
+}
+
+.logo-sidebar {
+  width: 80%;
+  max-width: 200px;
+}
+
+.sidebar-welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.welcome_username {
+  text-align: center;
+  padding-bottom: 10%;
+}
+
+#welcome {
+  font-family: "roboto_bold", sans-serif;
+  margin-bottom: 5px;
+}
+
+#header_username {
+  font-family: "pixeleum", sans-serif;
+  font-size: 1.2em;
+}
+
+.sidebar-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2em;
+}
+
+.sidebar-button {
+  font-size: 60%;
+  background-color: #ed2ea5;
+  font-family: "pixeleum", sans-serif;
+  color: white;
+  margin-bottom: 5px;
+  padding: 5px 10px;
+  border: solid white 1px;
+  border-radius: 8px;
+  text-align: center;
+  text-transform: uppercase;
+  box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  width: 14em;
+}
+
+.sidebar-button:hover {
+  background-color: white;
+  color: #ed2ea5;
+  border: #ed2ea5 solid 1px;
+}
+
+.sidebar-button:active {
+  transform: translateY(2px) translateX(4px);
+  box-shadow: 0px 0px 5px rgba(255, 255, 255, 0.6), 0px 0px 10px
+    rgba(255, 255, 255, 0.3);
+}
+
+.sidebar-button-logged {
+  font-size: 65%;
+  background-color: #2c0d2a;
+  font-family: "pixeleum", sans-serif;
+  color: white;
+  margin-bottom: 5px;
+  padding: 2px 10px;
+  border: solid white 1px;
+  border-radius: 8px;
+  text-align: center;
+  text-transform: uppercase;
+  box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  width: 70%;
+}
+
+.sidebar-button-logged:hover {
+  background-color: white;
+  color: #2c0d2a;
+  border: solid #2c0d2a 1px;
+}
+
+.sidebar-button-logged:active {
+  transform: none;
+  box-shadow: none;
+}
+
+.sidebar-nav {
+  padding: 0;
+  list-style-type: none;
+}
+
+.sidebar-nav ul {
+  padding: 0;
+}
+
+.sidebar-nav li {
+  padding: 5px 0;
+  text-align: center;
+}
+
+.sidebar-nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2em;
+  display: block;
+}
+
+.sidebar-icon_footer {
+  width: 10%;
+  padding-top: 2%;
+  padding-bottom: 2%;
+}
+
+.sidebar-button_footer {
+  background-color: #6e7dc9;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 5%;
+  padding-right: 3%;
+  margin-left: 10%;
+  margin-right: 10%;
+  color: white;
+  font-family: "pixeleum", sans-serif;
+  font-size: 75%;
+  border: solid white 1px;
+  border-radius: 8px;
+  text-align: left;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.sidebar-button_footer:hover {
+  background-color: #ed2ea5;
+}
+
+.sidebar-button_footer:active {
+  transform: translateY(2px) translateX(4px);
+  box-shadow: 0px 0px 5px rgba(255, 255, 255, 0.6), 0px 0px 10px
+    rgba(255, 255, 255, 0.3);
+}
+
+img.icon_camera {
+  width: 40%;
+}
+
+.button_camera {
+  width: 4vw;
+  height: 4vw;
+  margin-bottom: 4%;
+}
+
+#add-artwork {
+  font-size: 0.8em;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: "pixeleum";
+  src: url("../../assets/fonts/pixeleum-48.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "roboto";
+  src: url("../../assets/fonts/roboto.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "roboto_bold";
+  src: url("../../assets/fonts/roboto_bold.ttf") format("truetype");
+}

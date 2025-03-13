@@ -1,0 +1,163 @@
+/* Réinitialisation des marges et padding pour la page de login */
+body.login-page {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+  overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Page de login */
+.loginPage {
+  background: url("../../assets/images/backgroundstreet.jpg") center / cover
+    fixed;
+  color: white;
+  font-family: "pixeleum", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+/* Logo */
+#logo_login {
+  width: 15em;
+  padding: 3em 0 20%;
+}
+
+/* Formulaire */
+.formulaire {
+  width: 100%;
+  margin-top: 3em;
+}
+
+/* Labels Container */
+.labels_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 300px;
+  box-sizing: border-box;
+  margin-top: -10%;
+}
+
+/* Inputs */
+input,
+textarea {
+  width: 100%;
+  margin-bottom: 1em;
+  padding: 10px;
+  border: 1px solid white;
+  border-radius: 8px;
+  text-align: left;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  font-family: "roboto_bold", sans-serif;
+  color: #ed2ea5;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #888;
+  font-family: "roboto", sans-serif;
+}
+
+/* Boutons */
+.signup_button,
+.login_button {
+  width: 100%;
+  margin-bottom: 1em;
+  padding: 10px;
+  border: 1px solid white;
+  border-radius: 8px;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  font-family: "pixeleum", sans-serif;
+  color: white;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.signup_button {
+  background-color: #6e7dc9;
+}
+
+.login_button {
+  background-color: #ed2ea5;
+  margin-top: 6%;
+}
+
+/* Textes et Labels */
+.label2,
+.text_login,
+.input_passeword,
+.text_visitor,
+.email {
+  font-family: "pixeleum", sans-serif;
+}
+
+.label2,
+.text_login,
+.text_visitor {
+  text-shadow: 2px 2px 4px black;
+}
+
+.text_visitor {
+  text-align: center;
+  font-size: 0.75em;
+  margin-bottom: 7%;
+}
+
+#text_password {
+  font-size: x-small;
+  text-align: right;
+  margin-bottom: 1em;
+}
+
+.email {
+  text-align: left;
+}
+
+/* Cacher le header, footer et sidebar sur la page de login */
+body.login-page header,
+body.login-page footer,
+body.login-page .sidebar {
+  display: none;
+}
+
+/* Desktop (1025px and above) */
+@media (min-width: 1025px) {
+  .main-content {
+    margin-left: 0;
+    flex: 1;
+  }
+
+  /* Logo */
+  #logo_login {
+    padding: 3em 0 45%;
+  }
+
+  .loginPage {
+    background: url("../../assets/images/backgroundcity.jpg") center / cover
+      fixed;
+  }
+}
+
+/* Tablet (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .loginPage {
+    background: url("../../assets/images/backgroundcity.jpg") center / cover
+      fixed;
+  }
+}

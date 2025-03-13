@@ -1,0 +1,163 @@
+/* -------------------------------------------
+   POLICES
+------------------------------------------- */
+@font-face {
+  font-family: "pixeleum";
+  src: url("../../assets/fonts/pixeleum-48.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "roboto";
+  src: url("../../assets/fonts/roboto.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "roboto_bold";
+  src: url("../../assets/fonts/roboto_bold.ttf") format("truetype");
+}
+
+/* -------------------------------------------
+   RÉGLAGES GÉNÉRAUX
+------------------------------------------- */
+* {
+  box-sizing: border-box;
+}
+
+h1 {
+  color: #fad009;
+  text-align: center;
+}
+
+.obligatory-fiels,
+.is_admin {
+  color: white;
+  font-family: "pixeleum", sans-serif;
+}
+
+/* -------------------------------------------
+   CONTAINER MISE À JOUR DE PROFIL
+------------------------------------------- */
+.update-profil-container {
+  background: url("../assets/images/backgroundstars.jpg") center / cover fixed;
+  color: #ed2ea5;
+  font-family: "pixeleum", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  position: relative;
+  padding: 28em 2em 30em;
+}
+
+/* -------------------------------------------
+   BOUTON DE MISE À JOUR
+------------------------------------------- */
+.update-profil-button {
+  width: 100%;
+  margin: 2em 0 1em;
+  padding: 10px;
+  border: 1px solid white;
+  border-radius: 8px;
+  box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  font-family: "pixeleum", sans-serif;
+  color: white;
+  text-align: center;
+  text-transform: uppercase;
+  background-color: #ed2ea5;
+}
+
+/* -------------------------------------------
+   BOUTON DE SUPPRESSION
+------------------------------------------- */
+.delete-form {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.delete-profil-button {
+  background-color: #ff4d4d;
+  border: 1px solid white;
+  font-family: "pixeleum", sans-serif;
+  text-transform: uppercase;
+  color: white;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s;
+  font-size: x-small;
+  width: 100%;
+}
+
+.delete-profil-button:hover {
+  background-color: #cc0000;
+}
+
+/* -------------------------------------------
+   AUTRES ÉLÉMENTS
+------------------------------------------- */
+
+.poubelle {
+  width: 1.2em;
+}
+
+/* -------------------------------------------
+   MEDIA QUERIES
+------------------------------------------- */
+/* Tablet (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .update-profil-container {
+    background: none;
+    background-color: black;
+    padding: 0 2em;
+    margin-top: 4em;
+  }
+
+  .delete_button {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+/* Desktop (1025px and above) */
+@media (min-width: 1025px) {
+  .main-content {
+    padding: 0;
+  }
+
+  .update-profil-container {
+    background: none;
+    background-color: black;
+    padding-left: 22%;
+  }
+
+  .profil-form {
+    margin: 0 auto;
+    max-width: 60%;
+  }
+
+  .updateForm-fields {
+    border-radius: 8px;
+    margin-top: 0.5em;
+    font-size: 19px;
+  }
+
+  #h1-profil-form {
+    padding-top: 1em;
+    margin-bottom: 1em;
+  }
+
+  .update-profil-button {
+    display: flex;
+    justify-content: center;
+  }
+
+  .button_center,
+  .delete_button {
+    display: flex;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,79 @@
+/* -------------------------------------------
+   CONTAINER SUPPRESSION DE COMPTE
+------------------------------------------- */
+.delete-account-container {
+  background: url("../../assets/images/backgroundstars.jpg") center / cover
+    fixed;
+  font-family: "roboto", sans-serif;
+  color: white;
+  text-align: center;
+  padding: 12em 1.5em 13em;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-y: auto;
+  position: fixed;
+  margin-top: 5em;
+}
+
+/* -------------------------------------------
+   TITRE
+------------------------------------------- */
+#delete_profile_title {
+  margin-top: 25%;
+}
+
+/* -------------------------------------------
+   BOUTON DE SUPPRESSION
+------------------------------------------- */
+.delete-button {
+  width: 50%;
+  margin: 2em 0 1em;
+  padding: 10px;
+  border: 1px solid white;
+  border-radius: 8px;
+  box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  font-family: "pixeleum", sans-serif;
+  color: white;
+  text-align: center;
+  text-transform: uppercase;
+  background-color: #ed2ea5;
+}
+
+/* -------------------------------------------
+   MEDIA QUERIES
+------------------------------------------- */
+/* Tablet (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .delete-account-container {
+    background: none;
+    background-color: black;
+  }
+
+  #delete_profile_title {
+    margin-top: 5%;
+  }
+
+  .delete-button {
+    width: 25%;
+  }
+}
+
+/* Desktop (1025px and above) */
+@media (min-width: 1025px) {
+  .delete-account-container {
+    background: none;
+    padding-left: 22%;
+    padding-top: 2%;
+  }
+
+  .delete-button {
+    width: 30%;
+  }
+}

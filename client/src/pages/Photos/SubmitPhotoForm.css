@@ -1,0 +1,107 @@
+@font-face {
+  font-family: "pixeleum";
+  src: url("../../assets/fonts/pixeleum-48.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "roboto";
+  src: url("../../assets/fonts/roboto.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "roboto_bold";
+  src: url("../../assets/fonts/roboto_bold.ttf") format("truetype");
+}
+.post-photo-container {
+  background: url("backgroundstars.jpg") center / cover fixed;
+  color: #ed2ea5;
+  font-family: "pixeleum", sans-serif;
+  margin-top: 1em;
+  margin-bottom: 4em;
+  padding: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  position: fixed;
+}
+h1 {
+  color: #fad009;
+}
+.form-photo-fields {
+  margin-bottom: 1em;
+}
+.star {
+  color: #ed2ea5;
+  font-family: "roboto", sans-serif;
+}
+.auth-gcu {
+  color: white;
+  font-family: "roboto", sans-serif;
+}
+.post-photo-button {
+  width: 100%;
+  margin-top: 1.5em;
+  margin-bottom: 1em;
+  padding: 10px;
+  border: solid white 1px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  font-family: "pixeleum", sans-serif;
+  color: white;
+  text-align: center;
+  text-transform: uppercase;
+  background-color: #ed2ea5;
+}
+
+.auth-gcu {
+  margin-top: 0.75em;
+}
+
+/* Tablet (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .post-photo-container {
+    background: none;
+    background-color: black;
+  }
+}
+
+/* Desktop(1025px and above) */
+@media (min-width: 1025px) {
+  .main-content {
+    padding: 0;
+    background-color: black;
+  }
+  .formphoto {
+    margin-left: 19%;
+    margin-right: 15%;
+  }
+
+  .form-photo-fields {
+    border-radius: 8px;
+  }
+
+  #subm_photo {
+    padding-top: 1em;
+    text-align: center;
+    margin-bottom: 1em;
+    padding-left: 5%;
+  }
+  .post-photo-container {
+    margin-top: 0;
+    background: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 20%;
+  }
+  .form-photo-fields {
+    margin-top: 0.5em;
+  }
+  .button_hiden {
+    display: none;
+  }
+}

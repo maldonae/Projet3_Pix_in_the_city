@@ -1,0 +1,135 @@
+/* -------------------------------------------
+   POLICES
+------------------------------------------- */
+@font-face {
+  font-family: "pixeleum";
+  src: url("../../assets/fonts/pixeleum-48.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "roboto";
+  src: url("../../assets/fonts/roboto.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "roboto_bold";
+  src: url("../../assets/fonts/roboto_bold.ttf") format("truetype");
+}
+
+/* -------------------------------------------
+   STYLES GÉNÉRAUX
+------------------------------------------- */
+a {
+  text-decoration: none;
+  font-family: "pixeleum", sans-serif;
+  color: white;
+  font-size: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1#contacts {
+  padding-top: 6em;
+  font-family: "pixeleum", sans-serif;
+  color: #fad009;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.title {
+  color: #fad009;
+  text-align: center;
+}
+
+/* -------------------------------------------
+   SECTION CONTACT
+------------------------------------------- */
+.container_contact {
+  background: url("../../assets/images/backgroundstars.jpg") center / cover
+    fixed;
+  width: 100%;
+  position: fixed;
+  padding-top: 24%;
+  padding-bottom: 100%;
+}
+
+/* Réseau social : grille */
+.RS {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+  align-items: center;
+  font-family: "roboto", sans-serif;
+  color: white;
+}
+
+/* Bloc réseau social */
+.box {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 10em;
+  height: 9em;
+  background-color: #6e7dc9;
+  margin: 0.5em;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 10px rgba(110, 125, 201, 0.5);
+  cursor: pointer;
+}
+
+/* Effet survol */
+.box:hover {
+  background-color: #ed2ea5;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+  transform: scale(1.05);
+}
+
+/* Effet clic */
+.box:active {
+  transform: scale(0.95);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 1);
+}
+
+.box img {
+  width: 2em;
+  height: 2em;
+}
+
+/* -------------------------------------------
+   MEDIA QUERIES
+------------------------------------------- */
+/* Tablet (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .container_contact {
+    position: fixed;
+    padding-top: 10%;
+    background: black;
+  }
+
+  .RS {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .box {
+    width: 13em;
+    height: 10em;
+  }
+}
+
+/* Desktop (1025px and above) */
+@media (min-width: 1025px) {
+  .container_contact {
+    position: fixed;
+    background: none;
+    margin: -42% 0 0 10%;
+    width: 82%;
+    padding: 48% 0 100% 18%;
+  }
+
+  .RS {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

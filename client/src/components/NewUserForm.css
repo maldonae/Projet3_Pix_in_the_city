@@ -1,0 +1,176 @@
+@font-face {
+  font-family: "pixeleum";
+  src: url("../../assets/fonts/pixeleum-48.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "roboto";
+  src: url("../../assets/fonts/roboto.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "roboto_bold";
+  src: url("../../assets/fonts/roboto_bold.ttf") format("truetype");
+}
+
+/* GENERAL STYLE */
+* {
+  box-sizing: border-box;
+}
+
+/* TITLE */
+h1 {
+  color: #fad009;
+}
+
+/* CONTAINER  */
+.create-profil-container {
+  background: url("../assets/images/backgroundstars.jpg") center / cover fixed;
+  color: #ed2ea5;
+  font-family: "pixeleum", sans-serif;
+  padding: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  position: relative;
+  padding-top: 40em;
+  padding-bottom: 50em;
+  margin-bottom: 6em;
+  text-transform: uppercase;
+}
+
+/* LABELS */
+label.updateForm-fields {
+  text-transform: uppercase;
+}
+
+/* GCU */
+.is_gcu_accepted {
+  color: white;
+  font-family: "pixeleum", sans-serif;
+}
+
+.obligatory-fiels {
+  color: white;
+}
+
+.is_gcu_accepted {
+  appearance: none;
+  margin: 0;
+  width: 16px;
+  height: 16px;
+  border: 2px solid white;
+  border-radius: 4px;
+  background-color: transparent;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+}
+
+.is_gcu_accepted:checked {
+  background-color: #ed2ea5;
+  border: 2px solid #ed2ea5;
+}
+
+.is_gcu_accepted:checked::after {
+  content: "✔";
+  font-size: 16px;
+  color: white;
+  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.gcu-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* BUTTONS */
+.create-profil-button {
+  width: 100%;
+  margin-top: 2em;
+  margin-bottom: 1em;
+  padding: 10px;
+  border: solid white 1px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  font-family: "pixeleum", sans-serif;
+  color: white;
+  text-align: center;
+  text-transform: uppercase;
+  background-color: #ed2ea5;
+}
+
+#button_up img {
+  width: 30px;
+}
+
+#button_up p {
+  margin: 0;
+  font-size: 14px;
+  color: white;
+}
+
+.button_center {
+  display: flex;
+  justify-content: center;
+}
+
+/* -------------------------------------------
+   MEDIA QUERIES
+------------------------------------------- */
+/* Tablet (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .main-content {
+    padding: 0;
+    background: none;
+    background-color: black;
+  }
+
+  .create-profil-container {
+    background: none;
+    background-color: black;
+    padding-top: 39em;
+    padding-bottom: 44em;
+  }
+}
+
+/* Desktop (1025 and above) */
+@media (min-width: 1025px) {
+  .profil-form {
+    margin-left: 19%;
+    margin-right: 15%;
+  }
+  .form-fields {
+    border-radius: 8px;
+    margin-top: 0.5em;
+    font-size: 19px;
+  }
+  #h1-profil-form {
+    padding-top: 1em;
+    text-align: center;
+    margin-bottom: 1em;
+  }
+  .create-profil-container {
+    padding-top: 44em;
+    padding-bottom: 48em;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-left: 22%;
+    background: none;
+    background-color: black;
+  }
+
+  .create-profil-button {
+    margin-top: 2em;
+  }
+}
