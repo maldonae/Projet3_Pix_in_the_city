@@ -7,6 +7,7 @@ type PhotoType = {
   latitude: number;
   longitude: number;
   picture: File | null;
+  user_id: number;
 };
 
 export default PhotoType;

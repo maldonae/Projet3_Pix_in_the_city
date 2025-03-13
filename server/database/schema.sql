@@ -22,7 +22,7 @@ CREATE TABLE photo (
   longitude FLOAT NOT NULL DEFAULT 4.8422, -- Longitude par défaut (centre de Lyon)
   picture VARCHAR(255) NOT NULL,
   user_id INT UNSIGNED NULL, -- A CHANGER QUAND ON AURA FAIT L'AUTHENTIFICATION Clé étrangère liée à user.id
-  FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE -- Contrainte de clé étrangère
+  FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE SET NULL -- Contrainte de clé étrangère
 );
 
 ALTER TABLE user
