@@ -93,8 +93,8 @@ describe("POST /api/users", () => {
       pseudo: "johndoe",
       zip_code: 69120,
       city: "New City",
-      password: "Erico",
-      passwordConfirm: "Erico",
+      password: "Johndoe69120@",
+      passwordConfirm: "Johndoe69120@",
       is_gcu_accepted: true,
       is_admin: false,
     };

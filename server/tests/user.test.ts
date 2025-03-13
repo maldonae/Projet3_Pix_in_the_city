@@ -27,17 +27,17 @@ describe("User Action Endpoints", () => {
       pseudo: "johndoe",
       zip_code: 69120,
       city: "New City",
-      password: "Erico",
-      passwordConfirm: "Erico",
-      is_gcu_accepted: true, // Acceptation des conditions d'utilisation (false par défaut)
-      is_admin: false,
+    password: "Johndoe69120@",
+    passwordConfirm: "Johndoe69120@",
+    is_gcu_accepted: true, // Acceptation des conditions d'utilisation (false par défaut)
+    is_admin: false,
     };
     jest.spyOn(userRepository, "create").mockResolvedValueOnce(1);
     const response = await supertest(app)
       .post("/api/users")
       .set("Authorization", `Bearer ${process.env.TEST_TOKEN}`)
       .send(newUser)
-      .set("Content-Type", "application/json");
+      .set("Content-Type","application/json");
     expect(response.status).toBe(201);
     expect(response.body).toEqual({ insertId: 1 });
   });
