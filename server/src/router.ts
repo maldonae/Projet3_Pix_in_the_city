@@ -39,7 +39,7 @@ router.get("/api/logout", authActions.logout);
 
 router.get("/api/photos", photoActions.browse);
 router.get("/api/photos/:id", photoActions.read);
-router.post("/api/photos", upload.single("picture"), photoActions.add);
+router.post("/api/photos", authActions.verifyAuth, upload.single("picture"), photoActions.add);
 router.delete("/api/photos/:id", photoActions.destroy);
 
 export default router;

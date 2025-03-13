@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SubmitPhotoForm from "../Photos/SubmitPhotoForm";
+import { useUser } from "../../hooks/useUser"; // Import du hook personnalisé
 
-// Interface définissant les données d'une photo à soumettre
 interface PhotoData {
   title: string;
   artist: string;
@@ -13,13 +13,13 @@ interface PhotoData {
 
 function UploadPhoto() {
   const navigate = useNavigate();
-  // États pour stocker la position géographique
+  const { user } = useUser(); // Récupérer l'utilisateur connecté
+  
   const [latitude, setLatitude] = useState<number | null>(null);
   const [longitude, setLongitude] = useState<number | null>(null);
-  // Gestion des erreurs
   const [geoError, setGeoError] = useState<string | null>(null);
+  const [apiError, setApiError] = useState<string | null>(null);
 
-  // Objet contenant les valeurs initiales du formulaire
   const newPhoto: PhotoData = {
     title: "",
     artist: "",
@@ -28,7 +28,6 @@ function UploadPhoto() {
     picture: null,
   };
 
-  // Effet permettant de récupérer la position GPS de l'utilisateur
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -38,50 +37,57 @@ function UploadPhoto() {
         },
         (error) => {
           if (error.code === error.PERMISSION_DENIED) {
-            setGeoError("Permission denied. Using default coordinates.");
+            setGeoError("Permission refusée. Coordonnées par défaut utilisées.");
           }
-        },
+        }
       );
     } else {
-      setGeoError("Geolocation is not supported by your browser.");
+      setGeoError("La géolocalisation n'est pas prise en charge par votre navigateur.");
     }
-  }, []); // Exécuté une seule fois au montage du composant
+  }, []);
 
-  // Fonction déclenchée lors de la soumission du formulaire
   const handleSubmit = (photoData: FormData) => {
-    // Format de la date au format DD-MM-YYYY
-    const formattedDate = new Date().toLocaleDateString("fr-FR");
+    if (!user) {
+      setApiError("Vous devez être connecté pour ajouter une photo.");
+      return;
+    }
 
-    // Ajout des coordonnées GPS si disponibles
+    if (!photoData.get("picture")) {
+      setApiError("Veuillez sélectionner une image.");
+      return;
+    }
+
+    const formattedDate = new Date().toLocaleDateString("fr-FR");
+    photoData.append("dateoftheday", formattedDate);
+    photoData.append("user_id", user.id.toString()); // Ajout de l'ID utilisateur
+
     if (latitude && longitude) {
       photoData.append("latitude", latitude.toString());
       photoData.append("longitude", longitude.toString());
     }
-    // Ajout de la date du jour au FormData
-    photoData.append("dateoftheday", formattedDate); // Ajouter la date formatée au FormData
 
-    // Envoi des données à l'API via une requête POST (add BREAD)
     fetch(`${import.meta.env.VITE_API_URL}/api/photos`, {
       method: "POST",
-      headers: {
-        // Pas besoin de définir Content-Type ici, il est géré par FormData
-      },
       body: photoData,
+      credentials: "include",
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) throw new Error("Erreur lors de l'envoi de la photo");
+        return response.json();
+      })
       .then(() => {
-        navigate("/");
+        setTimeout(() => navigate("/"), 1000);
       })
       .catch((error) => {
-        console.error("Error submitting photo:", error);
+        console.error("Erreur lors de l'envoi de la photo:", error);
+        setApiError("Impossible d'envoyer la photo. Réessayez plus tard.");
       });
   };
 
   return (
     <div>
-      {/* Affichage d'un message d'erreur si la géolocalisation échoue */}
       {geoError && <p>{geoError}</p>}
-      {/* Formulaire de soumission de la photo, appellé en tant que composant */}
+      {apiError && <p>{apiError}</p>}
       <SubmitPhotoForm defaultValue={newPhoto} onSubmit={handleSubmit} />
     </div>
   );

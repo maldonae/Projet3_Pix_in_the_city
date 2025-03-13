@@ -39,6 +39,7 @@ const read: RequestHandler = async (req, res, next) => {
 
 // The A of BREAD - Add (Create) operation
 const add: RequestHandler = async (req, res, next) => {
+  
   try {
     // Vérifie si un fichier est présent
     if (!req.file) {
@@ -55,8 +56,17 @@ const add: RequestHandler = async (req, res, next) => {
       res.status(400).json({ error: "Invalid image type" });
       return;
     }
+
+    // Vérifier si l'utilisateur est authentifié
+    if (!req.user || !req.user.id) {
+     
+      res.status(401).json({ error: "Unauthorized: User not authenticated" });
+      return;
+    }
+
+
     // Extrait des photos du request body
-    const { title, content, artist, date, user_id } = req.body;
+    const { title, content, artist, date} = req.body;
     const latitude = req.body.latitude;
     const longitude = req.body.longitude;
 
@@ -76,12 +86,12 @@ const add: RequestHandler = async (req, res, next) => {
       latitude: newLatitude, // Toujours utiliser les coordonnées par défaut
       longitude: newLongitude,
       picture: req.file?.filename || null, // Nom du fichier si présent
-      user_id: user_id || null, // Gérer les utilisateurs non connectés
+      user_id: req.user.id, // Utilisation de l'ID de l'utilisateur authentifié
     };
-
+    
     // Create the photo
     const insertId = await photoRepository.create(newPhoto);
-
+    
     // Répond avec une 201 (Created) et l'ID de la nouvelle photo inserrée
     res.status(201).json({ insertId });
   } catch (err) {
