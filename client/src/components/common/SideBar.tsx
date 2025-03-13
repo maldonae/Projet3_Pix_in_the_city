@@ -2,12 +2,10 @@ import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../assets/images/logo.png";
 import { useUser } from "../../hooks/useUser"; // Import du hook personnalisé
 import "../../styles (anciennement CSS)/common/SideBar.css";
-
 function SideBar() {
   const { user, userId, setUserId, isAuthenticated, setIsAuthenticated } =
     useUser();
   const navigate = useNavigate(); // Utiliser le hook useNavigate pour la redirection
-
   const handleLogout = () => {
     fetch(`${import.meta.env.VITE_API_URL}/api/logout`, {
       credentials: "include",
@@ -19,20 +17,24 @@ function SideBar() {
       }
     });
   };
-
   const goToProfile = () => {
     if (userId) {
       navigate("/profil/"); // Redirection vers le profil de l'utilisateur
       window.location.reload(); // Rafraîchir la page pour recharger l'état
     }
   };
-
   const goToEditProfile = () => {
     if (userId) {
       navigate(`/modifier_mon_profil/${userId}`); // Redirection vers la modification du profil
     }
   };
-
+  // Fonction pour gérer la publication d'une œuvre
+const handlePostArtwork = (event: { preventDefault: () => void; }) => {
+  if (!isAuthenticated) {
+    event.preventDefault(); // Annule la navigation du <Link>
+    alert("Vous devez être connecté pour publier une œuvre !");
+  }
+};
   return (
     <section className="sidebar">
       <section id="sidebar-header">
@@ -41,7 +43,6 @@ function SideBar() {
             <img src={Logo} alt="Logo" className="logo-sidebar" />
           </Link>
         </div>
-
         {isAuthenticated ? (
           <div className="sidebar-welcome">
             <span className="welcome_username">
@@ -86,7 +87,6 @@ function SideBar() {
           </div>
         )}
       </section>
-
       {/* Autres éléments de la sidebar */}
       <section id="sidebar-footer">
         <nav className="sidebar-nav">
@@ -141,10 +141,9 @@ function SideBar() {
             </li>
           </ul>
         </nav>
-
         {/* Bouton pour ajouter une œuvre */}
         <Link to="/post_a_photo">
-          <button type="button" className="button_camera">
+          <button type="button" className="button_camera" onClick={handlePostArtwork}>
             <img
               src={"/src/assets/images/footer_icons/icon_add.png"}
               alt="camera"
@@ -157,5 +156,4 @@ function SideBar() {
     </section>
   );
 }
-
 export default SideBar;

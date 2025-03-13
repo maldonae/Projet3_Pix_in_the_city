@@ -40,7 +40,7 @@ function CreaProfil() {
           })
           // si l'utilisateur rempli bien le formulaire il / elle, sera renvoyé à la page de son profil
           .then(() => {
-            navigate("/login/");
+            navigate("/login");
           });
       }}
     />
