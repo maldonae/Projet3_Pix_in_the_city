@@ -63,7 +63,7 @@ textarea {
   transition: all 0.2s ease;
   cursor: pointer;
   font-family: "roboto_bold", sans-serif;
-  color: #ed2ea5;
+  color: #c21477;
 }
 
 input::placeholder,
@@ -90,11 +90,11 @@ textarea::placeholder {
 }
 
 .signup_button {
-  background-color: #6e7dc9;
+  background-color: #4c5dbd;
 }
 
 .login_button {
-  background-color: #ed2ea5;
+  background-color: #c21477;
   margin-top: 6%;
 }
 

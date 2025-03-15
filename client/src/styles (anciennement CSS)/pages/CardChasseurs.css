@@ -22,7 +22,7 @@
 .streetArtPhotos {
   margin-bottom: 2em;
   padding-top: 1em;
-  border: solid 4px #ed2ea5;
+  border: solid 4px #ef62b2;
   border-radius: 3em;
   box-shadow: 2px 2px 20px 5px;
   margin-left: 1em;
@@ -79,7 +79,7 @@ p.date_content {
   font-family: "pixeleum", sans-serif;
   width: 90%;
   text-transform: uppercase;
-  color: #ed2ea5;
+  color: #ef62b2;
   font-size: 1.25em;
   height: 23%;
 }
@@ -94,7 +94,7 @@ p.date_content {
 
 button.delete-photo-button {
   font-size: 1em;
-  background-color: #ed2ea5;
+  background-color: #c21477;
   font-family: "pixeleum", sans-serif;
   padding: 0.5em;
   color: white;
@@ -118,13 +118,13 @@ button.delete-photo-button {
 .modal-content {
   position: relative;
   background: black;
-  border: 4px solid #ed2ea5;
+  border: 4px solid #ef62b2;
   padding: 20px;
   border-radius: 1em;
   max-width: 90%;
   max-height: 90%;
   overflow: auto;
-  box-shadow: 2px 2px 20px 5px #ed2ea5;
+  box-shadow: 2px 2px 20px 5px #ef62b2;
 }
 
 .modal-image {
