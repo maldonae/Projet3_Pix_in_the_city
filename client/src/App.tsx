@@ -1,4 +1,5 @@
 import { Outlet, useLocation } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import Footer from "./components/common/Footer";
 import Header from "./components/common/Header";
 
@@ -18,6 +19,7 @@ function App() {
       <div className="main-content">
         {/* Ne pas afficher le Header et Footer si c'est la page de login */}
         {!isLoginPage && <Header />}
+        <ToastContainer position="bottom-left" />
         <Outlet /> {/* Ce qui permet de rendre les autres composants/pages */}
         {/* Ne pas afficher le Footer si c'est la page de login */}
         {!isLoginPage && <Footer />}
