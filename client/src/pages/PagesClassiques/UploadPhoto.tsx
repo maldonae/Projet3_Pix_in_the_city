@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify"; // Import de Toastify
 import "react-toastify/dist/ReactToastify.css"; // Import du CSS de Toastify
-import SubmitPhotoForm from "../Photos/SubmitPhotoForm";
 import { useUser } from "../../hooks/useUser"; // Import du hook personnalisé
+import SubmitPhotoForm from "../Photos/SubmitPhotoForm";
 
 interface PhotoData {
   title: string;
