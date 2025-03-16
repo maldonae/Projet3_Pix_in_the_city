@@ -97,10 +97,12 @@ my-project/
 ├── server/
 │   ├── app/
 │   │   ├── modules/
-│   │   │   ├── item/
-│   │   │   │   ├── itemActions.ts
-│   │   │   │   └── itemRepository.ts
-│   │   │   └── ...
+│   │   │   ├── user/
+│   │   │   │   ├── userActions.ts
+│   │   │   │   └── userRepository.ts
+│   │   │   └── photo/
+│   │   │   │   ├── photoActions.ts
+│   │   │   │   └── photoRepository.ts
 │   │   ├── app.ts
 │   │   ├── main.ts
 │   │   └── router.ts
