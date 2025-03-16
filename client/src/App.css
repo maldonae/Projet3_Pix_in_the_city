@@ -8,6 +8,10 @@
   flex: 1;
 }
 
+.Toastify__toast-container--bottom-left {
+  position: fixed;
+}
+
 @media (max-width: 1025px) {
   .main-content {
     margin-left: 0;

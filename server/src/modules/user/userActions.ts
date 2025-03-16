@@ -54,6 +54,7 @@ const edit: RequestHandler = async (req, res, next) => {
       lastname: req.body.lastname,
       pseudo: req.body.pseudo,
       email: req.body.email,
+      city: req.body.city || null,
       zip_code: req.body.zip_code || null,
       hashed_password: req.body.hashed_password || null,
       is_gcu_accepted: req.body.is_gcu_accepted,

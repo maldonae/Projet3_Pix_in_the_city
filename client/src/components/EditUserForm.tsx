@@ -40,8 +40,8 @@ function EditUserForm({
             lastname: formData.get("lastname") as string,
             pseudo: formData.get("pseudo") as string,
             email: formData.get("email") as string,
-            zip_code: formData.get("zip_code")?.toString(),
-            city: formData.get("city")?.toString(),
+            zip_code: formData.get("zip_code") as string,
+            city: formData.get("city") as string,
           });
         }}
       >
