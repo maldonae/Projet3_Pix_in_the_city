@@ -7,7 +7,9 @@ import { useUser } from "../../hooks/useUser";
 
 function ModifProfil() {
   const navigate = useNavigate();
-  const { user } = useUser();
+  const { user, setUser } = useUser();
+
+  if (!user) return null; // on attend que le user soit chargé
 
   return (
     <>
@@ -25,6 +27,7 @@ function ModifProfil() {
               body: JSON.stringify(userData), // Envoi des données mises à jour au serveur
             }).then((response) => {
               if (response.status === 204) {
+                setUser({ ...user, ...userData });
                 toast.success("Profil mis à jour avec succès !", {
                   position: "top-center",
                   autoClose: 3000,
