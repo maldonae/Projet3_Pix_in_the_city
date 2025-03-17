@@ -1,14 +1,19 @@
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify"; // Import de Toastify
+import "react-toastify/dist/ReactToastify.css"; // Import du CSS de Toastify
 import Trash from "../../assets/images/trash-bin.png";
 import EditUserForm from "../../components/EditUserForm";
 import { useUser } from "../../hooks/useUser";
 
 function ModifProfil() {
   const navigate = useNavigate();
-  const { user } = useUser();
+  const { user, setUser } = useUser();
+
+  if (!user) return null; // on attend que le user soit chargé
 
   return (
     <>
+      <ToastContainer position="bottom-left" />
       {user && (
         <EditUserForm
           defaultValue={user} // Passage des données actuelles au formulaire
@@ -22,8 +27,12 @@ function ModifProfil() {
               body: JSON.stringify(userData), // Envoi des données mises à jour au serveur
             }).then((response) => {
               if (response.status === 204) {
-                navigate("/profil");
-                window.location.reload();
+                setUser({ ...user, ...userData });
+                toast.success("Profil mis à jour avec succès !", {
+                  position: "top-center",
+                  autoClose: 3000,
+                });
+                setTimeout(() => navigate("/profil"), 1500);
               }
             });
           }}

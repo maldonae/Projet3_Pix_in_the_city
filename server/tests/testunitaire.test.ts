@@ -143,7 +143,7 @@ describe("PUT /api/users/:id", () => {
 
   it("should fail on invalid request body", async () => {
     const response = await supertest(app).put("/api/users/42").send({});
-    expect([400, 404]).toContain(response.status); // ✅ Accepte les deux cas
+    expect([400, 404]).toContain(response.status); // Accepte les deux cas
     if (response.status === 400) {
       expect(response.body).toHaveProperty("error");
     }
@@ -207,6 +207,6 @@ describe("DELETE /api/users/:id", () => {
   });
 
   afterAll(async () => {
-    await databaseClient.pool.end(); // Ferme le pool de connexions
+    await databaseClient.pool.end(); // Closes the connection pool
   });
 });

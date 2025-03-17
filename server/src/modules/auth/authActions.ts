@@ -92,22 +92,22 @@ const verifyToken: RequestHandler = (req, res, next) => {
 };
 
 const verifyAuth: RequestHandler = (req, res, next) => {
-  
   const token = req.cookies.authToken;
-  
 
   if (!token) {
-   
     res.status(401).json({ message: "Non authentifié" });
   }
 
   try {
-    const user = jwt.verify(token, process.env.APP_SECRET as string) as { id: number; email: string; pseudo: string };
-  
-    req.user = user; // 🔥 On assigne `user` à `req.user`
+    const user = jwt.verify(token, process.env.APP_SECRET as string) as {
+      id: number;
+      email: string;
+      pseudo: string;
+    };
+
+    req.user = user; // On assigne user à req.user
     next();
   } catch (error) {
-   
     res.status(401).json({ message: "Token invalide" });
   }
 };

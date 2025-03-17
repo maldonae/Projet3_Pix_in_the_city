@@ -61,7 +61,7 @@ function Profil() {
         </div>
 
         {/* Contributions de l'utilisateur */}
-        <section aria-labelledby="user-contributions">
+        <section aria-label="user-contributions">
           <h2 id="user-contributions">Contributions</h2>
           {/* <p>Aperçu des photos déjà validées :</p> */}
           <ul className="contributions-list">
@@ -98,7 +98,7 @@ function Profil() {
         </section>
 
         {/* Paramètres et modification du profil */}
-        <section aria-labelledby="user-settings">
+        <section aria-label="user-settings">
           <button
             type="button"
             onClick={() => navigate(`/modifier_mon_profil/${user}`)}
