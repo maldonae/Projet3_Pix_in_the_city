@@ -66,7 +66,7 @@ h1 {
   color: white;
   text-align: center;
   text-transform: uppercase;
-  background-color: #ed2ea5;
+  background-color: #c21477;
 }
 
 /* -------------------------------------------
@@ -79,7 +79,7 @@ h1 {
 }
 
 .delete-profil-button {
-  background-color: #ff4d4d;
+  background-color: #b01111;
   border: 1px solid white;
   font-family: "pixeleum", sans-serif;
   text-transform: uppercase;
