@@ -79,7 +79,7 @@
 
 .sidebar-button {
   font-size: 60%;
-  background-color: #ed2ea5;
+  background-color: #c21477;
   font-family: "pixeleum", sans-serif;
   color: white;
   margin-bottom: 5px;
@@ -96,8 +96,8 @@
 
 .sidebar-button:hover {
   background-color: white;
-  color: #ed2ea5;
-  border: #ed2ea5 solid 1px;
+  color: #c21477;
+  border: #c21477 solid 1px;
 }
 
 .sidebar-button:active {
@@ -162,7 +162,7 @@
 }
 
 .sidebar-button_footer {
-  background-color: #6e7dc9;
+  background-color: #4c5dbd;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -182,7 +182,7 @@
 }
 
 .sidebar-button_footer:hover {
-  background-color: #ed2ea5;
+  background-color: #c21477;
 }
 
 .sidebar-button_footer:active {

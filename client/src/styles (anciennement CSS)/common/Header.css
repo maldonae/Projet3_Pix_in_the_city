@@ -108,7 +108,7 @@ header {
 #login_button,
 #signup_button {
   font-size: 50%;
-  background-color: #ed2ea5;
+  background-color: #c21477;
   font-family: "pixeleum", sans-serif;
   color: white;
   padding: 5px 10px;
@@ -122,7 +122,7 @@ header {
 }
 
 #signup_button {
-  background-color: #6e7dc9;
+  background-color: #4c5dbd;
 }
 
 #login_button:active,
