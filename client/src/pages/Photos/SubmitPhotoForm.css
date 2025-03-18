@@ -14,7 +14,7 @@
 }
 .post-photo-container {
   background: url("backgroundstars.jpg") center / cover fixed;
-  color: #ed2ea5;
+  color: #c21477;
   font-family: "pixeleum", sans-serif;
   margin-top: 1em;
   margin-bottom: 4em;
@@ -33,7 +33,7 @@ h1 {
   margin-bottom: 1em;
 }
 .star {
-  color: #ed2ea5;
+  color: #c21477;
   font-family: "roboto", sans-serif;
 }
 .auth-gcu {
@@ -54,7 +54,7 @@ h1 {
   color: white;
   text-align: center;
   text-transform: uppercase;
-  background-color: #ed2ea5;
+  background-color: #c21477;
 }
 
 .auth-gcu {
