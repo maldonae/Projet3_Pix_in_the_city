@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "../styles (anciennement CSS)/pages/CardChasseurs.css";
-import { useUser } from "../hooks/useUser";
 import { ToastContainer, toast } from "react-toastify";
+import { useUser } from "../hooks/useUser";
 import "react-toastify/dist/ReactToastify.css";
 
 type PhotoType = {
