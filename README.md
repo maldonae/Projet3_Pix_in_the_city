@@ -91,36 +91,130 @@ git config --global core.autocrlf false
 
 ### Structure des Dossiers
 
-```plaintext
-my-project/
+Street_art_hunter/
 │
-├── server/
-│   ├── app/
-│   │   ├── modules/
-│   │   │   ├── user/
-│   │   │   │   ├── userActions.ts
-│   │   │   │   └── userRepository.ts
-│   │   │   └── photo/
-│   │   │   │   ├── photoActions.ts
-│   │   │   │   └── photoRepository.ts
-│   │   ├── app.ts
-│   │   ├── main.ts
-│   │   └── router.ts
-│   ├── database/
-│   │   ├── client.ts
-│   │   └── schema.sql
-│   ├── tests/
-│   ├── .env
-│   └── .env.sample
-│
-└── client/
-    ├── src/
-    │   ├── components/
-    │   ├── pages/
-    │   └── App.tsx
-    ├── .env
-    └── .env.sample
-```
+|   +---@js-monorepo
+|   |   +---client
+|   |   |   |   .env
+|   |   |   |   .env.sample
+|   |   |   |               
+|   |   |   \---src
+|   |   |       |   App.css
+|   |   |       |   App.tsx
+|   |   |       |   main.tsx
+|   |   |       |            
+|   |   |       +---components
+|   |   |       |   |   
+|   |   |       |   |   CardChasseurs.tsx
+|   |   |       |   |   EditUserForm.css
+|   |   |       |   |   EditUserForm.tsx
+|   |   |       |   |   MapStreetArt.tsx
+|   |   |       |   |   NewUserForm.css
+|   |   |       |   |   NewUserForm.tsx
+|   |   |       |   |   UserDeleteForm.tsx
+|   |   |       |   |   
+|   |   |       |   +---common
+|   |   |       |   |       Footer.tsx
+|   |   |       |   |       Header.tsx
+|   |   |       |   |       SideBar.tsx
+|   |   |       |   |       
+|   |   |       |   \---CSS
+|   |   |       |           Login.css
+|   |   |       |           MapStreetArt.css
+|   |   |       |           
+|   |   |       +---contexts
+|   |   |       |       UserContext.tsx
+|   |   |       |       
+|   |   |       +---hooks
+|   |   |       |       useUser.ts
+|   |   |       |       
+|   |   |       +---pages
+|   |   |       |   |   
+|   |   |       |   |   
+|   |   |       |   +---PagesClassiques
+|   |   |       |   |       Carte.css
+|   |   |       |   |       Carte.tsx
+|   |   |       |   |       UploadPhoto.tsx
+|   |   |       |   |       
+|   |   |       |   +---Photos
+|   |   |       |   |       backgroundstars.jpg
+|   |   |       |   |       SubmitPhotoForm.css
+|   |   |       |   |       SubmitPhotoForm.tsx
+|   |   |       |   |       
+|   |   |       |   +---Profil
+|   |   |       |   |       CreaProfil.tsx
+|   |   |       |   |       DeleteProfil.css
+|   |   |       |   |       DeleteProfil.tsx
+|   |   |       |   |       ModifProfil.tsx
+|   |   |       |   |       Profil.css
+|   |   |       |   |       Profil.tsx
+|   |   |       |   |       
+|   |   |       |   +---Secu
+|   |   |       |   |       Login.tsx
+|   |   |       |   |       
+|   |   |       |   \---static
+|   |   |       |           CGU.tsx
+|   |   |       |           Contact.tsx
+|   |   |       |           Regles.tsx
+|   |   |       |           
+|   |   |       +---services
+|   |   |       |       
+|   |   |       |       
+|   |   |       +---styles (anciennement CSS)
+|   |   |       |   +---common
+|   |   |       |   |       Footer.css
+|   |   |       |   |       Header.css
+|   |   |       |   |       SideBar.css
+|   |   |       |   |       
+|   |   |       |   \---pages
+|   |   |       |           CardChasseurs.css
+|   |   |       |           CGU.css
+|   |   |       |           Contact.css
+|   |   |       |           Regles.css
+|   |   |       |           
+|   |   |       \---types
+|   |   |               PhotoType.ts
+|   |   |               UserType.ts
+|   |   |               vite-env.d.ts
+|   |   |               
+|   |   \---server
+|   |       |   .env
+|   |       |   .env.sample
+|   |       |       
+|   |       +---database
+|   |       |   |   checkConnection.ts
+|   |       |   |   client.ts
+|   |       |   |   schema.sql
+|   |       |           
+|   |       +---src
+|   |       |   |   app.ts
+|   |       |   |   main.ts
+|   |       |   |   router.ts
+|   |       |   |   
+|   |       |   +---modules
+|   |       |   |   +---auth
+|   |       |   |   |       authActions.ts
+|   |       |   |   |       
+|   |       |   |   +---photo
+|   |       |   |   |       photoActions.ts
+|   |       |   |   |       photoRepository.ts
+|   |       |   |   |       
+|   |       |   |   +---services
+|   |       |   |   |   \---middleware
+|   |       |   |   |           verifdata.ts
+|   |       |   |   |           
+|   |       |   |   \---user
+|   |       |   |           userActions.ts
+|   |       |   |           userRepository.ts
+|   |       |   |           
+|   |       |   \---types
+|   |       |       \---express
+|   |       |               index.d.ts
+|   |       |               
+|   |       \---tests
+|   |               install.test.ts
+|   |               testintegration.test.ts
+|   |               testunitaire.test.ts
 
 ### Mettre en place la base de données
 
