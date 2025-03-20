@@ -91,7 +91,7 @@ git config --global core.autocrlf false
 
 ### Structure des Dossiers
 ```plaintext
-|   +---@js-monorepo
+Street_art_Hunter
 |   |   +---client
 |   |   |   |   .env
 |   |   |   |   .env.sample
