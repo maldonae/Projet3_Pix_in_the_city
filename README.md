@@ -78,7 +78,7 @@ git config --global core.autocrlf false
 4. Créez des fichiers d'environnement (`.env`) dans les répertoires `server` et `client` : vous pouvez copier les fichiers `.env.sample` comme modèles (**ne les supprimez pas**).
 
 Voici les dependances installées :
-
+```plaintext
 ├── @biomejs/biome@1.9.2
 ├── @commitlint/cli@19.6.1
 ├── @commitlint/config-conventional@19.6.0
@@ -121,7 +121,7 @@ Voici les dependances installées :
 ├── concurrently@9.1.2
 ├── husky@9.1.7
 └── validate-branch-name@1.3.1
-
+```
 
 ## Les choses à retenir
 
