@@ -90,7 +90,7 @@ git config --global core.autocrlf false
 | `npm run test`         | Exécute les tests unitaires et d'intégration                                |
 
 ### Structure des Dossiers
-
+```plaintext
 |   +---@js-monorepo
 |   |   +---client
 |   |   |   |   .env
@@ -213,6 +213,7 @@ git config --global core.autocrlf false
 |   |               install.test.ts
 |   |               testintegration.test.ts
 |   |               testunitaire.test.ts
+```
 
 ### Mettre en place la base de données
 
