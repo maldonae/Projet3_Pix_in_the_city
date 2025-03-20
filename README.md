@@ -77,6 +77,52 @@ git config --global core.autocrlf false
 3. Exécutez la commande `npm install`.
 4. Créez des fichiers d'environnement (`.env`) dans les répertoires `server` et `client` : vous pouvez copier les fichiers `.env.sample` comme modèles (**ne les supprimez pas**).
 
+Voici les dependances installées :
+
+├── @biomejs/biome@1.9.2
+├── @commitlint/cli@19.6.1
+├── @commitlint/config-conventional@19.6.0
+├─┬ @js-monorepo/client@ -> .\client
+│ ├── @types/leaflet@1.9.15
+│ ├── @types/react-dom@18.3.5
+│ ├── @types/react@18.3.18
+│ ├── @vitejs/plugin-react@4.3.4
+│ ├── leaflet@1.9.4
+│ ├── react-dom@19.0.0
+│ ├── react-leaflet@5.0.0
+│ ├── react-router-dom@6.28.1
+│ ├── react-toastify@11.0.3
+│ ├── react@19.0.0
+│ ├── typescript@5.7.2
+│ └── vite@5.4.11
+├─┬ @js-monorepo/server@ -> .\server
+│ ├── @faker-js/faker@9.3.0
+│ ├── @types/cookie-parser@1.4.8
+│ ├── @types/cors@2.8.17
+│ ├── @types/express@5.0.0
+│ ├── @types/jest@29.5.14
+│ ├── @types/jsonwebtoken@9.0.7
+│ ├── @types/multer@1.4.12
+│ ├── @types/supertest@6.0.2
+│ ├── argon2@0.41.1
+│ ├── cookie-parser@1.4.7
+│ ├── cors@2.8.5
+│ ├── dotenv@16.4.7
+│ ├── express@4.21.2
+│ ├── jest@29.7.0
+│ ├── jsonwebtoken@9.0.2
+│ ├── multer@1.4.5-lts.1
+│ ├── mysql2@3.12.0
+│ ├── supertest@7.0.0
+│ ├── ts-jest@29.2.5
+│ ├── tsx@4.19.2
+│ ├── typescript@5.7.2 deduped
+│ └── validate-image-type@3.0.0
+├── concurrently@9.1.2
+├── husky@9.1.7
+└── validate-branch-name@1.3.1
+
+
 ## Les choses à retenir
 
 ### Commandes de Base
