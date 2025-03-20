@@ -77,7 +77,7 @@ git config --global core.autocrlf false
 3. Exécutez la commande `npm install`.
 4. Créez des fichiers d'environnement (`.env`) dans les répertoires `server` et `client` : vous pouvez copier les fichiers `.env.sample` comme modèles (**ne les supprimez pas**).
 
-Voici les dependances installées :
+Voici les dépendances installées pour le projet (après avoir fait npm install à la racine le point 3 de l'installation) :
 ```plaintext
 ├── @biomejs/biome@1.9.2
 ├── @commitlint/cli@19.6.1
