@@ -1,4 +1,4 @@
-# Projet 3 - Street Art Hunter
+# Projet 3 - Street Art Hunter (déploiement)
 
 Ce projet est un monorepo JS, suivant l'architecture React-Express-MySQL telle qu'enseignée à la Wild Code School (v7.1.7) :
 
