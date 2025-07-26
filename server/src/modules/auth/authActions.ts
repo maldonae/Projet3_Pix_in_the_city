@@ -142,35 +142,17 @@ const requireAdmin: RequestHandler = (req: any, res, next) => {
   next();
 };
 
-// 🔍 VERSION DEBUG - Avec logs détaillés
-const requireSelfOrAdmin: RequestHandler = (req: any, res, next) => {
+  const requireSelfOrAdmin: RequestHandler = (req: any, res, next) => {
   const user = req.user as AuthUser;
   const targetUserId = req.params.id;
 
-  console.log("=== DEBUG AUTH ===");
-  console.log("user:", JSON.stringify(user));
-  console.log("targetUserId:", targetUserId, "type:", typeof targetUserId);
-  console.log("user.id:", user?.id, "type:", typeof user?.id);
-  console.log("user.role:", user?.role);
-  console.log("Number(user.id):", Number(user?.id));
-  console.log("Number(targetUserId):", Number(targetUserId));
-  console.log("comparison:", Number(user?.id) === Number(targetUserId));
-  console.log("is admin:", user?.role === 'admin');
-  console.log("==================");
-
   if (!user) {
-    console.log("❌ NO USER");
     return res.status(401).json({ error: "Authentication required" });
   }
 
   if (Number(user.id) !== Number(targetUserId) && user.role !== 'admin') {
-    console.log("❌ ACCESS DENIED");
-    console.log("- user.id:", user.id, "vs targetUserId:", targetUserId);
-    console.log("- user.role:", user.role, "vs admin");
     return res.status(403).json({ error: "Can only access your own profile or be admin" });
   }
-
-  console.log("✅ ACCESS GRANTED");
   next();
 };
 

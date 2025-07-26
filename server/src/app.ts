@@ -102,29 +102,35 @@ import fs from "node:fs";
 import path from "node:path";
 
 // Serve server resources avec headers CORS
-const publicFolderPath = path.join(__dirname, "../../server/public");
-
+const publicFolderPath = "/var/www/server/public"; 
 if (fs.existsSync(publicFolderPath)) {
-  // Middleware pour ajouter les headers CORS aux images
-  app.use('/photos', (req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Cross-Origin-Resource-Policy', 'cross-origin');
+  // ✅ CORRECTION: Middleware général pour ajouter les headers CORS aux images
+  app.use((req, res, next) => {
+    if (req.path.startsWith('/photos/')) {
+      res.header('Access-Control-Allow-Origin', '*');
+      res.header('Cross-Origin-Resource-Policy', 'cross-origin');
+    }
     next();
   });
   
+  // ✅ Express static pour servir les fichiers depuis /var/www/server/public
   app.use(express.static(publicFolderPath));
 }
 
 // Serve client resources
 
-const clientBuildPath = path.join(__dirname, "../../client/dist");
+const clientBuildPath = "/var/www/client/dist";
 
 if (fs.existsSync(clientBuildPath)) {
   app.use(express.static(clientBuildPath));
 
   // Redirect unhandled requests to the client index file
-
-  app.get("*", (_, res) => {
+  // Exclure les routes API et fichiers statiques
+  app.get("*", (req, res) => {
+    // Ne pas intercepter les routes API et fichiers statiques
+    if (req.path.startsWith('/api/') || req.path.startsWith('/photos/')) {
+      return res.status(404).send('Not Found');
+    }
     res.sendFile("index.html", { root: clientBuildPath });
   });
 }

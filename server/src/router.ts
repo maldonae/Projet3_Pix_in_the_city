@@ -12,7 +12,7 @@ import badgeActions from "./modules/badge/badgeActions"; // ✅ RESTAURÉ
 
 // 🔒 CONFIGURATION MULTER SÉCURISÉE
 const upload = multer({
-  dest: "public/photos/",
+  dest: "/var/www/server/public/photos/",
   limits: {
     fileSize: 5 * 1024 * 1024, // 5MB maximum
     files: 1, // 1 seul fichier

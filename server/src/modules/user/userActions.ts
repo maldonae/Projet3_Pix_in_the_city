@@ -35,25 +35,17 @@ const read: RequestHandler = async (req, res, next) => {
   }
 };
 
-// 🔍 VERSION DEBUG - Avec logs détaillés
 const edit: RequestHandler = async (req, res, next) => {
-  console.log("=== userActions.edit START ===");
-  console.log("req.user:", req.user);
-  console.log("req.body:", req.body);
-  console.log("req.params.id:", req.params.id);
-  
   try {
     const userId = Number.parseInt(req.params.id);
-    console.log("userId parsed:", userId);
     
     // Vérifie si l'ID est valide
     if (Number.isNaN(userId)) {
-      console.log("❌ Invalid user ID");
       res.status(400).json({ error: "Invalid user ID" });
       return;
     }
 
-    // ✅ SÉCURITÉ - Construire seulement les champs fournis
+    // SÉCURITÉ - Construire seulement les champs fournis
     const userData: any = { id: userId };
 
     // Champs autorisés pour modification
@@ -63,44 +55,32 @@ const edit: RequestHandler = async (req, res, next) => {
     for (const field of allowedFields) {
       if (req.body[field] !== undefined) {
         userData[field] = req.body[field];
-        console.log(`Adding field ${field}:`, req.body[field]);
       }
     }
 
-    console.log("userData to update:", userData);
-
-    // ⚠️ SÉCURITÉ - Empêcher l'escalade de privilèges
+    // SÉCURITÉ - Empêcher l'escalade de privilèges
     if (req.body.is_admin !== undefined) {
-      console.log("❌ Attempted admin escalation");
       res.status(403).json({ error: "Cannot modify admin status" });
       return;
     }
-
     if (req.body.email !== undefined) {
-      console.log("❌ Attempted email modification");
       res.status(403).json({ error: "Cannot modify email via this route" });
       return;
     }
 
     // Vérifier qu'il y a au moins un champ à modifier
     if (Object.keys(userData).length <= 1) {
-      console.log("❌ No fields to update");
       res.status(400).json({ error: "No fields to update" });
       return;
     }
 
-    console.log("Calling userRepository.update with:", userData);
     const affectedRows = await userRepository.update(userData);
-    console.log("affectedRows:", affectedRows);
-
     if (affectedRows === 0) {
-      console.log("❌ No rows affected - user not found");
       res.sendStatus(404);
       return;
     }
 
-    console.log("✅ Update successful - sending 204");
-    // ✅ CORRECTION - Renvoie status 204 comme attendu par le frontend
+    // CORRECTION - Renvoie status 204 comme attendu par le frontend
     res.sendStatus(204);
 
   } catch (err) {
@@ -112,7 +92,7 @@ const edit: RequestHandler = async (req, res, next) => {
 // The A of BREAD - Add (Create) operation
 const add: RequestHandler = async (req, res, next) => {
   try {
-    // Extret des datas de user depuis la requet body
+    // Datas de user depuis la requet body
     const newUser = {
       firstname: req.body.firstname,
       lastname: req.body.lastname,
