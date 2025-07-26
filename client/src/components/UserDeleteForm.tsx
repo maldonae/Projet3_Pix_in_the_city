@@ -14,16 +14,19 @@ function UserDeleteForm({ id, onDelete }: UserDeleteFormProps) {
 
   const handleDelete = async (event: React.MouseEvent) => {
     event.preventDefault();
+
     // Vérifie si l'ID de l'utilisateur est bien défini
     if (!id) {
       alert("Erreur : impossible de récupérer votre ID utilisateur.");
       return;
     }
+
     // Demande de confirmation avant de supprimer le profil
     const confirmDelete = window.confirm(
       "Voulez-vous vraiment supprimer votre profil ?",
     );
     if (!confirmDelete) return;
+
     // Envoie une requête DELETE à l'API pour supprimer l'utilisateur
     try {
       const response = await fetch(
@@ -31,9 +34,10 @@ function UserDeleteForm({ id, onDelete }: UserDeleteFormProps) {
         {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
+          credentials: 'include'
         },
       );
-
+      
       if (response.ok) {
         alert("Votre profil a été supprimé avec succès.");
         if (onDelete) onDelete(); // Exécuter l'action personnalisée après suppression

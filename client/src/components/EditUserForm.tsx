@@ -39,7 +39,6 @@ function EditUserForm({
             firstname: formData.get("firstname") as string,
             lastname: formData.get("lastname") as string,
             pseudo: formData.get("pseudo") as string,
-            email: formData.get("email") as string,
             zip_code: formData.get("zip_code") as string,
             city: formData.get("city") as string,
           });

@@ -1,0 +1,16 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="32" cy="32" r="30" fill="#E91E63" stroke="#C2185B" stroke-width="2"/>
+  <rect x="18" y="14" width="28" height="36" rx="2" fill="white"/>
+  <rect x="20" y="16" width="24" height="4" fill="#E91E63"/>
+  <circle cx="24" cy="26" r="3" fill="#E91E63"/>
+  <rect x="29" y="24" width="12" height="1.5" fill="#BDBDBD"/>
+  <rect x="29" y="27" width="8" height="1" fill="#BDBDBD"/>
+  <circle cx="24" cy="34" r="3" fill="#E91E63"/>
+  <rect x="29" y="32" width="12" height="1.5" fill="#BDBDBD"/>
+  <rect x="29" y="35" width="8" height="1" fill="#BDBDBD"/>
+  <circle cx="24" cy="42" r="3" fill="#E91E63"/>
+  <rect x="29" y="40" width="12" height="1.5" fill="#BDBDBD"/>
+  <rect x="29" y="43" width="8" height="1" fill="#BDBDBD"/>
+  <polygon points="46,12 50,16 46,20" fill="#FFD700"/>
+  <text x="32" y="54" text-anchor="middle" fill="#424242" font-size="6" font-family="Arial">100+</text>
+</svg>

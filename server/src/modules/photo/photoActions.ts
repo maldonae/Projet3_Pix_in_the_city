@@ -2,15 +2,16 @@ import fs from "node:fs";
 import type { RequestHandler } from "express";
 import { validateMIMEType } from "validate-image-type";
 import photoRepository from "./photoRepository";
+// NOUVEAU : Import du service badges
+import badgeService from "../badge/badgeService";
+import badgeRepository from "../badge/badgeRepository";
 
 // Import access to data
-
 // The B of BREAD - Browse (Read All) operation
 const browse: RequestHandler = async (req, res, next) => {
   try {
     // Fetch all photos
     const photos = await photoRepository.readAll();
-
     // Répond avec les photos en JSON format
     res.json(photos);
   } catch (err) {
@@ -24,7 +25,6 @@ const read: RequestHandler = async (req, res, next) => {
     // Fetch une photo spécifique basée sur l'ID fournie
     const photoid = Number(req.params.id);
     const photo = await photoRepository.read(photoid);
-
     // Si la photo n'est pas trouvée, répondre avec une erreur 404
     // Sinon, répondre avec une photo en format JSON
     if (photo == null) {
@@ -37,9 +37,8 @@ const read: RequestHandler = async (req, res, next) => {
   }
 };
 
-// The A of BREAD - Add (Create) operation
+// The A of BREAD - Add (Create) operation - MODIFIÉ POUR LES BADGES
 const add: RequestHandler = async (req, res, next) => {
-  
   try {
     // Vérifie si un fichier est présent
     if (!req.file) {
@@ -59,17 +58,14 @@ const add: RequestHandler = async (req, res, next) => {
 
     // Vérifier si l'utilisateur est authentifié
     if (!req.user || !req.user.id) {
-     
       res.status(401).json({ error: "Unauthorized: User not authenticated" });
       return;
     }
 
-
     // Extrait des photos du request body
-    const { title, content, artist, date} = req.body;
+    const { title, content, artist, date } = req.body;
     const latitude = req.body.latitude;
     const longitude = req.body.longitude;
-
     const defaultLatitude = 45.7597; // Latitude par défaut (centre de Lyon)
     const defaultLongitude = 4.8422; // Longitude par défaut (centre de Lyon)
 
@@ -83,17 +79,46 @@ const add: RequestHandler = async (req, res, next) => {
       content,
       artist,
       dateoftheday: date,
-      latitude: newLatitude, // Toujours utiliser les coordonnées par défaut
+      latitude: newLatitude,
       longitude: newLongitude,
-      picture: req.file?.filename || null, // Nom du fichier si présent
-      user_id: req.user.id, // Utilisation de l'ID de l'utilisateur authentifié
+      picture: req.file?.filename || null,
+      user_id: req.user.id,
     };
-    
+
     // Create the photo
     const insertId = await photoRepository.create(newPhoto);
-    
-    // Répond avec une 201 (Created) et l'ID de la nouvelle photo inserrée
-    res.status(201).json({ insertId });
+
+    // NOUVEAU : Gestion des badges et points
+    let pointsEarned = 0;
+    let newBadges: any[] = [];
+
+    try {
+      // Calculer les points pour cette action
+      const photoPoints = badgeService.getPointsForAction('photo_upload');
+      const descriptionPoints = content ? badgeService.getPointsForAction('photo_with_description') : 0;
+      pointsEarned = photoPoints + descriptionPoints;
+
+      // Ajouter les points à l'utilisateur si il y en a
+      if (pointsEarned > 0) {
+        await badgeRepository.addPoints(req.user.id, pointsEarned);
+      }
+
+      // Vérifier et attribuer de nouveaux badges
+      newBadges = await badgeService.onPhotoAdded(req.user.id);
+
+    } catch (badgeError) {
+      // En cas d'erreur avec les badges, on continue mais on log l'erreur
+      console.error("Error processing badges:", badgeError);
+    }
+
+    // Réponse enrichie avec informations des badges
+    res.status(201).json({ 
+      insertId,
+      pointsEarned,
+      newBadges,
+      message: "Photo created successfully"
+    });
+
   } catch (err) {
     // Pass any errors to the error-handling middleware
     next(err);

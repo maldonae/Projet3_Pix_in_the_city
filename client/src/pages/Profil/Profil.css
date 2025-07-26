@@ -3,7 +3,6 @@
   font-family: "Pixeleum";
   src: url("../../assets/fonts/pixeleum-48.ttf") format("truetype");
 }
-
 @font-face {
   font-family: "Roboto";
   src: url("../../assets/fonts/roboto.ttf") format("truetype");
@@ -16,13 +15,13 @@ body {
 }
 
 .profil_container {
-  background: url("../../assets/images/backgroundstars.jpg") center / cover
-    fixed;
+  background: url("../../assets/images/backgroundstars.jpg") center / cover fixed;
   margin-top: 10%;
   text-align: center;
   height: 100vh;
   position: fixed;
   padding-top: 19%;
+  overflow-y: auto; /* Permet le scroll pour les nouveaux éléments */
 }
 
 /* User Section */
@@ -60,6 +59,8 @@ h1#username {
   padding-top: 9%;
   padding-bottom: 0;
   text-transform: uppercase;
+  color: white;
+  font-family: "Pixeleum", sans-serif;
 }
 
 #user_level {
@@ -74,11 +75,206 @@ h1#username {
 }
 
 #user_points,
-#user_badges,
+#user_badges_label,
 #user-contributions {
   color: #ed2ea5;
   font-family: "Pixeleum", sans-serif;
   text-transform: uppercase;
+}
+
+#user_badges_number {
+  color: #FFD700;
+  font-family: "Pixeleum", sans-serif;
+  font-size: 120%;
+}
+
+/* Action Buttons */
+.action-buttons {
+  margin: 20px 0;
+}
+
+.btn-classement {
+  background: linear-gradient(45deg, #FFD700, #FFA500);
+  color: black;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-family: "Pixeleum", sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-transform: uppercase;
+  font-size: 0.9em;
+  margin: 10px 0;
+  min-width: 200px;
+}
+
+.btn-classement:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+}
+
+.btn-classement:active {
+  transform: scale(0.98);
+}
+
+/* NOUVEAUX STYLES - Section Badges */
+.user-badges-section {
+  margin: 20px 0;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  border: 1px solid #ed2ea5;
+}
+
+.user-badges-section h2 {
+  font-family: "Pixeleum", sans-serif;
+  color: #FFD700;
+  font-size: 1.1em;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.badges-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  max-height: 100px;
+  overflow-y: auto;
+}
+
+.badge-item {
+  background: linear-gradient(45deg, #ed2ea5, #6e7dc9);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.7em;
+  font-family: "Pixeleum", sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.badge-item.rare {
+  background: linear-gradient(45deg, #FFD700, #FFA500);
+  color: black;
+  font-weight: bold;
+}
+
+.badge-more {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.7em;
+  font-family: "Pixeleum", sans-serif;
+}
+
+/* NOUVEAUX STYLES - Stats rapides */
+.quick-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 15px 0;
+  font-family: "Pixeleum", sans-serif;
+}
+
+.stat-box {
+  text-align: center;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 8px;
+  border: 1px solid #6e7dc9;
+}
+
+.stat-number {
+  font-size: 1.3em;
+  font-weight: bold;
+  color: #ed2ea5;
+  display: block;
+}
+
+.stat-label {
+  font-size: 0.8em;
+  color: white;
+  text-transform: uppercase;
+}
+
+/* Contributions List - Améliorée */
+.contributions-section {
+  margin-top: 20px;
+}
+
+.contributions-list {
+  display: flex;
+  overflow-x: auto;
+  gap: 16px;
+  padding: 0;
+  list-style: none;
+  scroll-snap-type: x mandatory;
+  margin-bottom: 0;
+  justify-content: center;
+}
+
+.contributions-list::-webkit-scrollbar {
+  display: none;
+}
+
+.contribution-photo {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 2px solid #fad009;
+  scroll-snap-align: center;
+}
+
+.no-contributions {
+  text-align: center;
+  opacity: 0.7;
+  font-size: 0.8em;
+  color: white;
+  font-family: "Roboto", sans-serif;
+  padding: 20px;
+}
+
+.no-contributions a {
+  color: #FFD700;
+  text-decoration: none;
+  font-family: "Pixeleum", sans-serif;
+  text-transform: uppercase;
+}
+
+.no-contributions a:hover {
+  color: #ed2ea5;
+}
+
+.more-contributions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  border: 2px dashed #6e7dc9;
+  font-size: 0.8em;
+  color: white;
+  font-family: "Pixeleum", sans-serif;
+}
+
+figure {
+  margin: 0;
+  text-align: center;
+}
+
+figcaption {
+  margin-top: 8px;
+  font-family: "Pixeleum", sans-serif;
+  font-size: 12px;
+  color: white;
 }
 
 /* Buttons */
@@ -110,41 +306,13 @@ img.repair_icon {
   animation: spin 20s linear infinite;
 }
 
-/* Contributions List */
-.contributions-list {
-  display: flex;
-  overflow-x: auto;
-  gap: 16px;
-  padding: 0;
-  list-style: none;
-  scroll-snap-type: x mandatory;
-  margin-bottom: 0;
-  justify-content: center;
-}
-
-.contributions-list::-webkit-scrollbar {
-  display: none;
-}
-
-.contribution-photo {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 6px;
-  border: 2px solid #fad009;
-  scroll-snap-align: center;
-}
-
-figure {
-  margin: 0;
-  text-align: center;
-}
-
-figcaption {
-  margin-top: 8px;
-  font-family: "Pixeleum", sans-serif;
-  font-size: 12px;
+/* Loading state */
+.loading {
   color: white;
+  font-family: "Pixeleum", sans-serif;
+  font-size: 1.2em;
+  padding: 50px;
+  text-transform: uppercase;
 }
 
 /* Tablet (768px - 1024px) */
@@ -174,6 +342,11 @@ figcaption {
     width: 100%;
   }
 
+  .btn-classement {
+    font-size: 0.8em;
+    padding: 10px 20px;
+  }
+
   img.repair_icon {
     width: 3%;
   }
@@ -184,6 +357,15 @@ figcaption {
 
   #user_title {
     margin-bottom: -2%;
+  }
+
+  .quick-stats {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+
+  .badges-container {
+    max-height: 80px;
   }
 }
 
@@ -201,7 +383,26 @@ figcaption {
     margin-top: 1%;
   }
 
+  .btn-classement {
+    font-size: 1em;
+    padding: 14px 28px;
+  }
+
   img.repair_icon {
     width: 4%;
+  }
+
+  .quick-stats {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+  }
+
+  .user-badges-section {
+    margin: 25px 0;
+    padding: 20px;
+  }
+
+  .badges-container {
+    max-height: 120px;
   }
 }

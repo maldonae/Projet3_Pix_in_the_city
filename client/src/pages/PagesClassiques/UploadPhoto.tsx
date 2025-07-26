@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify"; // Import de Toastify
-import "react-toastify/dist/ReactToastify.css"; // Import du CSS de Toastify
-import { useUser } from "../../hooks/useUser"; // Import du hook personnalisé
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useUser } from "../../hooks/useUser";
 import SubmitPhotoForm from "../Photos/SubmitPhotoForm";
 
 interface PhotoData {
@@ -15,8 +15,7 @@ interface PhotoData {
 
 function UploadPhoto() {
   const navigate = useNavigate();
-  const { user } = useUser(); // Récupérer l'utilisateur connecté
-
+  const { user } = useUser();
   const [latitude, setLatitude] = useState<number | null>(null);
   const [longitude, setLongitude] = useState<number | null>(null);
   const [geoError, setGeoError] = useState<string | null>(null);
@@ -52,50 +51,53 @@ function UploadPhoto() {
     }
   }, []);
 
-  const handleSubmit = (photoData: FormData) => {
+  // ✅ CORRECTION - Fonction async qui lance des erreurs
+  const handleSubmit = async (photoData: FormData): Promise<void> => {
     if (!user) {
-      setApiError("Vous devez être connecté pour ajouter une photo.");
-      return;
+      throw new Error("Vous devez être connecté pour ajouter une photo.");
     }
-
+    
     if (!photoData.get("picture")) {
-      setApiError("Veuillez sélectionner une image.");
-      return;
+      throw new Error("Veuillez sélectionner une image.");
     }
 
     const formattedDate = new Date().toLocaleDateString("fr-FR");
     photoData.append("dateoftheday", formattedDate);
-    photoData.append("user_id", user.id.toString()); // Ajout de l'ID utilisateur
-
+    photoData.append("user_id", user.id.toString());
+    
     if (latitude && longitude) {
       photoData.append("latitude", latitude.toString());
       photoData.append("longitude", longitude.toString());
     }
 
-    fetch(`${import.meta.env.VITE_API_URL}/api/photos`, {
-      method: "POST",
-      body: photoData,
-      credentials: "include",
-    })
-      .then((response) => {
-        if (!response.ok) throw new Error("Erreur lors de l'envoi de la photo");
-        return response.json();
-      })
-      .then(() => {
-        toast.success("Photo envoyée avec succès !", {
-          position: "top-right",
-          autoClose: 3000,
-        });
-        setTimeout(() => navigate("/"), 1000);
-      })
-      .catch((error) => {
-        console.error("Error submitting photo:", error);
-        toast.error("Échec de l'envoi de la photo. Veuillez réessayer.", {
-          position: "top-right",
-          autoClose: 3000,
-        });
-        setApiError("Impossible d'envoyer la photo. Réessayez plus tard.");
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/photos`, {
+        method: "POST",
+        body: photoData,
+        credentials: "include",
       });
+
+      if (!response.ok) {
+        // ✅ GESTION D'ERREUR SPÉCIFIQUE SELON LE STATUS
+        if (response.status === 400) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || "Erreur de validation");
+        } else {
+          throw new Error("Erreur lors de l'envoi de la photo");
+        }
+      }
+
+      const result = await response.json();
+      
+      // ✅ SUCCÈS - Redirection après délai
+      setTimeout(() => navigate("/"), 1000);
+      
+    } catch (error: any) {
+      console.error("Error submitting photo:", error);
+      
+      // ✅ Relancer l'erreur pour que SubmitPhotoForm la gère
+      throw error;
+    }
   };
 
   return (

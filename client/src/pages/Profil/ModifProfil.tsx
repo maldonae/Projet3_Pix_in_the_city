@@ -24,6 +24,7 @@ function ModifProfil() {
               headers: {
                 "Content-Type": "application/json",
               },
+              credentials: 'include',
               body: JSON.stringify(userData), // Envoi des données mises à jour au serveur
             }).then((response) => {
               if (response.status === 204) {

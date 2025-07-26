@@ -11,6 +11,7 @@ interface User {
   city?: string; // optionnel
   is_gcu_accepted: boolean;
   is_admin: boolean;
+  role?: string; // Nouveau : rôle utilisateur
 }
 
 // Créer un contexte avec un utilisateur par défaut
@@ -22,6 +23,7 @@ export interface UserContextType {
   isAuthenticated: boolean;
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
 const UserContext = createContext<UserContextType | null>(null);
 
 // Crée un provider pour fournir le contexte à l'application
@@ -39,28 +41,57 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         if (res.status === 200) {
           setIsAuthenticated(true);
           return res.json();
+        } else {
+          throw new Error('Not authenticated');
         }
       })
       .then((data) => {
-        setUserId(data.id);
+        setUserId(parseInt(data.id));
       })
       .catch(() => {
         setIsAuthenticated(false);
         setUserId(null);
+        setUser(null);
       });
-    // }
   }, []);
 
   useEffect(() => {
-    if (!userId) return;
+    if (!userId || !isAuthenticated) return;
 
-    fetch(`${import.meta.env.VITE_API_URL}/api/users/${userId}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setUser(data);
+    fetch(`${import.meta.env.VITE_API_URL}/api/users/${userId}`, {
+      credentials: 'include', // Important : envoyer les cookies
+    })
+      .then((response) => {
+        if (response.status === 401) {
+          // Non autorisé - déconnecter l'utilisateur
+          setIsAuthenticated(false);
+          setUserId(null);
+          setUser(null);
+          return null;
+        }
+        if (response.status === 403) {
+          // Accès refusé mais toujours connecté
+          console.warn('Access denied to user profile');
+          return null;
+        }
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
       })
-      .catch((error) => console.error("Error while fetching :", error));
-  }, [userId]);
+      .then((data) => {
+        if (data) {
+          setUser(data);
+        }
+      })
+      .catch((error) => {
+        console.error("Error while fetching user:", error);
+        // En cas d'erreur, on peut choisir de déconnecter ou non
+        // setIsAuthenticated(false);
+        // setUserId(null);
+        // setUser(null);
+      });
+  }, [userId, isAuthenticated]);
 
   return (
     <UserContext.Provider

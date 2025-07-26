@@ -1,10 +1,25 @@
 // Load the express module to create a web application
 import cookieParser from "cookie-parser";
 import express from "express";
+import helmet from "helmet";
 
 const app = express();
 
 // Configure it
+
+/* ************************************************************************* */
+// SECURITY: Helmet configuration
+// Important: Helmet doit être configuré AVANT les autres middlewares mais APRÈS CORS
+
+app.use(helmet({
+  contentSecurityPolicy: false, // Désactiver temporairement le CSP
+  crossOriginEmbedderPolicy: false,
+  hsts: {
+    maxAge: 31536000,
+    includeSubDomains: true,
+    preload: true
+  }
+}));
 
 /* ************************************************************************* */
 
@@ -21,7 +36,14 @@ const app = express();
 import cors from "cors";
 
 if (process.env.CLIENT_URL != null) {
-  app.use(cors({ origin: [process.env.CLIENT_URL], credentials: true }));
+  app.use(cors({ 
+    origin: [
+      process.env.CLIENT_URL, 
+      "https://www.street-art-hunter.com", 
+      "https://street-art-hunter.com"
+    ], 
+    credentials: true 
+  }));
 }
 
 // If you need to allow extra origins, you can add something like this:
@@ -79,11 +101,17 @@ app.use(router);
 import fs from "node:fs";
 import path from "node:path";
 
-// Serve server resources
-
+// Serve server resources avec headers CORS
 const publicFolderPath = path.join(__dirname, "../../server/public");
 
 if (fs.existsSync(publicFolderPath)) {
+  // Middleware pour ajouter les headers CORS aux images
+  app.use('/photos', (req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Cross-Origin-Resource-Policy', 'cross-origin');
+    next();
+  });
+  
   app.use(express.static(publicFolderPath));
 }
 

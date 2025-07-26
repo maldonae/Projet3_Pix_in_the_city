@@ -1,10 +1,17 @@
 import argon2 from "argon2";
 import type { RequestHandler } from "express";
 import userRepository from "../user/userRepository";
-
 import jwt from "jsonwebtoken";
-// Importe l'access aux data
 
+// Interface pour le type user étendu avec le rôle
+interface AuthUser {
+  id: number;
+  email: string;
+  pseudo: string;
+  role: string;
+}
+
+// Importe l'access aux data
 const login: RequestHandler = async (req, res, next) => {
   try {
     if (!req.body.password || !req.body.email) {
@@ -12,7 +19,6 @@ const login: RequestHandler = async (req, res, next) => {
       return;
     }
     const user = await userRepository.readByEmailWithPassword(req.body.email);
-
     const verified = await argon2.verify(
       user.hashed_password,
       req.body.password,
@@ -24,8 +30,8 @@ const login: RequestHandler = async (req, res, next) => {
         id: user.id.toString(),
         email: user.email,
         pseudo: user.pseudo,
+        role: user.role || 'user', // Inclure le rôle dans le payload
       };
-
       const token = await jwt.sign(
         myPayload,
         process.env.APP_SECRET as string,
@@ -33,7 +39,6 @@ const login: RequestHandler = async (req, res, next) => {
           expiresIn: "1h",
         },
       );
-
       res.cookie("authToken", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production", // Active HTTPS en prod
@@ -93,23 +98,80 @@ const verifyToken: RequestHandler = (req, res, next) => {
 
 const verifyAuth: RequestHandler = (req, res, next) => {
   const token = req.cookies.authToken;
-
   if (!token) {
     res.status(401).json({ message: "Non authentifié" });
+    return;
   }
-
   try {
-    const user = jwt.verify(token, process.env.APP_SECRET as string) as {
-      id: number;
-      email: string;
-      pseudo: string;
-    };
-
-    req.user = user; // On assigne user à req.user
+    const user = jwt.verify(token, process.env.APP_SECRET as string) as AuthUser;
+    req.user = user; // On assigne user à req.user avec le rôle
     next();
   } catch (error) {
     res.status(401).json({ message: "Token invalide" });
   }
+};
+
+// NOUVEAUX MIDDLEWARES DE SÉCURITÉ
+const requireRole = (roles: string[]) => {
+  return (req: any, res: any, next: any) => {
+    const user = req.user as AuthUser;
+
+    if (!user) {
+      return res.status(401).json({ error: "Authentication required" });
+    }
+
+    if (!roles.includes(user.role)) {
+      return res.status(403).json({ error: "Insufficient permissions" });
+    }
+
+    next();
+  };
+};
+
+const requireAdmin: RequestHandler = (req: any, res, next) => {
+  const user = req.user as AuthUser;
+
+  if (!user) {
+    return res.status(401).json({ error: "Authentication required" });
+  }
+
+  if (user.role !== 'admin') {
+    return res.status(403).json({ error: "Admin access required" });
+  }
+
+  next();
+};
+
+// 🔍 VERSION DEBUG - Avec logs détaillés
+const requireSelfOrAdmin: RequestHandler = (req: any, res, next) => {
+  const user = req.user as AuthUser;
+  const targetUserId = req.params.id;
+
+  console.log("=== DEBUG AUTH ===");
+  console.log("user:", JSON.stringify(user));
+  console.log("targetUserId:", targetUserId, "type:", typeof targetUserId);
+  console.log("user.id:", user?.id, "type:", typeof user?.id);
+  console.log("user.role:", user?.role);
+  console.log("Number(user.id):", Number(user?.id));
+  console.log("Number(targetUserId):", Number(targetUserId));
+  console.log("comparison:", Number(user?.id) === Number(targetUserId));
+  console.log("is admin:", user?.role === 'admin');
+  console.log("==================");
+
+  if (!user) {
+    console.log("❌ NO USER");
+    return res.status(401).json({ error: "Authentication required" });
+  }
+
+  if (Number(user.id) !== Number(targetUserId) && user.role !== 'admin') {
+    console.log("❌ ACCESS DENIED");
+    console.log("- user.id:", user.id, "vs targetUserId:", targetUserId);
+    console.log("- user.role:", user.role, "vs admin");
+    return res.status(403).json({ error: "Can only access your own profile or be admin" });
+  }
+
+  console.log("✅ ACCESS GRANTED");
+  next();
 };
 
 const logout: RequestHandler = async (req, res, next) => {
@@ -125,4 +187,13 @@ const logout: RequestHandler = async (req, res, next) => {
   }
 };
 
-export default { login, hashPassword, verifyToken, logout, verifyAuth };
+export default {
+  login,
+  hashPassword,
+  verifyToken,
+  logout,
+  verifyAuth,
+  requireRole,
+  requireAdmin,
+  requireSelfOrAdmin
+};

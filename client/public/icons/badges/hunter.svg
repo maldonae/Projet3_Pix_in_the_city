@@ -1,0 +1,11 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="32" cy="32" r="30" fill="#32CD32" stroke="#228B22" stroke-width="2"/>
+  <circle cx="32" cy="32" r="12" fill="white"/>
+  <circle cx="32" cy="32" r="8" fill="#E8F5E8"/>
+  <circle cx="32" cy="32" r="4" fill="#32CD32"/>
+  <rect x="30" y="18" width="4" height="8" fill="white"/>
+  <polygon points="28,18 32,14 36,18" fill="#32CD32"/>
+  <rect x="18" y="30" width="8" height="4" fill="white"/>
+  <rect x="38" y="30" width="8" height="4" fill="white"/>
+  <text x="32" y="54" text-anchor="middle" fill="white" font-size="8" font-family="Arial">HUNTER</text>
+</svg>

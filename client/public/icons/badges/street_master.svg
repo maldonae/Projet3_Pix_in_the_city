@@ -1,0 +1,8 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="32" cy="32" r="30" fill="#FFD700" stroke="#FFA000" stroke-width="2"/>
+  <polygon points="32,8 36,20 48,20 39,28 42,40 32,34 22,40 25,28 16,20 28,20" fill="white"/>
+  <polygon points="32,12 35,22 43,22 37,27 39,37 32,32 25,37 27,27 21,22 29,22" fill="#FFD700"/>
+  <circle cx="32" cy="26" r="6" fill="white"/>
+  <text x="32" y="30" text-anchor="middle" fill="#FFD700" font-size="10" font-weight="bold" font-family="Arial">9</text>
+  <text x="32" y="52" text-anchor="middle" fill="#424242" font-size="7" font-family="Arial">MASTER</text>
+</svg>

@@ -1,0 +1,87 @@
+.leaderboard {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.leaderboard h2 {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.leaderboard-list {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.leaderboard-entry {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.2s ease;
+}
+
+.leaderboard-entry:hover {
+  background-color: #f8f9fa;
+}
+
+.leaderboard-entry:last-child {
+  border-bottom: none;
+}
+
+.leaderboard-entry.podium {
+  background: linear-gradient(135deg, #fff8e1 0%, #fff3e0 100%);
+}
+
+.rank {
+  font-size: 24px;
+  font-weight: 700;
+  width: 60px;
+  text-align: center;
+}
+
+.user-info {
+  flex: 1;
+  margin-left: 20px;
+}
+
+.pseudo {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.level-badge {
+  display: inline-block;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.stats {
+  text-align: right;
+}
+
+.points {
+  font-size: 20px;
+  font-weight: 700;
+  color: #007bff;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.mini-stats {
+  display: flex;
+  gap: 15px;
+  font-size: 12px;
+  color: #666;
+}

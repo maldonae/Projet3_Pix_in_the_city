@@ -1,0 +1,8 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="32" cy="32" r="30" fill="#607D8B" stroke="#455A64" stroke-width="2"/>
+  <polygon points="32,12 38,24 52,24 42,34 46,48 32,40 18,48 22,34 12,24 26,24" fill="white"/>
+  <polygon points="32,16 36,26 46,26 39,32 42,42 32,37 22,42 25,32 18,26 28,26" fill="#607D8B"/>
+  <rect x="28" y="28" width="8" height="8" fill="white"/>
+  <circle cx="32" cy="32" r="2" fill="#607D8B"/>
+  <text x="32" y="54" text-anchor="middle" fill="#424242" font-size="6" font-family="Arial">EXPERT</text>
+</svg>

@@ -66,6 +66,9 @@ function CardChasseurs() {
       try {
         const response = await fetch(
           `${import.meta.env.VITE_API_URL}/api/photos`,
+          {
+            credentials: 'include'
+          }
         );
         if (!response.ok)
           throw new Error("Erreur lors de la récupération des photos.");
@@ -84,6 +87,7 @@ function CardChasseurs() {
         `${import.meta.env.VITE_API_URL}/api/photos/${photoId}`,
         {
           method: "DELETE",
+          credentials: 'include'
         },
       );
       if (!response.ok) throw new Error("Échec de la suppression");
@@ -184,7 +188,7 @@ function CardChasseurs() {
             <p className="photo_content">{photo.content}</p>
             <div className="delete_photo_content">
               <p className="date_content">{formatDate(photo.dateoftheday)}</p>
-              {isAuthenticated && user?.is_admin && (
+              {isAuthenticated && (user?.is_admin || user?.role === 'admin') && (
                 <button
                   type="button"
                   className="delete-photo-button"

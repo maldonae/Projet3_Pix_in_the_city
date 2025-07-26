@@ -1,5 +1,4 @@
 import databaseClient from "../../../database/client";
-
 import type { Result, Rows } from "../../../database/client";
 
 type User = {
@@ -16,8 +15,7 @@ type User = {
 };
 
 class UserRepository {
-  //   // The C of CRUD - Create operation
-
+  // The C of CRUD - Create operation
   async create(user: Omit<User, "id">): Promise<number> {
     // Execute le query SQL INSERT pour ajouter un nouvel user à la table
     const [result] = await databaseClient.query<Result>(
@@ -34,20 +32,17 @@ class UserRepository {
         user.is_admin,
       ],
     );
-
     // Retourne l'ID du nouvel user inserré
     return result.insertId;
   }
 
   // The Rs of CRUD - Read operations
-
   async read(id: number) {
     // Execute la query SQL Select pour récupérer un user spécifique grâce à son ID
     const [rows] = await databaseClient.query<Rows>(
       "select * from user where id = ?",
       [id],
     );
-
     // Retourne la première row du résultat, qui représente l'user
     return rows[0] as User;
   }
@@ -55,7 +50,6 @@ class UserRepository {
   async readAll() {
     // Exécute la query SELECT de SQL SELECT pour récupérer tous les users de la table user
     const [rows] = await databaseClient.query<Rows>("select * from user");
-
     // Retourne un tableau
     return rows as User[];
   }
@@ -66,28 +60,29 @@ class UserRepository {
       "select * from user where email = ?",
       [email],
     );
-
     // Retourne la première row du résultat, c'est-à-dire l'user
     return rows[0] as User;
   }
-  // The U of CRUD - Update operation
 
-  async update(user: User) {
-    const { firstname, lastname, pseudo, email, zip_code, city, id } =
-      user;
-
-    const query =
-      "UPDATE user SET firstname = ?, lastname = ?, pseudo = ?, email = ?, zip_code = ?, city = ? WHERE id = ?";
-    const values = [
-      firstname,
-      lastname,
-      pseudo,
-      email,
-      zip_code,
-      city,
-      id,
-    ];
-
+  // ✅ NOUVELLE MÉTHODE UPDATE - Requête dynamique (corrige le problème email = NULL)
+  async update(userData: any) {
+    const { id, ...fieldsToUpdate } = userData;
+    
+    // Construire la requête dynamiquement avec seulement les champs fournis
+    const fields = Object.keys(fieldsToUpdate);
+    const values = Object.values(fieldsToUpdate);
+    
+    if (fields.length === 0) {
+      throw new Error("No fields to update");
+    }
+    
+    // Construire la clause SET dynamiquement
+    const setClause = fields.map(field => `${field} = ?`).join(', ');
+    const query = `UPDATE user SET ${setClause} WHERE id = ?`;
+    
+    // Ajouter l'ID à la fin des valeurs
+    values.push(id);
+    
     const [result] = await databaseClient.query<Result>(query, values);
     return result.affectedRows;
   }
@@ -98,7 +93,6 @@ class UserRepository {
       "delete from user where id = ?",
       [id],
     );
-
     // Retourne combien de rows ont été affectés
     return result.affectedRows;
   }
