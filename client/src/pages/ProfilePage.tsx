@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import './ProfilePage.css';
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import "./ProfilePage.css";
 
 interface Badge {
   id: number;
@@ -30,20 +30,25 @@ interface UserStats {
 }
 
 // Composant BadgeCard intégré
-const BadgeCard: React.FC<{ badge: Badge; isEarned: boolean }> = ({ badge, isEarned }) => {
+const BadgeCard: React.FC<{ badge: Badge; isEarned: boolean }> = ({
+  badge,
+  isEarned,
+}) => {
   const getCategoryColor = (category: string) => {
     const colors: { [key: string]: string } = {
-      discovery: '#4CAF50',
-      photography: '#2196F3',
-      social: '#FF9800',
-      exploration: '#9C27B0',
-      special: '#F44336'
+      discovery: "#4CAF50",
+      photography: "#2196F3",
+      social: "#FF9800",
+      exploration: "#9C27B0",
+      special: "#F44336",
     };
-    return colors[category] || '#757575';
+    return colors[category] || "#757575";
   };
 
   return (
-    <div className={`badge-card ${isEarned ? 'earned' : 'not-earned'} ${badge.is_rare ? 'rare' : ''}`}>
+    <div
+      className={`badge-card ${isEarned ? "earned" : "not-earned"} ${badge.is_rare ? "rare" : ""}`}
+    >
       <div className="badge-icon-container">
         <img
           src={`/icons/badges/${badge.icon}`}
@@ -69,7 +74,7 @@ const BadgeCard: React.FC<{ badge: Badge; isEarned: boolean }> = ({ badge, isEar
 
         {isEarned && badge.earned_at && (
           <div className="earned-date">
-            Obtenu le {new Date(badge.earned_at).toLocaleDateString('fr-FR')}
+            Obtenu le {new Date(badge.earned_at).toLocaleDateString("fr-FR")}
           </div>
         )}
       </div>
@@ -86,18 +91,20 @@ const UserLevel: React.FC<{
   const getProgressPercentage = () => {
     if (!nextLevelPoints) return 100;
     const currentLevelMin = getLevelMinPoints(currentLevel.name);
-    const progress = ((totalPoints - currentLevelMin) / (nextLevelPoints - currentLevelMin)) * 100;
+    const progress =
+      ((totalPoints - currentLevelMin) / (nextLevelPoints - currentLevelMin)) *
+      100;
     return Math.min(100, Math.max(0, progress));
   };
 
   const getLevelMinPoints = (levelName: string) => {
     const levelMins: { [key: string]: number } = {
-      'Novice': 0,
-      'Explorateur': 50,
-      'Chasseur': 150,
-      'Expert': 350,
-      'Maître': 700,
-      'Légende': 1300
+      Novice: 0,
+      Explorateur: 50,
+      Chasseur: 150,
+      Expert: 350,
+      Maître: 700,
+      Légende: 1300,
     };
     return levelMins[levelName] || 0;
   };
@@ -126,7 +133,7 @@ const UserLevel: React.FC<{
               className="progress-fill"
               style={{
                 width: `${getProgressPercentage()}%`,
-                backgroundColor: currentLevel.color
+                backgroundColor: currentLevel.color,
               }}
             />
           </div>
@@ -150,34 +157,42 @@ const ProfilePage: React.FC = () => {
     const fetchUserData = async () => {
       try {
         // Récupérer les stats utilisateur
-        const statsResponse = await fetch(`https://api.street-art-hunter.com/api/users/${id}/stats`, {
-          credentials: 'include'
-        });
+        const statsResponse = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/users/${id}/stats`,
+          {
+            credentials: "include",
+          },
+        );
         if (statsResponse.ok) {
           const stats = await statsResponse.json();
           setUserStats(stats);
         }
 
         // Récupérer les badges de l'utilisateur
-        const badgesResponse = await fetch(`https://api.street-art-hunter.com/api/users/${id}/badges`, {
-          credentials: 'include'
-        });
+        const badgesResponse = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/users/${id}/badges`,
+          {
+            credentials: "include",
+          },
+        );
         if (badgesResponse.ok) {
           const badges = await badgesResponse.json();
           setUserBadges(badges);
         }
 
         // Récupérer tous les badges disponibles
-        const allBadgesResponse = await fetch('https://api.street-art-hunter.com/api/badges', {
-          credentials: 'include'
-        });
+        const allBadgesResponse = await fetch(
+          "${import.meta.env.VITE_API_URL}/api/badges",
+          {
+            credentials: "include",
+          },
+        );
         if (allBadgesResponse.ok) {
           const allBadgesData = await allBadgesResponse.json();
           setAllBadges(allBadgesData);
         }
-
       } catch (error) {
-        console.error('Error fetching user data:', error);
+        console.error("Error fetching user data:", error);
       } finally {
         setLoading(false);
       }
@@ -196,17 +211,17 @@ const ProfilePage: React.FC = () => {
     return <div className="error">Utilisateur non trouvé</div>;
   }
 
-  const earnedBadgeIds = userBadges.map(badge => badge.id);
+  const earnedBadgeIds = userBadges.map((badge) => badge.id);
 
   // Calculer le prochain niveau
   const getNextLevelPoints = (currentLevel: string) => {
     const levelPoints: { [key: string]: number } = {
-      'Novice': 50,
-      'Explorateur': 150,
-      'Chasseur': 350,
-      'Expert': 700,
-      'Maître': 1300,
-      'Légende': undefined
+      Novice: 50,
+      Explorateur: 150,
+      Chasseur: 350,
+      Expert: 700,
+      Maître: 1300,
+      Légende: Number.POSITIVE_INFINITY,
     };
     return levelPoints[currentLevel];
   };
@@ -216,7 +231,10 @@ const ProfilePage: React.FC = () => {
       <div className="profile-header">
         <h1>🎨 Profil de {userStats.pseudo}</h1>
         <UserLevel
-          currentLevel={{ name: userStats.level_name, color: userStats.level_color }}
+          currentLevel={{
+            name: userStats.level_name,
+            color: userStats.level_color,
+          }}
           totalPoints={userStats.total_points}
           nextLevelPoints={getNextLevelPoints(userStats.level_name)}
         />
@@ -245,20 +263,31 @@ const ProfilePage: React.FC = () => {
         <h2>🏆 Badges obtenus ({userStats.total_badges})</h2>
         {userBadges.length > 0 ? (
           <div className="badges-grid">
-            {userBadges.map(badge => (
-              <BadgeCard key={`earned-${badge.id}`} badge={badge} isEarned={true} />
+            {userBadges.map((badge) => (
+              <BadgeCard
+                key={`earned-${badge.id}`}
+                badge={badge}
+                isEarned={true}
+              />
             ))}
           </div>
         ) : (
-          <p className="no-badges">Aucun badge obtenu pour le moment. Uploadez votre première photo pour commencer !</p>
+          <p className="no-badges">
+            Aucun badge obtenu pour le moment. Uploadez votre première photo
+            pour commencer !
+          </p>
         )}
 
         <h2>🎯 Badges à débloquer</h2>
         <div className="badges-grid">
           {allBadges
-            .filter(badge => !earnedBadgeIds.includes(badge.id))
-            .map(badge => (
-              <BadgeCard key={`available-${badge.id}`} badge={badge} isEarned={false} />
+            .filter((badge) => !earnedBadgeIds.includes(badge.id))
+            .map((badge) => (
+              <BadgeCard
+                key={`available-${badge.id}`}
+                badge={badge}
+                isEarned={false}
+              />
             ))}
         </div>
       </div>

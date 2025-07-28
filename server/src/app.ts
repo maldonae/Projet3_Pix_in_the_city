@@ -11,15 +11,17 @@ const app = express();
 // SECURITY: Helmet configuration
 // Important: Helmet doit être configuré AVANT les autres middlewares mais APRÈS CORS
 
-app.use(helmet({
-  contentSecurityPolicy: false, // Désactiver temporairement le CSP
-  crossOriginEmbedderPolicy: false,
-  hsts: {
-    maxAge: 31536000,
-    includeSubDomains: true,
-    preload: true
-  }
-}));
+app.use(
+  helmet({
+    contentSecurityPolicy: false, // Désactiver temporairement le CSP
+    crossOriginEmbedderPolicy: false,
+    hsts: {
+      maxAge: 31536000,
+      includeSubDomains: true,
+      preload: true,
+    },
+  }),
+);
 
 /* ************************************************************************* */
 
@@ -36,14 +38,16 @@ app.use(helmet({
 import cors from "cors";
 
 if (process.env.CLIENT_URL != null) {
-  app.use(cors({ 
-    origin: [
-      process.env.CLIENT_URL, 
-      "https://www.street-art-hunter.com", 
-      "https://street-art-hunter.com"
-    ], 
-    credentials: true 
-  }));
+  app.use(
+    cors({
+      origin: [
+        process.env.CLIENT_URL,
+        "https://www.street-art-hunter.com",
+        "https://street-art-hunter.com",
+      ],
+      credentials: true,
+    }),
+  );
 }
 
 // If you need to allow extra origins, you can add something like this:
@@ -102,17 +106,17 @@ import fs from "node:fs";
 import path from "node:path";
 
 // Serve server resources avec headers CORS
-const publicFolderPath = "/var/www/server/public"; 
+const publicFolderPath = "/var/www/server/public";
 if (fs.existsSync(publicFolderPath)) {
   // ✅ CORRECTION: Middleware général pour ajouter les headers CORS aux images
   app.use((req, res, next) => {
-    if (req.path.startsWith('/photos/')) {
-      res.header('Access-Control-Allow-Origin', '*');
-      res.header('Cross-Origin-Resource-Policy', 'cross-origin');
+    if (req.path.startsWith("/photos/")) {
+      res.header("Access-Control-Allow-Origin", "*");
+      res.header("Cross-Origin-Resource-Policy", "cross-origin");
     }
     next();
   });
-  
+
   // ✅ Express static pour servir les fichiers depuis /var/www/server/public
   app.use(express.static(publicFolderPath));
 }
@@ -128,8 +132,9 @@ if (fs.existsSync(clientBuildPath)) {
   // Exclure les routes API et fichiers statiques
   app.get("*", (req, res) => {
     // Ne pas intercepter les routes API et fichiers statiques
-    if (req.path.startsWith('/api/') || req.path.startsWith('/photos/')) {
-      return res.status(404).send('Not Found');
+    if (req.path.startsWith("/api/") || req.path.startsWith("/photos/")) {
+      res.status(404).send("Not Found");
+      return; // ✅ Return void, pas return res.status()
     }
     res.sendFile("index.html", { root: clientBuildPath });
   });

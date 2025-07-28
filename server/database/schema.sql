@@ -1,5 +1,20 @@
--- Table des utilisateurs
-create table user (
+-- ======================================
+-- ORDRE CORRIGÉ : TABLES PARENTS D'ABORD
+-- ======================================
+
+-- 1. Table des niveaux (TABLE PARENT - doit être créée en premier)
+CREATE TABLE level (
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    name VARCHAR(50) NOT NULL,
+    min_points INT NOT NULL,
+    max_points INT NOT NULL,
+    icon VARCHAR(255) NOT NULL,
+    color VARCHAR(7) NOT NULL, -- code couleur hex
+    description TEXT
+);
+
+-- 2. Table des utilisateurs (sans FK pour l'instant)
+CREATE TABLE user (
   id int unsigned primary key auto_increment not null,
   firstname varchar(255) not null,
   lastname varchar(255) not null,
@@ -13,38 +28,7 @@ create table user (
   is_admin boolean not null default false
 );
 
--- Table des photos
-CREATE TABLE photo (
-  id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
-  title VARCHAR(255) NOT NULL,
-  content TEXT,
-  artist VARCHAR(255),
-  dateoftheday DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  latitude FLOAT NOT NULL DEFAULT 45.7597,  -- Latitude par défaut (centre de Lyon)
-  longitude FLOAT NOT NULL DEFAULT 4.8422, -- Longitude par défaut (centre de Lyon)
-  picture VARCHAR(255) NOT NULL,
-  user_id INT UNSIGNED NULL, -- A CHANGER QUAND ON AURA FAIT L'AUTHENTIFICATION Clé étrangère liée à user.id
-  FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE SET NULL -- Contrainte de clé étrangère
-);
-
--- Suppression de la colonne avatar (comme dans votre fichier original)
-ALTER TABLE user
-DROP COLUMN avatar;
-
--- EXTENSION BADGES ET NIVEAUX --
-
--- Table des niveaux (à créer AVANT les badges pour la contrainte FK)
-CREATE TABLE level (
-    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    name VARCHAR(50) NOT NULL,
-    min_points INT NOT NULL,
-    max_points INT NOT NULL,
-    icon VARCHAR(255) NOT NULL,
-    color VARCHAR(7) NOT NULL, -- code couleur hex
-    description TEXT
-);
-
--- Table des badges disponibles
+-- 3. Table des badges disponibles
 CREATE TABLE badge (
     id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
     name VARCHAR(100) NOT NULL,
@@ -58,7 +42,21 @@ CREATE TABLE badge (
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
--- Table des badges obtenus par les utilisateurs
+-- 4. Table des photos (avec FK vers user)
+CREATE TABLE photo (
+  id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
+  title VARCHAR(255) NOT NULL,
+  content TEXT,
+  artist VARCHAR(255),
+  dateoftheday DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  latitude FLOAT NOT NULL DEFAULT 45.7597,  -- Latitude par défaut (centre de Lyon)
+  longitude FLOAT NOT NULL DEFAULT 4.8422, -- Longitude par défaut (centre de Lyon)
+  picture VARCHAR(255) NOT NULL,
+  user_id INT UNSIGNED NULL, -- Clé étrangère liée à user.id
+  FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE SET NULL -- Contrainte de clé étrangère
+);
+
+-- 5. Table des badges obtenus par les utilisateurs (avec FK vers user et badge)
 CREATE TABLE user_badge (
     id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
     user_id INT UNSIGNED NOT NULL,
@@ -69,23 +67,11 @@ CREATE TABLE user_badge (
     UNIQUE KEY unique_user_badge (user_id, badge_id)
 );
 
--- Extension de la table user existante (ajout de colonnes pour badges/niveaux)
-ALTER TABLE user 
-ADD COLUMN total_points INT NOT NULL DEFAULT 0,
-ADD COLUMN current_level_id INT UNSIGNED DEFAULT 1,
-ADD COLUMN created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-ADD FOREIGN KEY (current_level_id) REFERENCES level(id);
+-- ======================================
+-- DONNÉES INITIALES (AVANT LES ALTER)
+-- ======================================
 
--- DONNÉES INITIALES --
-
--- Insertion des utilisateurs de test (vos données existantes)
-insert into user(firstname, lastname, pseudo, email, zip_code, city, hashed_password, is_gcu_accepted, is_admin)
-values
-  ("Jacqueline", "Morin", "jijimomo_95", "jacquelinecomptabilite@sah.fr", "69001", "Lyon", "ilovecomptabilite", TRUE, TRUE),
-  ("René", "Pichard", "pich-art", "rene_pich-art@sah.fr", "69002", "Lyon", "rene_explorateur", TRUE, FALSE),
-  ("Pépito", "Perez", "pepito_roi_du_gateau", "p-p@sah.fr", "69003", "Lyon" ,"perezforever", TRUE, FALSE);
-
--- Insertion des niveaux de base
+-- Insertion des niveaux de base (OBLIGATOIRE AVANT ALTER TABLE user)
 INSERT INTO level (name, min_points, max_points, icon, color, description) VALUES
 ('Novice', 0, 49, 'novice.svg', '#8B4513', 'Premier pas dans le monde du street art lyonnais'),
 ('Explorateur', 50, 149, 'explorer.svg', '#4682B4', 'Commence à découvrir les rues de Lyon'),
@@ -116,6 +102,32 @@ INSERT INTO badge (name, description, icon, category, condition_type, condition_
 ('Hunter Vétéran', 'Membre depuis plus d\'un an', 'veteran.svg', 'special', 'special_action', 365, 50, TRUE),
 ('Ambassadeur de Lyon', 'Badge spécial réservé aux contributeurs exceptionnels', 'ambassador.svg', 'special', 'special_action', 0, 200, TRUE),
 ('Fan d\'Ememem', 'Découvrir une œuvre d\'Ememem à Lyon', 'ememem_fan.svg', 'special', 'special_action', 1, 30, FALSE);
+
+-- Insertion des utilisateurs de test (vos données existantes)
+insert into user(firstname, lastname, pseudo, email, zip_code, city, hashed_password, is_gcu_accepted, is_admin)
+values
+  ("Jacqueline", "Morin", "jijimomo_95", "jacquelinecomptabilite@sah.fr", "69001", "Lyon", "ilovecomptabilite", TRUE, TRUE),
+  ("René", "Pichard", "pich-art", "rene_pich-art@sah.fr", "69002", "Lyon", "rene_explorateur", TRUE, FALSE),
+  ("Pépito", "Perez", "pepito_roi_du_gateau", "p-p@sah.fr", "69003", "Lyon" ,"perezforever", TRUE, FALSE);
+
+-- ======================================
+-- MODIFICATIONS DE STRUCTURE (APRÈS DONNÉES)
+-- ======================================
+
+-- Suppression de la colonne avatar
+ALTER TABLE user DROP COLUMN avatar;
+
+-- Extension de la table user existante (ajout de colonnes pour badges/niveaux)
+-- MAINTENANT level existe et contient des données, donc la FK peut être créée
+ALTER TABLE user 
+ADD COLUMN total_points INT NOT NULL DEFAULT 0,
+ADD COLUMN current_level_id INT UNSIGNED DEFAULT 1,
+ADD COLUMN created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+ADD FOREIGN KEY (current_level_id) REFERENCES level(id);
+
+-- ======================================
+-- DONNÉES DE TEST
+-- ======================================
 
 -- Insertion des photos de test (vos données existantes)
 insert into photo(title, content, picture, latitude, longitude, artist, user_id)
@@ -170,6 +182,10 @@ LEFT JOIN level l ON u.current_level_id = l.id
 LEFT JOIN photo p ON u.id = p.user_id
 LEFT JOIN user_badge ub ON u.id = ub.user_id
 GROUP BY u.id, u.pseudo, u.firstname, u.lastname, u.total_points, l.name, l.color, l.icon, u.created_at;
+
+-- ======================================
+-- ATTRIBUTION AUTOMATIQUE DES BADGES
+-- ======================================
 
 -- Attribution automatique des badges aux utilisateurs existants
 -- (à exécuter après l'insertion des badges)

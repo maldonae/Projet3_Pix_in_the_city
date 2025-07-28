@@ -1,10 +1,10 @@
 import fs from "node:fs";
 import type { RequestHandler } from "express";
 import { validateMIMEType } from "validate-image-type";
-import photoRepository from "./photoRepository";
+import badgeRepository from "../badge/badgeRepository";
 // NOUVEAU : Import du service badges
 import badgeService from "../badge/badgeService";
-import badgeRepository from "../badge/badgeRepository";
+import photoRepository from "./photoRepository";
 
 // Import access to data
 // The B of BREAD - Browse (Read All) operation
@@ -90,12 +90,14 @@ const add: RequestHandler = async (req, res, next) => {
 
     // NOUVEAU : Gestion des badges et points
     let pointsEarned = 0;
-    let newBadges: any[] = [];
+    let newBadges = [];
 
     try {
       // Calculer les points pour cette action
-      const photoPoints = badgeService.getPointsForAction('photo_upload');
-      const descriptionPoints = content ? badgeService.getPointsForAction('photo_with_description') : 0;
+      const photoPoints = badgeService.getPointsForAction("photo_upload");
+      const descriptionPoints = content
+        ? badgeService.getPointsForAction("photo_with_description")
+        : 0;
       pointsEarned = photoPoints + descriptionPoints;
 
       // Ajouter les points à l'utilisateur si il y en a
@@ -105,20 +107,18 @@ const add: RequestHandler = async (req, res, next) => {
 
       // Vérifier et attribuer de nouveaux badges
       newBadges = await badgeService.onPhotoAdded(req.user.id);
-
     } catch (badgeError) {
       // En cas d'erreur avec les badges, on continue mais on log l'erreur
       console.error("Error processing badges:", badgeError);
     }
 
     // Réponse enrichie avec informations des badges
-    res.status(201).json({ 
+    res.status(201).json({
       insertId,
       pointsEarned,
       newBadges,
-      message: "Photo created successfully"
+      message: "Photo created successfully",
     });
-
   } catch (err) {
     // Pass any errors to the error-handling middleware
     next(err);

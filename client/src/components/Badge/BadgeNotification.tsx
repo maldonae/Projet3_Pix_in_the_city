@@ -1,16 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
-import './BadgeNotification.css';
+import { useEffect } from "react";
+import { toast } from "react-toastify";
+import "./BadgeNotification.css";
+
+// Type pour un badge
+interface Badge {
+  id: number;
+  name: string;
+  icon: string;
+  points: number;
+  is_rare?: boolean;
+}
 
 interface BadgeNotificationProps {
-  badges: any[];
+  badges: Badge[]; // ✅ Type spécifique au lieu de any[]
   onClose: () => void;
 }
 
-const BadgeNotification: React.FC<BadgeNotificationProps> = ({ badges, onClose }) => {
+const BadgeNotification: React.FC<BadgeNotificationProps> = ({
+  badges,
+  onClose,
+}) => {
   useEffect(() => {
     if (badges.length > 0) {
-      badges.forEach(badge => {
+      // ✅ for...of au lieu de forEach (recommandation Biome)
+      for (const badge of badges) {
         toast.success(
           <div className="badge-toast">
             <div className="badge-toast-icon">
@@ -29,9 +42,9 @@ const BadgeNotification: React.FC<BadgeNotificationProps> = ({ badges, onClose }
             closeOnClick: true,
             pauseOnHover: true,
             draggable: true,
-          }
+          },
         );
-      });
+      }
       onClose();
     }
   }, [badges, onClose]);

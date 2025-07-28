@@ -41,12 +41,11 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         if (res.status === 200) {
           setIsAuthenticated(true);
           return res.json();
-        } else {
-          throw new Error('Not authenticated');
         }
+        throw new Error("Not authenticated");
       })
       .then((data) => {
-        setUserId(parseInt(data.id));
+        setUserId(Number.parseInt(data.id));
       })
       .catch(() => {
         setIsAuthenticated(false);
@@ -59,7 +58,7 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     if (!userId || !isAuthenticated) return;
 
     fetch(`${import.meta.env.VITE_API_URL}/api/users/${userId}`, {
-      credentials: 'include', // Important : envoyer les cookies
+      credentials: "include", // Important : envoyer les cookies
     })
       .then((response) => {
         if (response.status === 401) {
@@ -71,7 +70,7 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         }
         if (response.status === 403) {
           // Accès refusé mais toujours connecté
-          console.warn('Access denied to user profile');
+          console.warn("Access denied to user profile");
           return null;
         }
         if (!response.ok) {

@@ -3,6 +3,13 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import "./SubmitPhotoForm.css";
 
+interface Badge {
+  id: number;
+  name: string;
+  points: number;
+  is_rare: boolean;
+}
+
 type PhotoType = {
   title: string;
   content: string;
@@ -49,25 +56,24 @@ function SubmitPhotoForm({
       });
 
       (event.target as HTMLFormElement).reset();
-      
+
       // Vérifier les nouveaux badges après succès
       await checkForNewBadges();
+    } catch (error: unknown) {
+      console.error("Error uploading photo:", error);
 
-    } catch (error: any) {
-      console.error('Error uploading photo:', error);
-      
-      // ✅ GESTION D'ERREUR SPÉCIFIQUE
       let errorMessage = "❌ Erreur lors de l'upload de la photo";
-      
-      if (error.message) {
+
+      if (error instanceof Error && error.message) {
         errorMessage = `❌ ${error.message}`;
+      } else if (typeof error === "string") {
+        errorMessage = `❌ ${error}`;
       }
-      
+
       toast.error(errorMessage, {
         position: "top-right",
         autoClose: 8000,
       });
-      
       // ❌ NE PAS réinitialiser le formulaire en cas d'erreur
     } finally {
       setUploading(false);
@@ -76,7 +82,7 @@ function SubmitPhotoForm({
 
   const checkForNewBadges = async () => {
     try {
-      const userResponse = await fetch('/api/auth', { credentials: 'include' });
+      const userResponse = await fetch("/api/auth", { credentials: "include" });
       if (!userResponse.ok) return;
 
       const userData = await userResponse.json();
@@ -84,16 +90,19 @@ function SubmitPhotoForm({
 
       if (!userId) return;
 
-      const badgeResponse = await fetch(`https://api.street-art-hunter.com/api/users/${userId}/check-badges`, {
-        method: 'POST',
-        credentials: 'include'
-      });
+      const badgeResponse = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/users/${userId}/check-badges`,
+        {
+          method: "POST",
+          credentials: "include",
+        },
+      );
 
       if (badgeResponse.ok) {
         const result = await badgeResponse.json();
 
         if (result.newBadges && result.newBadges.length > 0) {
-          result.newBadges.forEach((badge: any, index: number) => {
+          result.newBadges.forEach((badge: Badge, index: number) => {
             setTimeout(() => {
               toast.success(
                 `🏆 Nouveau badge obtenu ! "${badge.name}" (+${badge.points} XP)`,
@@ -105,18 +114,20 @@ function SubmitPhotoForm({
                   pauseOnHover: true,
                   draggable: true,
                   style: {
-                    background: badge.is_rare ? 'linear-gradient(45deg, #FFD700, #FFA500)' : 'linear-gradient(45deg, #4CAF50, #45a049)',
-                    color: badge.is_rare ? 'black' : 'white',
-                    fontWeight: 'bold'
-                  }
-                }
+                    background: badge.is_rare
+                      ? "linear-gradient(45deg, #FFD700, #FFA500)"
+                      : "linear-gradient(45deg, #4CAF50, #45a049)",
+                    color: badge.is_rare ? "black" : "white",
+                    fontWeight: "bold",
+                  },
+                },
               );
             }, index * 2000);
           });
         }
       }
     } catch (error) {
-      console.error('Error checking badges:', error);
+      console.error("Error checking badges:", error);
     }
   };
 
@@ -171,10 +182,12 @@ function SubmitPhotoForm({
           disabled={uploading}
           style={{
             opacity: uploading ? 0.7 : 1,
-            cursor: uploading ? 'not-allowed' : 'pointer'
+            cursor: uploading ? "not-allowed" : "pointer",
           }}
         >
-          {uploading ? '⏳ Upload en cours...' : `${children}🎨 PROPOSER UNE ŒUVRE`}
+          {uploading
+            ? "⏳ Upload en cours..."
+            : `${children}🎨 PROPOSER UNE ŒUVRE`}
         </button>
       </form>
     </section>

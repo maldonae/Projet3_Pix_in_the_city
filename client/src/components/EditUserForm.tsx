@@ -7,7 +7,6 @@ type User = {
   firstname: string;
   lastname: string;
   pseudo: string;
-  email: string;
   zip_code?: string; // optionnel
   city?: string; // optionnel
 };
@@ -68,15 +67,6 @@ function EditUserForm({
             type="text"
             name="pseudo"
             defaultValue={defaultValue.pseudo}
-            required
-          />
-        </label>
-        <label className="updateForm-fields">
-          Email:
-          <input
-            type="email"
-            name="email"
-            defaultValue={defaultValue.email}
             required
           />
         </label>

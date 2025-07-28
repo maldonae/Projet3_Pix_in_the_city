@@ -1,5 +1,5 @@
-import React from 'react';
-import './UserLevel.css';
+import type React from "react";
+import "./UserLevel.css";
 
 interface Level {
   name: string;
@@ -12,26 +12,28 @@ interface UserLevelProps {
   nextLevelPoints?: number;
 }
 
-const UserLevel: React.FC<UserLevelProps> = ({ 
-  currentLevel, 
-  totalPoints, 
-  nextLevelPoints 
+const UserLevel: React.FC<UserLevelProps> = ({
+  currentLevel,
+  totalPoints,
+  nextLevelPoints,
 }) => {
   const getProgressPercentage = () => {
     if (!nextLevelPoints) return 100;
     const currentLevelMin = getLevelMinPoints(currentLevel.name);
-    const progress = ((totalPoints - currentLevelMin) / (nextLevelPoints - currentLevelMin)) * 100;
+    const progress =
+      ((totalPoints - currentLevelMin) / (nextLevelPoints - currentLevelMin)) *
+      100;
     return Math.min(100, Math.max(0, progress));
   };
 
   const getLevelMinPoints = (levelName: string) => {
-    const levelMins = {
-      'Novice': 0,
-      'Explorateur': 50,
-      'Chasseur': 150,
-      'Expert': 350,
-      'Maître': 700,
-      'Légende': 1300
+    const levelMins: { [key: string]: number } = {
+      Novice: 0,
+      Explorateur: 50,
+      Chasseur: 150,
+      Expert: 350,
+      Maître: 700,
+      Légende: 1300,
     };
     return levelMins[levelName] || 0;
   };
@@ -39,7 +41,7 @@ const UserLevel: React.FC<UserLevelProps> = ({
   return (
     <div className="user-level">
       <div className="level-header">
-        <div 
+        <div
           className="level-badge"
           style={{ backgroundColor: currentLevel.color }}
         >
@@ -52,15 +54,15 @@ const UserLevel: React.FC<UserLevelProps> = ({
           )}
         </div>
       </div>
-      
+
       {nextLevelPoints && (
         <div className="progress-container">
           <div className="progress-bar">
-            <div 
+            <div
               className="progress-fill"
-              style={{ 
+              style={{
                 width: `${getProgressPercentage()}%`,
-                backgroundColor: currentLevel.color 
+                backgroundColor: currentLevel.color,
               }}
             />
           </div>

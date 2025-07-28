@@ -1,7 +1,19 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../hooks/useUser";
-import { useState, useEffect } from "react";
 import "../../pages/Profil/Profil.css";
+
+interface Photo {
+  id: number;
+  title: string;
+  content: string;
+  artist: string;
+  picture: string;
+  user_id: number;
+  dateoftheday: string;
+  latitude: number;
+  longitude: number;
+}
 
 interface Badge {
   id: number;
@@ -35,20 +47,20 @@ function Profil() {
   const { user } = useUser();
   const [userStats, setUserStats] = useState<UserStats | null>(null);
   const [userBadges, setUserBadges] = useState<Badge[]>([]);
-  const [userPhotos, setUserPhotos] = useState<any[]>([]);
+  const [userPhotos, setUserPhotos] = useState<Photo[]>([]);
   const [loading, setLoading] = useState(true);
 
   // Fonction pour obtenir le titre basé sur le niveau
   const getUserTitle = (levelName: string) => {
     const titles: { [key: string]: string } = {
-      'Novice': 'Passant·e Curieux·se',
-      'Explorateur': 'Explorateur·trice Urbain·e',
-      'Chasseur': 'Chasseur·se d\'Art',
-      'Expert': 'Expert·e Street Art',
-      'Maître': 'Maître des Rues',
-      'Légende': 'Légende Urbaine'
+      Novice: "Passant·e Curieux·se",
+      Explorateur: "Explorateur·trice Urbain·e",
+      Chasseur: "Chasseur·se d'Art",
+      Expert: "Expert·e Street Art",
+      Maître: "Maître des Rues",
+      Légende: "Légende Urbaine",
     };
-    return titles[levelName] || 'Passant·e Curieux·se';
+    return titles[levelName] || "Passant·e Curieux·se";
   };
 
   useEffect(() => {
@@ -57,35 +69,45 @@ function Profil() {
 
       try {
         // Récupérer les stats utilisateur
-        const statsResponse = await fetch(`https://api.street-art-hunter.com/api/users/${user.id}/stats`, {
-          credentials: 'include'
-        });
+        const statsResponse = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/users/${user.id}/stats`,
+          {
+            credentials: "include",
+          },
+        );
         if (statsResponse.ok) {
           const stats = await statsResponse.json();
           setUserStats(stats);
         }
 
         // Récupérer les badges de l'utilisateur
-        const badgesResponse = await fetch(`https://api.street-art-hunter.com/api/users/${user.id}/badges`, {
-          credentials: 'include'
-        });
+        const badgesResponse = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/users/${user.id}/badges`,
+          {
+            credentials: "include",
+          },
+        );
         if (badgesResponse.ok) {
           const badges = await badgesResponse.json();
           setUserBadges(badges);
         }
 
         // Récupérer les photos de l'utilisateur
-        const photosResponse = await fetch('https://api.street-art-hunter.com/api/photos', {
-          credentials: 'include'
-        });
+        const photosResponse = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/photos`,
+          {
+            credentials: "include",
+          },
+        );
         if (photosResponse.ok) {
           const allPhotos = await photosResponse.json();
-          const userPhotos = allPhotos.filter((photo: any) => photo.user_id === user.id);
+          const userPhotos = allPhotos.filter(
+            (photo: Photo) => photo.user_id === user.id,
+          );
           setUserPhotos(userPhotos);
         }
-
       } catch (error) {
-        console.error('Error fetching user data:', error);
+        console.error("Error fetching user data:", error);
       } finally {
         setLoading(false);
       }
@@ -124,12 +146,14 @@ function Profil() {
 
         {/* Niveau de l'utilisateur - DONNÉES RÉELLES */}
         <p id="user_level" aria-label="Niveau de l'utilisateur">
-          {userStats?.level_name || 'LEVEL 1'}
+          {userStats?.level_name || "LEVEL 1"}
         </p>
 
         {/* Titre de l'utilisateur - BASÉ SUR LE NIVEAU */}
         <p id="user_title" aria-label="Titre de l'utilisateur">
-          {userStats ? getUserTitle(userStats.level_name) : 'Passant·e Curieux·se'}
+          {userStats
+            ? getUserTitle(userStats.level_name)
+            : "Passant·e Curieux·se"}
         </p>
 
         <div className="user_results">
@@ -150,18 +174,16 @@ function Profil() {
           </p>
           {/* Badges accumulés - DONNÉES RÉELLES */}
           <p id="user_badges_number" aria-label="badges accumulés">
-            {userBadges.length > 0
-              ? userBadges.map(() => '🏆').join('')
-              : '🎯'
-            }
+            {userBadges.length > 0 ? userBadges.map(() => "🏆").join("") : "🎯"}
           </p>
         </div>
 
         {/* BOUTON CLASSEMENT */}
         <div className="action-buttons">
-          <button 
+          <button
+            type="button"
             className="btn-classement"
-            onClick={() => navigate('/classement')}
+            onClick={() => navigate("/classement")}
           >
             🏆 Voir le classement
           </button>
@@ -172,13 +194,13 @@ function Profil() {
           <section aria-label="user-badges" className="user-badges-section">
             <h2>🏆 Mes Badges ({userBadges.length})</h2>
             <div className="badges-container">
-              {userBadges.slice(0, 6).map(badge => (
+              {userBadges.slice(0, 6).map((badge) => (
                 <div
                   key={badge.id}
-                  className={`badge-item ${badge.is_rare ? 'rare' : ''}`}
+                  className={`badge-item ${badge.is_rare ? "rare" : ""}`}
                   title={badge.description}
                 >
-                  {badge.is_rare ? '⭐' : '🏆'} {badge.name}
+                  {badge.is_rare ? "⭐" : "🏆"} {badge.name}
                 </div>
               ))}
               {userBadges.length > 6 && (
@@ -193,17 +215,24 @@ function Profil() {
         {/* NOUVELLE SECTION - STATS RAPIDES */}
         <div className="quick-stats">
           <div className="stat-box">
-            <span className="stat-number">📸 {userStats?.total_photos || 0}</span>
+            <span className="stat-number">
+              📸 {userStats?.total_photos || 0}
+            </span>
             <span className="stat-label">Photos</span>
           </div>
           <div className="stat-box">
-            <span className="stat-number">🎨 {userStats?.unique_artists || 0}</span>
+            <span className="stat-number">
+              🎨 {userStats?.unique_artists || 0}
+            </span>
             <span className="stat-label">Artistes</span>
           </div>
         </div>
 
         {/* Contributions de l'utilisateur - DONNÉES RÉELLES */}
-        <section aria-label="user-contributions" className="contributions-section">
+        <section
+          aria-label="user-contributions"
+          className="contributions-section"
+        >
           <h2 id="user-contributions">Contributions ({userPhotos.length})</h2>
           {userPhotos.length > 0 ? (
             <ul className="contributions-list">
@@ -211,15 +240,16 @@ function Profil() {
                 <li key={photo.id}>
                   <figure>
                     <img
-                      src={`https://api.street-art-hunter.com/photos/${photo.picture}`}
+                      src={`${import.meta.env.VITE_API_URL}/photos/${photo.picture}`}
                       alt={`Contribution : ${photo.title}`}
                       className="contribution-photo"
                       onError={(e) => {
                         // Image de fallback si l'image ne charge pas
-                        (e.target as HTMLImageElement).src = "/src/assets/images/essai_photo.webp";
+                        (e.target as HTMLImageElement).src =
+                          "/src/assets/images/essai_photo.webp";
                       }}
                     />
-                    <figcaption>{photo.title || 'Sans titre'}</figcaption>
+                    <figcaption>{photo.title || "Sans titre"}</figcaption>
                   </figure>
                 </li>
               ))}
@@ -233,7 +263,8 @@ function Profil() {
             </ul>
           ) : (
             <div className="no-contributions">
-              Aucune contribution pour le moment.<br/>
+              Aucune contribution pour le moment.
+              <br />
               <a href="/post_a_photo">Ajoutez votre première œuvre !</a>
             </div>
           )}

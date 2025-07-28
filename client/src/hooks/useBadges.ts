@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { toast } from 'react-toastify';
+import { useCallback, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 interface Badge {
   id: number;
@@ -32,69 +32,70 @@ export const useBadges = (userId: string | null) => {
   const [userStats, setUserStats] = useState<UserStats | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const fetchUserBadges = async () => {
+  const fetchUserBadges = useCallback(async () => {
     if (!userId) return;
     try {
       const response = await fetch(`/api/users/${userId}/badges`, {
-        credentials: 'include'
+        credentials: "include",
       });
       const badges = await response.json();
       setUserBadges(badges);
     } catch (error) {
-      console.error('Error fetching user badges:', error);
+      console.error("Error fetching user badges:", error);
     }
-  };
+  }, [userId]);
 
-  const fetchUserStats = async () => {
+  const fetchUserStats = useCallback(async () => {
     if (!userId) return;
     try {
       const response = await fetch(`/api/users/${userId}/stats`, {
-        credentials: 'include'
+        credentials: "include",
       });
       const stats = await response.json();
       setUserStats(stats);
     } catch (error) {
-      console.error('Error fetching user stats:', error);
+      console.error("Error fetching user stats:", error);
     }
-  };
+  }, [userId]);
 
-  const checkForNewBadges = async () => {
+  const checkForNewBadges = useCallback(async () => {
     if (!userId) return;
     setLoading(true);
     try {
       const response = await fetch(`/api/users/${userId}/check-badges`, {
-        method: 'POST',
-        credentials: 'include'
+        method: "POST",
+        credentials: "include",
       });
       const result = await response.json();
-      if (result.newBadges && result.newBadges.length > 0) {
-        // Afficher les notifications de nouveaux badges
-        result.newBadges.forEach((badge: Badge) => {
+
+      if (Array.isArray(result.newBadges) && result.newBadges.length > 0) {
+        for (const badge of result.newBadges) {
           toast.success(
             `🏆 Nouveau badge obtenu ! ${badge.name} (+${badge.points} XP)`,
             {
               autoClose: 5000,
               position: "top-right",
-            }
+            },
           );
-        });
+        }
+
         // Recharger les badges et stats
         await fetchUserBadges();
         await fetchUserStats();
       }
     } catch (error) {
-      console.error('Error checking badges:', error);
+      console.error("Error checking badges:", error);
     } finally {
       setLoading(false);
     }
-  };
+  }, [userId, fetchUserBadges, fetchUserStats]);
 
   useEffect(() => {
     if (userId) {
       fetchUserBadges();
       fetchUserStats();
     }
-  }, [userId]);
+  }, [userId, fetchUserBadges, fetchUserStats]);
 
   return {
     userBadges,
@@ -104,6 +105,6 @@ export const useBadges = (userId: string | null) => {
     refreshData: () => {
       fetchUserBadges();
       fetchUserStats();
-    }
+    },
   };
 };

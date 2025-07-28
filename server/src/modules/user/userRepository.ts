@@ -1,7 +1,8 @@
 import databaseClient from "../../../database/client";
 import type { Result, Rows } from "../../../database/client";
 
-type User = {
+export type User = {
+  role: string;
   id: number;
   firstname: string;
   lastname: string;
@@ -17,9 +18,9 @@ type User = {
 class UserRepository {
   // The C of CRUD - Create operation
   async create(user: Omit<User, "id">): Promise<number> {
-    // Execute le query SQL INSERT pour ajouter un nouvel user à la table
+    // ✅ CORRECTION: Ajout de la colonne role dans l'INSERT
     const [result] = await databaseClient.query<Result>(
-      "insert into user (firstname, lastname, pseudo, email, zip_code, city, hashed_password, is_gcu_accepted, is_admin) values (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO user (firstname, lastname, pseudo, email, zip_code, city, hashed_password, is_gcu_accepted, is_admin, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
         user.firstname,
         user.lastname,
@@ -30,70 +31,115 @@ class UserRepository {
         user.hashed_password,
         user.is_gcu_accepted,
         user.is_admin,
+        user.role || (user.is_admin ? "admin" : "user"), // ✅ Définir role basé sur is_admin
       ],
     );
-    // Retourne l'ID du nouvel user inserré
     return result.insertId;
   }
 
   // The Rs of CRUD - Read operations
-  async read(id: number) {
-    // Execute la query SQL Select pour récupérer un user spécifique grâce à son ID
+  async read(id: number): Promise<User | null> {
     const [rows] = await databaseClient.query<Rows>(
-      "select * from user where id = ?",
+      "SELECT * FROM user WHERE id = ?",
       [id],
     );
-    // Retourne la première row du résultat, qui représente l'user
-    return rows[0] as User;
+
+    if (!rows[0]) return null;
+
+    const user = rows[0] as User;
+    // ✅ CORRECTION: S'assurer que role est défini si manquant en BDD
+    if (!user.role) {
+      user.role = user.is_admin ? "admin" : "user";
+    }
+
+    return user;
   }
 
-  async readAll() {
-    // Exécute la query SELECT de SQL SELECT pour récupérer tous les users de la table user
-    const [rows] = await databaseClient.query<Rows>("select * from user");
-    // Retourne un tableau
-    return rows as User[];
+  async readAll(): Promise<User[]> {
+    const [rows] = await databaseClient.query<Rows>("SELECT * FROM user");
+    const users = rows as User[];
+
+    // ✅ CORRECTION: S'assurer que tous les users ont un role
+    return users.map((user) => ({
+      ...user,
+      role: user.role || (user.is_admin ? "admin" : "user"),
+    }));
   }
 
-  async readByEmailWithPassword(email: string) {
-    // Exécute la query SQL SELECT pour récupérer un user spécifique avec son email
+  async readByEmailWithPassword(email: string): Promise<User | null> {
     const [rows] = await databaseClient.query<Rows>(
-      "select * from user where email = ?",
+      "SELECT * FROM user WHERE email = ?",
       [email],
     );
-    // Retourne la première row du résultat, c'est-à-dire l'user
-    return rows[0] as User;
+
+    if (!rows[0]) return null;
+
+    const user = rows[0] as User;
+    // ✅ CORRECTION: S'assurer que role est défini pour l'authentification
+    if (!user.role) {
+      user.role = user.is_admin ? "admin" : "user";
+    }
+
+    return user;
   }
 
-  // ✅ NOUVELLE MÉTHODE UPDATE - Requête dynamique (corrige le problème email = NULL)
-  async update(userData: any) {
+  // ✅ CORRECTION: Méthode update avec types stricts et logique simplifiée
+  async update(
+    userData: { id: number } & Partial<Omit<User, "id">>,
+  ): Promise<number> {
     const { id, ...fieldsToUpdate } = userData;
-    
-    // Construire la requête dynamiquement avec seulement les champs fournis
-    const fields = Object.keys(fieldsToUpdate);
-    const values = Object.values(fieldsToUpdate);
-    
-    if (fields.length === 0) {
+
+    // Supprimer les champs undefined et construire les arrays
+    const entries = Object.entries(fieldsToUpdate).filter(
+      ([_, value]) => value !== undefined,
+    );
+
+    if (entries.length === 0) {
       throw new Error("No fields to update");
     }
-    
-    // Construire la clause SET dynamiquement
-    const setClause = fields.map(field => `${field} = ?`).join(', ');
+
+    // ✅ CORRECTION: Synchroniser is_admin avec role si role est modifié
+    const updateData: Record<string, unknown> = {};
+
+    for (const [key, value] of entries) {
+      updateData[key] = value;
+    }
+
+    // Si role est modifié, synchroniser is_admin
+    if ("role" in updateData && typeof updateData.role === "string") {
+      updateData.is_admin = updateData.role === "admin";
+    }
+
+    const finalEntries = Object.entries(updateData);
+    const fields = finalEntries.map(([key]) => key);
+    const values = finalEntries.map(([_, value]) => value);
+
+    const setClause = fields.map((field) => `${field} = ?`).join(", ");
     const query = `UPDATE user SET ${setClause} WHERE id = ?`;
-    
-    // Ajouter l'ID à la fin des valeurs
+
     values.push(id);
-    
+
     const [result] = await databaseClient.query<Result>(query, values);
     return result.affectedRows;
   }
 
-  async delete(id: number) {
-    // Exécute la query SQL DELETE pour supprimer un user existant depuis la table
+  async delete(id: number): Promise<number> {
     const [result] = await databaseClient.query<Result>(
-      "delete from user where id = ?",
+      "DELETE FROM user WHERE id = ?",
       [id],
     );
-    // Retourne combien de rows ont été affectés
+    return result.affectedRows;
+  }
+
+  // ✅ NOUVELLE MÉTHODE: Mettre à jour le rôle spécifiquement
+  async updateRole(id: number, role: "user" | "admin"): Promise<number> {
+    const isAdmin = role === "admin";
+
+    const [result] = await databaseClient.query<Result>(
+      "UPDATE user SET role = ?, is_admin = ? WHERE id = ?",
+      [role, isAdmin, id],
+    );
+
     return result.affectedRows;
   }
 }

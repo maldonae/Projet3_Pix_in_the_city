@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import './Leaderboard.css';
+import { useEffect, useState } from "react";
+import "./Leaderboard.css";
 
 interface LeaderboardEntry {
   id: number;
@@ -18,13 +18,16 @@ const Leaderboard: React.FC = () => {
   useEffect(() => {
     const fetchLeaderboard = async () => {
       try {
-        const response = await fetch('https://api.street-art-hunter.com/api/leaderboard?limit=20', {
-          credentials: 'include'
-        });
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/leaderboard?limit=20`,
+          {
+            credentials: "include",
+          },
+        );
         const data = await response.json();
         setLeaderboard(data);
       } catch (error) {
-        console.error('Error fetching leaderboard:', error);
+        console.error("Error fetching leaderboard:", error);
       } finally {
         setLoading(false);
       }
@@ -42,16 +45,22 @@ const Leaderboard: React.FC = () => {
       <h2>🏆 Classement des Street Art Hunters</h2>
       <div className="leaderboard-list">
         {leaderboard.map((entry, index) => (
-          <div key={entry.id} className={`leaderboard-entry ${index < 3 ? 'podium' : ''}`}>
+          <div
+            key={entry.id}
+            className={`leaderboard-entry ${index < 3 ? "podium" : ""}`}
+          >
             <div className="rank">
-              {index === 0 && '🥇'}
-              {index === 1 && '🥈'}
-              {index === 2 && '🥉'}
+              {index === 0 && "🥇"}
+              {index === 1 && "🥈"}
+              {index === 2 && "🥉"}
               {index > 2 && `#${index + 1}`}
             </div>
             <div className="user-info">
               <span className="pseudo">{entry.pseudo}</span>
-              <div className="level-badge" style={{ backgroundColor: entry.level_color }}>
+              <div
+                className="level-badge"
+                style={{ backgroundColor: entry.level_color }}
+              >
                 {entry.level_name}
               </div>
             </div>
