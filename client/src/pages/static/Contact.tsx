@@ -1,6 +1,11 @@
 import "../../styles (anciennement CSS)/pages/Contact.css";
 import Header from "../../components/common/Header";
 
+import IconFacebook from "../../assets/images/contacts/icon_facebook.png";
+import IconInstagram from "../../assets/images/contacts/icon_instagram.png";
+import IconX from "../../assets/images/contacts/icon_X.png";
+import IconMail from "../../assets/images/contacts/icon_mail.png";
+
 function Contact() {
   return (
     <>
@@ -13,7 +18,7 @@ function Contact() {
           <div className="box">
             <a href="http://facebook.com">
               <img
-                src={"/src/assets/images/contacts/icon_facebook.png"}
+                src={IconFacebook}
                 alt="logo_facebook"
               />
               FACEBOOK
@@ -22,7 +27,7 @@ function Contact() {
           <div className="box">
             <a href="http://instagram.com">
               <img
-                src={"/src/assets/images/contacts/icon_instagram.png"}
+                src={IconInstagram}
                 alt="logo_instagram"
               />
               INSTAGRAM
@@ -31,7 +36,7 @@ function Contact() {
           <div className="box">
             <a href="http://x.com">
               <img
-                src={"/src/assets/images/contacts/icon_X.png"}
+                src={IconX}
                 alt="logo_X"
               />
               X
@@ -40,7 +45,7 @@ function Contact() {
           <div className="box">
             <a href="http://Mail.com">
               <img
-                src={"/src/assets/images/contacts/icon_mail.png"}
+                src={IconMail}
                 alt="logo_mail"
               />
               MAIL

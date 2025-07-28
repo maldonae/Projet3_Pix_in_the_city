@@ -1,5 +1,14 @@
 import "../../styles (anciennement CSS)/pages/Regles.css";
 
+import badgePhone from "../../assets/images/badges/badge_phone.png";
+import badgeCamera from "../../assets/images/badges/badge_camera.png";
+import badgeNegative from "../../assets/images/badges/badge_negative.png";
+import badgeRoller from "../../assets/images/badges/badge_roller.png";
+import badgeSpaceship from "../../assets/images/badges/badge_spaceship.png";
+import badgeSpray from "../../assets/images/badges/badge_spray.png";
+import badgeEye from "../../assets/images/badges/badge_eye.png";
+import arrowUp from "../../assets/images/arrow_up.png";
+
 const scrollToTop = () => {
   window.scrollTo({
     top: 0,
@@ -49,59 +58,38 @@ function Regles() {
               <h5>Badge Découvreur·euse Novice</h5>
             </div>
             <p>Soumettre 5 œuvres</p>
-            <img
-              src={"/src/assets/images/badges/badge_phone.png"}
-              alt="phone"
-              className="badges_img"
-            />
+            <img src={badgePhone} alt="phone" className="badges_img" />
           </li>
           <li>
             <div className="badge">
               <h5>Badge Photographe de Rue</h5>
             </div>
             <p>Soumettre 20 œuvres</p>
-            <img
-              src={"/src/assets/images/badges/badge_camera.png"}
-              alt="camera"
-              className="badges_img"
-            />
+            <img src={badgeCamera} alt="camera" className="badges_img" />
           </li>
           <li>
             <div className="badge">
               <h5>Badge Archiviste</h5>
             </div>
             <p>Soumettre 50 œuvres</p>
-            <img
-              src={"/src/assets/images/badges/badge_negative.png"}
-              alt="negative"
-              className="badges_img"
-            />
+            <img src={badgeNegative} alt="negative" className="badges_img" />
           </li>
         </ul>
         <h4>Badges Voyageur·euses</h4>
-
         <ul className="badges_class">
           <li>
             <div className="badge">
               <h5>Badge Explorateur·rice Local·e</h5>
             </div>
             <p>Soumettre des œuvres dans 3 quartiers d'une même ville</p>
-            <img
-              src={"/src/assets/images/badges/badge_roller.png"}
-              alt="roller_skate"
-              className="badges_img"
-            />
+            <img src={badgeRoller} alt="roller_skate" className="badges_img" />
           </li>
           <li>
             <div className="badge">
               <h5>Globe-Trotteur·euse Urbain·e</h5>
             </div>
             <p>Soumettre des œuvres dans 2 villes différentes</p>
-            <img
-              src={"/src/assets/images/badges/badge_spaceship.png"}
-              alt="spaceship"
-              className="badges_img"
-            />
+            <img src={badgeSpaceship} alt="spaceship" className="badges_img" />
           </li>
         </ul>
         <h4>Badges spéciaux</h4>
@@ -111,22 +99,14 @@ function Regles() {
               <h5>Découverte Rare</h5>
             </div>
             <p>Soumettre une œuvre d'un·e artiste renommé·e</p>
-            <img
-              src={"/src/assets/images/badges/badge_spray.png"}
-              alt="spray_paint"
-              className="badges_img"
-            />
+            <img src={badgeSpray} alt="spray_paint" className="badges_img" />
           </li>
           <li>
             <div className="badge">
               <h5>Œil de Lynx</h5>
             </div>
             <p>Soumettre une œuvre difficile à localiser</p>
-            <img
-              src={"/src/assets/images/badges/badge_eye.png"}
-              alt="eye"
-              className="badges_img"
-            />
+            <img src={badgeEye} alt="eye" className="badges_img" />
           </li>
         </ul>
 
@@ -183,11 +163,7 @@ function Regles() {
           </li>
         </ul>
         <button type="button" id="button_up" onClick={scrollToTop}>
-          <img
-            src={"/src/assets/images/arrow_up.png"}
-            alt="Retour_vers_le_haut"
-            id="arrow_up"
-          />
+          <img src={arrowUp} alt="Retour_vers_le_haut" id="arrow_up" />
           <p>RETOUR VERS LE HAUT</p>
         </button>
       </div>

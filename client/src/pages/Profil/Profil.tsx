@@ -2,6 +2,11 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../hooks/useUser";
 import "../../pages/Profil/Profil.css";
+// En haut du fichier (ajoute ces imports) :
+import avatarBackground from "../../assets/images/avatar/avatar_background.png";
+import iconUser from "../../assets/images/icon_user.png";
+import repairIcon from "../../assets/images/repair.png";
+import fallbackPhoto from "../../assets/images/essai_photo.webp";
 
 interface Photo {
   id: number;
@@ -130,12 +135,12 @@ function Profil() {
         {/* Avatar de l'utilisateur */}
         <div className="user_picture">
           <img
-            src={"/src/assets/images/avatar/avatar_background.png"}
+            src={avatarBackground}
             alt="user_background"
             className="user_background"
           />
           <img
-            src={"/src/assets/images/icon_user.png"}
+            src={iconUser}
             alt="icon_user"
             className="icon_user"
           />
@@ -246,7 +251,7 @@ function Profil() {
                       onError={(e) => {
                         // Image de fallback si l'image ne charge pas
                         (e.target as HTMLImageElement).src =
-                          "/src/assets/images/essai_photo.webp";
+                          fallbackPhoto;
                       }}
                     />
                     <figcaption>{photo.title || "Sans titre"}</figcaption>
@@ -278,7 +283,7 @@ function Profil() {
             className="btn-edit-profile"
           >
             <img
-              src={"/src/assets/images/repair.png"}
+              src={repairIcon}
               alt="repair_icon"
               className="repair_icon"
             />

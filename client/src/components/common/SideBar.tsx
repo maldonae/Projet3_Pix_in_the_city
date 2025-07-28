@@ -1,11 +1,18 @@
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../assets/images/logo.png";
+import IconMarker from "../../assets/images/footer_icons/icon_marker.png";
+import IconArtwork from "../../assets/images/footer_icons/icon_artwork.png";
+import IconRules from "../../assets/images/footer_icons/icon_rules.png";
+import IconContact from "../../assets/images/footer_icons/icon_contact.png";
+import IconAdd from "../../assets/images/footer_icons/icon_add.png";
 import { useUser } from "../../hooks/useUser"; // Import du hook personnalisé
 import "../../styles (anciennement CSS)/common/SideBar.css";
+
 function SideBar() {
   const { user, userId, setUserId, isAuthenticated, setIsAuthenticated } =
     useUser();
   const navigate = useNavigate(); // Utiliser le hook useNavigate pour la redirection
+
   const handleLogout = () => {
     fetch(`${import.meta.env.VITE_API_URL}/api/logout`, {
       credentials: "include",
@@ -17,24 +24,27 @@ function SideBar() {
       }
     });
   };
+
   const goToProfile = () => {
     if (userId) {
       navigate("/profil/"); // Redirection vers le profil de l'utilisateur
       window.location.reload(); // Rafraîchir la page pour recharger l'état
     }
   };
+
   const goToEditProfile = () => {
     if (userId) {
       navigate(`/modifier_mon_profil/${userId}`); // Redirection vers la modification du profil
     }
   };
-  // Fonction pour gérer la publication d'une œuvre
-const handlePostArtwork = (event: { preventDefault: () => void; }) => {
-  if (!isAuthenticated) {
-    event.preventDefault(); // Annule la navigation du <Link>
-    alert("Vous devez être connecté pour publier une œuvre !");
-  }
-};
+
+  const handlePostArtwork = (event: { preventDefault: () => void }) => {
+    if (!isAuthenticated) {
+      event.preventDefault(); // Annule la navigation du <Link>
+      alert("Vous devez être connecté pour publier une œuvre !");
+    }
+  };
+
   return (
     <section className="sidebar">
       <section id="sidebar-header">
@@ -87,7 +97,7 @@ const handlePostArtwork = (event: { preventDefault: () => void; }) => {
           </div>
         )}
       </section>
-      {/* Autres éléments de la sidebar */}
+
       <section id="sidebar-footer">
         <nav className="sidebar-nav">
           <ul>
@@ -95,7 +105,7 @@ const handlePostArtwork = (event: { preventDefault: () => void; }) => {
               <Link to="/">
                 <button type="button" className="sidebar-button_footer">
                   <img
-                    src={"/src/assets/images/footer_icons/icon_marker.png"}
+                    src={IconMarker}
                     alt="marker"
                     className="sidebar-icon_footer"
                   />
@@ -107,7 +117,7 @@ const handlePostArtwork = (event: { preventDefault: () => void; }) => {
               <Link to="/oeuvres">
                 <button type="button" className="sidebar-button_footer">
                   <img
-                    src={"/src/assets/images/footer_icons/icon_artwork.png"}
+                    src={IconArtwork}
                     alt="ranking"
                     className="sidebar-icon_footer"
                   />
@@ -119,7 +129,7 @@ const handlePostArtwork = (event: { preventDefault: () => void; }) => {
               <Link to="/regles">
                 <button type="button" className="sidebar-button_footer">
                   <img
-                    src={"/src/assets/images/footer_icons/icon_rules.png"}
+                    src={IconRules}
                     alt="rules"
                     className="sidebar-icon_footer"
                   />
@@ -131,7 +141,7 @@ const handlePostArtwork = (event: { preventDefault: () => void; }) => {
               <Link to="/contact">
                 <button type="button" className="sidebar-button_footer">
                   <img
-                    src={"/src/assets/images/footer_icons/icon_contact.png"}
+                    src={IconContact}
                     alt="contact"
                     className="sidebar-icon_footer"
                   />
@@ -141,11 +151,11 @@ const handlePostArtwork = (event: { preventDefault: () => void; }) => {
             </li>
           </ul>
         </nav>
-        {/* Bouton pour ajouter une œuvre */}
+
         <Link to="/post_a_photo">
           <button type="button" className="button_camera" onClick={handlePostArtwork}>
             <img
-              src={"/src/assets/images/footer_icons/icon_add.png"}
+              src={IconAdd}
               alt="camera"
               className="icon_camera"
             />
@@ -156,4 +166,5 @@ const handlePostArtwork = (event: { preventDefault: () => void; }) => {
     </section>
   );
 }
+
 export default SideBar;
