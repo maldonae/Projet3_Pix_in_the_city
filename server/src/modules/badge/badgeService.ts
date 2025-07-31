@@ -7,25 +7,28 @@ interface BadgeCondition {
   points: number;
 }
 
+// ✅ CORRECTION: Utiliser le type exact du repository
+type UserStatistics = Awaited<
+  ReturnType<typeof badgeRepository.readUserStatistics>
+>;
+
 // ✅ SUPPRESSION de l'export nommé - seulement l'export par défaut
 const badgeService = {
   // Vérifier et attribuer les badges à un utilisateur
-  async checkAndAwardBadges(userId: number): Promise<any[]> {
-    const newBadges: any[] = [];
+  async checkAndAwardBadges(userId: number): Promise<BadgeCondition[]> {
+    const newBadges: BadgeCondition[] = [];
     try {
       // Récupérer les statistiques de l'utilisateur
       const userStats = await badgeRepository.readUserStatistics(userId);
       // Récupérer tous les badges que l'utilisateur n'a pas encore
       const availableBadges = await badgeRepository.readAvailableBadges(userId);
-      
       // Vérifier chaque badge disponible
       for (const badge of availableBadges as BadgeCondition[]) {
-        if (await this.checkBadgeCondition(badge, userStats)) {
+        if (await this.checkBadgeCondition(badge, userStats, userId)) {
           await this.awardBadgeWithPoints(userId, badge.id, badge.points);
           newBadges.push(badge);
         }
       }
-      
       // Mettre à jour le niveau de l'utilisateur
       await this.updateUserLevel(userId);
       return newBadges;
@@ -36,18 +39,26 @@ const badgeService = {
   },
 
   // Vérifier si un badge doit être attribué
-  async checkBadgeCondition(badge: BadgeCondition, userStats: any): Promise<boolean> {
+  async checkBadgeCondition(
+    badge: BadgeCondition,
+    userStats: UserStatistics,
+    userId: number,
+  ): Promise<boolean> {
     switch (badge.condition_type) {
-      case 'photo_count':
+      case "photo_count":
         return userStats.photo_count >= badge.condition_value;
-      case 'artist_count':
+      case "artist_count":
         return userStats.unique_artists >= badge.condition_value;
-      case 'location_count':
+      case "location_count":
         return userStats.unique_locations >= badge.condition_value;
-      case 'special_action':
+      case "special_action":
         // Pour les badges spéciaux comme "Vétéran"
         if (badge.condition_value === 365) {
-          return userStats.days_since_registration >= 365;
+          // ✅ SOLUTION: Récupérer les jours depuis l'inscription
+          const daysSinceRegistration =
+            await badgeRepository.getDaysSinceRegistration(userId);
+
+          return daysSinceRegistration >= 365;
         }
         return false;
       default:
@@ -56,14 +67,17 @@ const badgeService = {
   },
 
   // Attribuer un badge et ses points (transaction)
-  async awardBadgeWithPoints(userId: number, badgeId: number, points: number): Promise<void> {
+  async awardBadgeWithPoints(
+    userId: number,
+    badgeId: number,
+    points: number,
+  ): Promise<void> {
     try {
       // ✅ CORRECTION - Typo "hasbadge" → "hasBadge"
       const hasBadge = await badgeRepository.userHasBadge(userId, badgeId);
       if (hasBadge) {
         return; // Badge déjà obtenu
       }
-      
       // Attribuer le badge
       await badgeRepository.awardBadge(userId, badgeId);
       // Ajouter les points
@@ -89,16 +103,16 @@ const badgeService = {
   },
 
   // Fonction à appeler après qu'un utilisateur poste une photo
-  async onPhotoAdded(userId: number): Promise<any[]> {
+  async onPhotoAdded(userId: number): Promise<BadgeCondition[]> {
     return await this.checkAndAwardBadges(userId);
   },
 
   // Calculer les points à attribuer pour une action
   getPointsForAction(action: string): number {
-    const pointsMap: { [key: string]: number } = {
-      'photo_upload': 5,
-      'first_photo': 10,
-      'photo_with_description': 2
+    const pointsMap: Record<string, number> = {
+      photo_upload: 5,
+      first_photo: 10,
+      photo_with_description: 2,
     };
     return pointsMap[action] || 0;
   },
@@ -106,8 +120,7 @@ const badgeService = {
   // Ajouter des points à un utilisateur (méthode simple)
   async awardPoints(userId: number, points: number): Promise<void> {
     await badgeRepository.addPoints(userId, points);
-  }
+  },
 };
 
-// ✅ SEULEMENT l'export par défaut
 export default badgeService;

@@ -1,10 +1,18 @@
 import fs from "node:fs";
 import type { RequestHandler } from "express";
 import { validateMIMEType } from "validate-image-type";
+
 import badgeRepository from "../badge/badgeRepository";
-// NOUVEAU : Import du service badges
 import badgeService from "../badge/badgeService";
 import photoRepository from "./photoRepository";
+
+// ✅ Type pour les badges
+interface BadgeCondition {
+  id: number;
+  condition_type: string;
+  condition_value: number;
+  points: number;
+}
 
 // Import access to data
 // The B of BREAD - Browse (Read All) operation
@@ -40,32 +48,37 @@ const read: RequestHandler = async (req, res, next) => {
 // The A of BREAD - Add (Create) operation - MODIFIÉ POUR LES BADGES
 const add: RequestHandler = async (req, res, next) => {
   try {
+    // ✅ Type assertion au lieu d'interface custom
+    const reqWithFile = req as typeof req & {
+      file?: Express.Multer.File;
+      user?: { id: number };
+    };
+
     // Vérifie si un fichier est présent
-    if (!req.file) {
+    if (!reqWithFile.file) {
       res.status(400).json({ error: "No file uploaded" });
       return;
     }
 
-    const validation = await validateMIMEType(req.file.path, {
+    const validation = await validateMIMEType(reqWithFile.file.path, {
       allowMimeTypes: ["image/jpeg", "image/png", "image/webp"],
     });
 
     if (!validation.ok) {
-      fs.unlinkSync(req.file.path);
+      fs.unlinkSync(reqWithFile.file.path);
       res.status(400).json({ error: "Invalid image type" });
       return;
     }
 
     // Vérifier si l'utilisateur est authentifié
-    if (!req.user || !req.user.id) {
+    if (!reqWithFile.user?.id) {
       res.status(401).json({ error: "Unauthorized: User not authenticated" });
       return;
     }
 
     // Extrait des photos du request body
     const { title, content, artist, date } = req.body;
-    const latitude = req.body.latitude;
-    const longitude = req.body.longitude;
+    const { latitude, longitude } = req.body;
     const defaultLatitude = 45.7597; // Latitude par défaut (centre de Lyon)
     const defaultLongitude = 4.8422; // Longitude par défaut (centre de Lyon)
 
@@ -81,8 +94,8 @@ const add: RequestHandler = async (req, res, next) => {
       dateoftheday: date,
       latitude: newLatitude,
       longitude: newLongitude,
-      picture: req.file?.filename || null,
-      user_id: req.user.id,
+      picture: reqWithFile.file.filename,
+      user_id: reqWithFile.user.id,
     };
 
     // Create the photo
@@ -90,7 +103,7 @@ const add: RequestHandler = async (req, res, next) => {
 
     // NOUVEAU : Gestion des badges et points
     let pointsEarned = 0;
-    let newBadges = [];
+    let newBadges: BadgeCondition[] = [];
 
     try {
       // Calculer les points pour cette action
@@ -102,11 +115,11 @@ const add: RequestHandler = async (req, res, next) => {
 
       // Ajouter les points à l'utilisateur si il y en a
       if (pointsEarned > 0) {
-        await badgeRepository.addPoints(req.user.id, pointsEarned);
+        await badgeRepository.addPoints(reqWithFile.user.id, pointsEarned);
       }
 
       // Vérifier et attribuer de nouveaux badges
-      newBadges = await badgeService.onPhotoAdded(req.user.id);
+      newBadges = await badgeService.onPhotoAdded(reqWithFile.user.id);
     } catch (badgeError) {
       // En cas d'erreur avec les badges, on continue mais on log l'erreur
       console.error("Error processing badges:", badgeError);

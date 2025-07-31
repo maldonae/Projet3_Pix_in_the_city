@@ -198,6 +198,25 @@ const badgeRepository = {
     };
   },
 
+  // ✅ NOUVELLE MÉTHODE: Calculer les jours depuis l'inscription
+  async getDaysSinceRegistration(userId: number): Promise<number> {
+    const result = (await client.query(
+      `SELECT DATEDIFF(NOW(), created_at) as days_since_registration 
+       FROM user 
+       WHERE id = ?`,
+      [userId],
+    )) as QueryResult;
+
+    if (Array.isArray(result)) {
+      const rows = result as RowDataPacket[];
+      return (
+        (rows[0] as { days_since_registration: number })
+          ?.days_since_registration || 0
+      );
+    }
+    return 0;
+  },
+
   // Ajouter des points à un utilisateur
   async addPoints(userId: number, points: number): Promise<void> {
     (await client.query(
