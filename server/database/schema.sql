@@ -119,7 +119,8 @@ ALTER TABLE user DROP COLUMN avatar;
 
 -- Extension de la table user existante (ajout de colonnes pour badges/niveaux)
 -- MAINTENANT level existe et contient des données, donc la FK peut être créée
-ALTER TABLE user 
+ALTER TABLE user
+ADD COLUMN role VARCHAR(50) DEFAULT 'user' AFTER is_admin,
 ADD COLUMN total_points INT NOT NULL DEFAULT 0,
 ADD COLUMN current_level_id INT UNSIGNED DEFAULT 1,
 ADD COLUMN created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
