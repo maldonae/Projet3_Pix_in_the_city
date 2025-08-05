@@ -92,16 +92,26 @@ const badgeService = {
   async updateUserLevel(userId: number): Promise<void> {
     try {
       const currentPoints = await badgeRepository.getUserPoints(userId);
+
       const newLevel = await badgeRepository.getLevelForPoints(currentPoints);
-      if (newLevel) {
+
+      if (newLevel?.id) {
         await badgeRepository.updateUserLevel(userId, newLevel.id);
+      } else {
+        // Calcul manuel si getLevelForPoints échoue
+        let levelId = 1;
+        if (currentPoints >= 1300) levelId = 6;
+        else if (currentPoints >= 700) levelId = 5;
+        else if (currentPoints >= 350) levelId = 4;
+        else if (currentPoints >= 150) levelId = 3;
+        else if (currentPoints >= 50) levelId = 2;
+
+        await badgeRepository.updateUserLevel(userId, levelId);
       }
     } catch (error) {
-      console.error("Error updating user level:", error);
-      throw error;
+      console.error("❌ Error updating user level:", error);
     }
   },
-
   // Fonction à appeler après qu'un utilisateur poste une photo
   async onPhotoAdded(userId: number): Promise<BadgeCondition[]> {
     return await this.checkAndAwardBadges(userId);

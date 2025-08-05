@@ -4,9 +4,9 @@ import { useUser } from "../../hooks/useUser";
 import "../../pages/Profil/Profil.css";
 // En haut du fichier (ajoute ces imports) :
 import avatarBackground from "../../assets/images/avatar/avatar_background.png";
+import fallbackPhoto from "../../assets/images/essai_photo.webp";
 import iconUser from "../../assets/images/icon_user.png";
 import repairIcon from "../../assets/images/repair.png";
-import fallbackPhoto from "../../assets/images/essai_photo.webp";
 
 interface Photo {
   id: number;
@@ -82,7 +82,7 @@ function Profil() {
         );
         if (statsResponse.ok) {
           const stats = await statsResponse.json();
-          setUserStats(stats);
+          setUserStats(Array.isArray(stats) ? stats[0] : stats);
         }
 
         // Récupérer les badges de l'utilisateur
@@ -139,11 +139,7 @@ function Profil() {
             alt="user_background"
             className="user_background"
           />
-          <img
-            src={iconUser}
-            alt="icon_user"
-            className="icon_user"
-          />
+          <img src={iconUser} alt="icon_user" className="icon_user" />
         </div>
 
         {/* Pseudo de l'utilisateur */}
@@ -250,8 +246,7 @@ function Profil() {
                       className="contribution-photo"
                       onError={(e) => {
                         // Image de fallback si l'image ne charge pas
-                        (e.target as HTMLImageElement).src =
-                          fallbackPhoto;
+                        (e.target as HTMLImageElement).src = fallbackPhoto;
                       }}
                     />
                     <figcaption>{photo.title || "Sans titre"}</figcaption>
@@ -282,11 +277,7 @@ function Profil() {
             onClick={() => navigate(`/modifier_mon_profil/${user?.id}`)}
             className="btn-edit-profile"
           >
-            <img
-              src={repairIcon}
-              alt="repair_icon"
-              className="repair_icon"
-            />
+            <img src={repairIcon} alt="repair_icon" className="repair_icon" />
             Modifier mon profil
           </button>
         </section>
