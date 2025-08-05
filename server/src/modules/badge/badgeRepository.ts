@@ -233,8 +233,11 @@ const badgeRepository = {
     )) as QueryResult;
 
     if (Array.isArray(result)) {
-      const rows = result as RowDataPacket[];
-      return (rows[0] as { total_points: number })?.total_points || 0;
+      const [rows] = result;
+      if (Array.isArray(rows) && rows.length > 0) {
+        const user = rows[0] as RowDataPacket;
+        return user.total_points || 0;
+      }
     }
     return 0;
   },

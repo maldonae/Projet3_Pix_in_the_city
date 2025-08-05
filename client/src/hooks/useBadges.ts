@@ -32,12 +32,25 @@ export const useBadges = (userId: string | null) => {
   const [userStats, setUserStats] = useState<UserStats | null>(null);
   const [loading, setLoading] = useState(false);
 
+  // ✅ CORRECTION 1: URLs complètes avec base URL
   const fetchUserBadges = useCallback(async () => {
     if (!userId) return;
     try {
-      const response = await fetch(`/api/users/${userId}/badges`, {
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/users/${userId}/badges`,
+        {
+          credentials: "include",
+        },
+      );
+
+      // ✅ CORRECTION 2: Vérifier le status de la réponse
+      if (!response.ok) {
+        console.error(
+          `Error fetching badges: ${response.status} ${response.statusText}`,
+        );
+        return;
+      }
+
       const badges = await response.json();
       setUserBadges(badges);
     } catch (error) {
@@ -48,9 +61,21 @@ export const useBadges = (userId: string | null) => {
   const fetchUserStats = useCallback(async () => {
     if (!userId) return;
     try {
-      const response = await fetch(`/api/users/${userId}/stats`, {
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/users/${userId}/stats`,
+        {
+          credentials: "include",
+        },
+      );
+
+      // ✅ CORRECTION 3: Vérifier le status de la réponse
+      if (!response.ok) {
+        console.error(
+          `Error fetching stats: ${response.status} ${response.statusText}`,
+        );
+        return;
+      }
+
       const stats = await response.json();
       setUserStats(stats);
     } catch (error) {
@@ -62,10 +87,22 @@ export const useBadges = (userId: string | null) => {
     if (!userId) return;
     setLoading(true);
     try {
-      const response = await fetch(`/api/users/${userId}/check-badges`, {
-        method: "POST",
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/users/${userId}/check-badges`,
+        {
+          method: "POST",
+          credentials: "include",
+        },
+      );
+
+      // ✅ CORRECTION 4: Vérifier le status avant de traiter
+      if (!response.ok) {
+        console.error(
+          `Error checking badges: ${response.status} ${response.statusText}`,
+        );
+        return;
+      }
+
       const result = await response.json();
 
       if (Array.isArray(result.newBadges) && result.newBadges.length > 0) {
@@ -90,6 +127,14 @@ export const useBadges = (userId: string | null) => {
     }
   }, [userId, fetchUserBadges, fetchUserStats]);
 
+  // ✅ CORRECTION 5: Ajouter une fonction pour déclencher après upload de photo
+  const onPhotoUploaded = useCallback(async () => {
+    // Recharger immédiatement les stats pour voir les nouveaux points
+    await fetchUserStats();
+    // Puis vérifier les nouveaux badges
+    await checkForNewBadges();
+  }, [fetchUserStats, checkForNewBadges]);
+
   useEffect(() => {
     if (userId) {
       fetchUserBadges();
@@ -102,6 +147,7 @@ export const useBadges = (userId: string | null) => {
     userStats,
     loading,
     checkForNewBadges,
+    onPhotoUploaded, // ✅ NOUVEAU: Exposer cette fonction
     refreshData: () => {
       fetchUserBadges();
       fetchUserStats();
