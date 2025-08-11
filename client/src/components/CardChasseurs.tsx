@@ -211,7 +211,7 @@ function CardChasseurs() {
           onClose={() => setSelectedPhoto(null)}
         />
       )}
-      <ToastContainer 
+      <ToastContainer
         position="bottom-right"
         aria-label="Notifications"
         autoClose={3000}

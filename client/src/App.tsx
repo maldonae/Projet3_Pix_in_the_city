@@ -19,7 +19,7 @@ function App() {
       <div className="main-content">
         {/* Ne pas afficher le Header et Footer si c'est la page de login */}
         {!isLoginPage && <Header />}
-        <ToastContainer 
+        <ToastContainer
           position="bottom-left"
           aria-label="Notifications générales de l'application"
           autoClose={3000}

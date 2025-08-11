@@ -267,7 +267,7 @@ function NewUserForm({ children, defaultValue, onSubmit }: CreaProfilType) {
             <p>RETOUR VERS LE HAUT</p>
           </button>
         </div>
-        <ToastContainer 
+        <ToastContainer
           position="bottom-center"
           aria-label="Notifications de création de profil"
           autoClose={3000}

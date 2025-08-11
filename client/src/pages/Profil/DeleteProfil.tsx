@@ -8,7 +8,7 @@ function DeleteProfil() {
   const navigate = useNavigate();
   const { id } = useParams(); // récupération de l'ID utilisateur depuis l'URL (paramètre dynamique comme profil/:id)
   const { setIsAuthenticated, setUserId } = useUser();
-  
+
   const handleDelete = async () => {
     if (!id) return; // vérifie si un ID est présent sinon annule l'exécution du delete
 
@@ -93,7 +93,7 @@ function DeleteProfil() {
 
   return (
     <>
-      <ToastContainer 
+      <ToastContainer
         position="top-center"
         aria-label="Notifications de suppression de profil"
         autoClose={3000}

@@ -47,18 +47,18 @@ function Login() {
   };
   return (
     <>
-      <ToastContainer 
-  position="bottom-left"
-  aria-label="Notifications"
-  autoClose={3000}
-  hideProgressBar={false}
-  newestOnTop={false}
-  closeOnClick
-  rtl={false}
-  pauseOnFocusLoss
-  draggable
-  pauseOnHover
-/>
+      <ToastContainer
+        position="bottom-left"
+        aria-label="Notifications"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <section className="loginPage">
         <Link to="/">
           <img src={Logo} alt="Logo" id="logo_login" />

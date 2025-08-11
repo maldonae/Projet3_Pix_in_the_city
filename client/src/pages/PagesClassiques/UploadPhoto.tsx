@@ -93,7 +93,7 @@ function UploadPhoto() {
 
   return (
     <div>
-      <ToastContainer 
+      <ToastContainer
         position="bottom-left"
         aria-label="Notifications d'upload de photo"
         autoClose={3000}

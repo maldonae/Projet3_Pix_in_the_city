@@ -13,7 +13,7 @@ function ModifProfil() {
 
   return (
     <>
-      <ToastContainer 
+      <ToastContainer
         position="bottom-left"
         aria-label="Notifications de modification de profil"
         autoClose={3000}
