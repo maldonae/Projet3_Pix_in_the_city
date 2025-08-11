@@ -77,8 +77,8 @@ h6 {
 .container_rules {
   position: absolute;
   text-align: center;
-  background: url("../../assets/images/backgroundstars.jpg") center / cover
-    fixed;
+  background:
+    url("../../assets/images/backgroundstars.jpg") center / cover fixed;
   font-family: "roboto", sans-serif;
   color: white;
   padding: 12em 1.5em 13em;

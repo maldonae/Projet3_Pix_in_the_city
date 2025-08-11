@@ -34,10 +34,10 @@ function UserDeleteForm({ id, onDelete }: UserDeleteFormProps) {
         {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
-          credentials: 'include'
+          credentials: "include",
         },
       );
-      
+
       if (response.ok) {
         alert("Votre profil a été supprimé avec succès.");
         if (onDelete) onDelete(); // Exécuter l'action personnalisée après suppression

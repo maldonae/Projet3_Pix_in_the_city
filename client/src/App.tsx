@@ -19,7 +19,18 @@ function App() {
       <div className="main-content">
         {/* Ne pas afficher le Header et Footer si c'est la page de login */}
         {!isLoginPage && <Header />}
-        <ToastContainer position="bottom-left" />
+        <ToastContainer
+          position="bottom-left"
+          aria-label="Notifications générales de l'application"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         <Outlet /> {/* Ce qui permet de rendre les autres composants/pages */}
         {/* Ne pas afficher le Footer si c'est la page de login */}
         {!isLoginPage && <Footer />}

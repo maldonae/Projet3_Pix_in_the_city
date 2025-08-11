@@ -1,5 +1,5 @@
-import express from "express";
 import type { NextFunction, Request, Response } from "express";
+import express from "express";
 import multer from "multer";
 
 import authActions from "./modules/auth/authActions";
@@ -13,7 +13,7 @@ const router = express.Router();
 // 🔒 CONFIGURATION MULTER SÉCURISÉE
 const upload = multer({
   dest: "/var/www/server/public/photos/",
-  fileFilter: (req, file, cb) => {
+  fileFilter: (_req, file, cb) => {
     // ✅ Vérification du type MIME
     const allowedMimeTypes = [
       "image/jpeg",
@@ -43,7 +43,7 @@ const upload = multer({
 // 🔒 MIDDLEWARE DE GESTION D'ERREURS MULTER - ✅ TYPES CORRECTS
 const handleMulterError = (
   err: Error,
-  req: Request,
+  _req: Request,
   res: Response,
   next: NextFunction,
 ): void => {

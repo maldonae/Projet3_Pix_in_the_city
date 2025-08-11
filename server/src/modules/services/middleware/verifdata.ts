@@ -54,7 +54,7 @@ const verifyformdata: RequestHandler = (req, res, next) => {
   }
   // Vérifie si le mot de passe contient au moins un caractère spéciale, une lettre majuscule et un chiffre
   const passwordVerifRegex =
-    /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).+$/;
+    /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).+$/;
   if (!passwordVerifRegex.test(password)) {
     res.status(403).send({
       error:
