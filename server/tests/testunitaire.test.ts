@@ -1,16 +1,15 @@
 import dotenv from "dotenv";
+
 dotenv.config({ path: ".env" });
 
 // Import the supertest library for making HTTP requests
 import supertest from "supertest";
-
-// Import the Express application
-import app from "../src/app";
+import type { Result, Rows } from "../database/client";
 
 // Import databaseClient
 import databaseClient from "../database/client";
-
-import type { Result, Rows } from "../database/client";
+// Import the Express application
+import app from "../src/app";
 
 // Restore all mocked functions after each test
 afterEach(() => {

@@ -45,17 +45,12 @@ export const useBadges = (userId: string | null) => {
 
       // ✅ CORRECTION 2: Vérifier le status de la réponse
       if (!response.ok) {
-        console.error(
-          `Error fetching badges: ${response.status} ${response.statusText}`,
-        );
         return;
       }
 
       const badges = await response.json();
       setUserBadges(badges);
-    } catch (error) {
-      console.error("Error fetching user badges:", error);
-    }
+    } catch (_error) {}
   }, [userId]);
 
   const fetchUserStats = useCallback(async () => {
@@ -70,17 +65,12 @@ export const useBadges = (userId: string | null) => {
 
       // ✅ CORRECTION 3: Vérifier le status de la réponse
       if (!response.ok) {
-        console.error(
-          `Error fetching stats: ${response.status} ${response.statusText}`,
-        );
         return;
       }
 
       const stats = await response.json();
       setUserStats(stats);
-    } catch (error) {
-      console.error("Error fetching user stats:", error);
-    }
+    } catch (_error) {}
   }, [userId]);
 
   const checkForNewBadges = useCallback(async () => {
@@ -97,9 +87,6 @@ export const useBadges = (userId: string | null) => {
 
       // ✅ CORRECTION 4: Vérifier le status avant de traiter
       if (!response.ok) {
-        console.error(
-          `Error checking badges: ${response.status} ${response.statusText}`,
-        );
         return;
       }
 
@@ -120,8 +107,7 @@ export const useBadges = (userId: string | null) => {
         await fetchUserBadges();
         await fetchUserStats();
       }
-    } catch (error) {
-      console.error("Error checking badges:", error);
+    } catch (_error) {
     } finally {
       setLoading(false);
     }

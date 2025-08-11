@@ -111,8 +111,7 @@ function Profil() {
           );
           setUserPhotos(userPhotos);
         }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
+      } catch (_error) {
       } finally {
         setLoading(false);
       }
@@ -146,12 +145,12 @@ function Profil() {
         <h1 id="username">{user?.pseudo}</h1>
 
         {/* Niveau de l'utilisateur - DONNÉES RÉELLES */}
-        <p id="user_level" aria-label="Niveau de l'utilisateur">
+        <p id="user_level" title="Niveau de l'utilisateur">
           {userStats?.level_name || "LEVEL 1"}
         </p>
 
         {/* Titre de l'utilisateur - BASÉ SUR LE NIVEAU */}
-        <p id="user_title" aria-label="Titre de l'utilisateur">
+        <p id="user_title" title="Titre de l'utilisateur">
           {userStats
             ? getUserTitle(userStats.level_name)
             : "Passant·e Curieux·se"}
@@ -159,22 +158,22 @@ function Profil() {
 
         <div className="user_results">
           {/* Points accumulés */}
-          <p id="user_points" aria-label="Points accumulés">
+          <p id="user_points" title="Points accumulés">
             Points
           </p>
           {/* Badges accumulés */}
-          <p id="user_badges_label" aria-label="badges accumulés">
+          <p id="user_badges_label" title="Badges accumulés">
             Badges obtenus
           </p>
         </div>
 
         <div className="user_results">
           {/* Points accumulés - DONNÉES RÉELLES */}
-          <p id="user_points_number" aria-label="Points accumulés">
+          <p id="user_points_number" title="Points accumulés">
             {userStats?.total_points || 0} XP
           </p>
           {/* Badges accumulés - DONNÉES RÉELLES */}
-          <p id="user_badges_number" aria-label="badges accumulés">
+          <p id="user_badges_number" title="Badges accumulés">
             {userBadges.length > 0 ? userBadges.map(() => "🏆").join("") : "🎯"}
           </p>
         </div>

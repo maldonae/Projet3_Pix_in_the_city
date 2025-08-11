@@ -69,43 +69,42 @@ function UploadPhoto() {
       photoData.append("latitude", latitude.toString());
       photoData.append("longitude", longitude.toString());
     }
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/photos`, {
+      method: "POST",
+      body: photoData,
+      credentials: "include",
+    });
 
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/photos`,
-        {
-          method: "POST",
-          body: photoData,
-          credentials: "include",
-        },
-      );
-
-      if (!response.ok) {
-        // ✅ GESTION D'ERREUR SPÉCIFIQUE SELON LE STATUS
-        if (response.status === 400) {
-          const errorData = await response.json();
-          throw new Error(errorData.error || "Erreur de validation");
-        }
-        throw new Error("Erreur lors de l'envoi de la photo");
+    if (!response.ok) {
+      // ✅ GESTION D'ERREUR SPÉCIFIQUE SELON LE STATUS
+      if (response.status === 400) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Erreur de validation");
       }
-
-      // ✅ CORRECTION: Variable result utilisée ou supprimée
-      await response.json(); // Si vous n'utilisez pas le résultat
-
-      // ✅ SUCCÈS - Redirection après délai
-      setTimeout(() => navigate("/"), 1000);
-    } catch (error) {
-      // ✅ CORRECTION: Type plus précis
-      console.error("Error submitting photo:", error);
-
-      // ✅ Relancer l'erreur pour que SubmitPhotoForm la gère
-      throw error;
+      throw new Error("Erreur lors de l'envoi de la photo");
     }
+
+    // ✅ CORRECTION: Variable result utilisée ou supprimée
+    await response.json(); // Si vous n'utilisez pas le résultat
+
+    // ✅ SUCCÈS - Redirection après délai
+    setTimeout(() => navigate("/"), 1000);
   };
 
   return (
     <div>
-      <ToastContainer position="bottom-left" />
+      <ToastContainer 
+        position="bottom-left"
+        aria-label="Notifications d'upload de photo"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       {geoError && <p>{geoError}</p>}
       {apiError && <p>{apiError}</p>}
       <SubmitPhotoForm defaultValue={newPhoto} onSubmit={handleSubmit} />

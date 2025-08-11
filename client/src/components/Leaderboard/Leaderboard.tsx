@@ -26,8 +26,7 @@ const Leaderboard: React.FC = () => {
         );
         const data = await response.json();
         setLeaderboard(data);
-      } catch (error) {
-        console.error("Error fetching leaderboard:", error);
+      } catch (_error) {
       } finally {
         setLoading(false);
       }

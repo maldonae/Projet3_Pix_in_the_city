@@ -13,7 +13,18 @@ function ModifProfil() {
 
   return (
     <>
-      <ToastContainer position="bottom-left" />
+      <ToastContainer 
+        position="bottom-left"
+        aria-label="Notifications de modification de profil"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       {user && (
         <EditUserForm
           defaultValue={user} // Passage des données actuelles au formulaire
@@ -24,7 +35,7 @@ function ModifProfil() {
               headers: {
                 "Content-Type": "application/json",
               },
-              credentials: 'include',
+              credentials: "include",
               body: JSON.stringify(userData), // Envoi des données mises à jour au serveur
             }).then((response) => {
               if (response.status === 204) {

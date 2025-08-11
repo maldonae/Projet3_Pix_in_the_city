@@ -1,6 +1,7 @@
 import "../../styles (anciennement CSS)/common/Footer.css";
 import { Link } from "react-router-dom";
 import { useUser } from "../../hooks/useUser"; // Import du hook pour récupérer l'état de l'utilisateur
+
 function Footer() {
   const { isAuthenticated } = useUser(); // Récupérer l'état d'authentification de l'utilisateur
   // Fonction pour gérer la publication d'une œuvre
@@ -33,7 +34,11 @@ function Footer() {
         </button>
       </Link>
       <Link to="/post_a_photo">
-        <button type="button" className="button_camera" onClick={handlePostArtwork}>
+        <button
+          type="button"
+          className="button_camera"
+          onClick={handlePostArtwork}
+        >
           <img
             src={"/src/assets/images/footer_icons/icon_add.png"}
             alt="camera"

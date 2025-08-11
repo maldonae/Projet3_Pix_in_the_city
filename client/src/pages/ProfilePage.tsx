@@ -182,7 +182,7 @@ const ProfilePage: React.FC = () => {
 
         // Récupérer tous les badges disponibles
         const allBadgesResponse = await fetch(
-          "${import.meta.env.VITE_API_URL}/api/badges",
+          `${import.meta.env.VITE_API_URL}/api/badges`,
           {
             credentials: "include",
           },
@@ -191,8 +191,7 @@ const ProfilePage: React.FC = () => {
           const allBadgesData = await allBadgesResponse.json();
           setAllBadges(allBadgesData);
         }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
+      } catch (_error) {
       } finally {
         setLoading(false);
       }

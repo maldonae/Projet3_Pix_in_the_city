@@ -1,12 +1,10 @@
 // Import Faker library for generating fake data
-import { faker } from "@faker-js/faker";
 
 import type { Faker } from "@faker-js/faker";
-
+import { faker } from "@faker-js/faker";
+import type { Result } from "../client";
 // Import database client
 import database from "../client";
-
-import type { Result } from "../client";
 
 // Declare an object to store created objects from their names
 type Ref = object & { insertId: number };

@@ -1,10 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
-import Logo from "../../assets/images/logo.png";
-import IconMarker from "../../assets/images/footer_icons/icon_marker.png";
-import IconArtwork from "../../assets/images/footer_icons/icon_artwork.png";
-import IconRules from "../../assets/images/footer_icons/icon_rules.png";
-import IconContact from "../../assets/images/footer_icons/icon_contact.png";
 import IconAdd from "../../assets/images/footer_icons/icon_add.png";
+import IconArtwork from "../../assets/images/footer_icons/icon_artwork.png";
+import IconContact from "../../assets/images/footer_icons/icon_contact.png";
+import IconMarker from "../../assets/images/footer_icons/icon_marker.png";
+import IconRules from "../../assets/images/footer_icons/icon_rules.png";
+import Logo from "../../assets/images/logo.png";
 import { useUser } from "../../hooks/useUser"; // Import du hook personnalisé
 import "../../styles (anciennement CSS)/common/SideBar.css";
 
@@ -153,12 +153,12 @@ function SideBar() {
         </nav>
 
         <Link to="/post_a_photo">
-          <button type="button" className="button_camera" onClick={handlePostArtwork}>
-            <img
-              src={IconAdd}
-              alt="camera"
-              className="icon_camera"
-            />
+          <button
+            type="button"
+            className="button_camera"
+            onClick={handlePostArtwork}
+          >
+            <img src={IconAdd} alt="camera" className="icon_camera" />
           </button>
           <p id="add-artwork">AJOUTER UNE ŒUVRE</p>
         </Link>

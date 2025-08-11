@@ -1,15 +1,15 @@
 // Import necessary modules from React and React Router
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 /* ************************************************************************* */
 // Import the main app component
 import App from "./App";
 import CardChasseurs from "./components/CardChasseurs";
+import Classement from "./components/Leaderboard/classement";
 import { UserProvider } from "./contexts/UserContext";
 import Carte from "./pages/PagesClassiques/Carte";
 import UploadPhoto from "./pages/PagesClassiques/UploadPhoto";
-import Classement from "./components/Leaderboard/classement";
 import CreaProfil from "./pages/Profil/CreaProfil";
 import DeleteProfil from "./pages/Profil/DeleteProfil";
 import ModifProfil from "./pages/Profil/ModifProfil";

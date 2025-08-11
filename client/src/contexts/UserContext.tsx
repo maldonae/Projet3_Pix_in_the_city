@@ -1,4 +1,4 @@
-import { type ReactNode, createContext, useEffect, useState } from "react";
+import { createContext, type ReactNode, useEffect, useState } from "react";
 
 // Définir le type de l'utilisateur
 interface User {
@@ -69,8 +69,6 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
           return null;
         }
         if (response.status === 403) {
-          // Accès refusé mais toujours connecté
-          console.warn("Access denied to user profile");
           return null;
         }
         if (!response.ok) {
@@ -83,8 +81,7 @@ const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
           setUser(data);
         }
       })
-      .catch((error) => {
-        console.error("Error while fetching user:", error);
+      .catch((_error) => {
         // En cas d'erreur, on peut choisir de déconnecter ou non
         // setIsAuthenticated(false);
         // setUserId(null);
