@@ -16,7 +16,7 @@
 }
 
 .badge-card.earned {
-  border-color: #4CAF50;
+  border-color: #4caf50;
   background: linear-gradient(135deg, #fff 0%, #f8fff8 100%);
 }
 
@@ -27,23 +27,32 @@
 
 .badge-card.rare {
   background: linear-gradient(135deg, #fff5e6 0%, #ffe0b3 100%);
-  border-color: #FFD700;
+  border-color: #ffd700;
 }
 
 .badge-card.rare::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -50%;
   left: -50%;
   width: 200%;
   height: 200%;
-  background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255, 215, 0, 0.1),
+    transparent
+  );
   animation: shimmer 3s infinite;
 }
 
 @keyframes shimmer {
-  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+  }
 }
 
 .badge-icon-container {
@@ -68,7 +77,7 @@
   position: absolute;
   top: -5px;
   right: -5px;
-  background: #FFD700;
+  background: #ffd700;
   color: #fff;
   border-radius: 50%;
   width: 20px;
@@ -163,20 +172,20 @@
   .badges-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .profile-stats {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .leaderboard-entry {
     padding: 15px;
   }
-  
+
   .rank {
     width: 40px;
     font-size: 18px;
   }
-  
+
   .pseudo {
     font-size: 16px;
   }

@@ -46,8 +46,8 @@ h1#contacts {
    SECTION CONTACT
 ------------------------------------------- */
 .container_contact {
-  background: url("../../assets/images/backgroundstars.jpg") center / cover
-    fixed;
+  background:
+    url("../../assets/images/backgroundstars.jpg") center / cover fixed;
   width: 100%;
   position: fixed;
   padding-top: 24%;

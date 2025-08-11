@@ -1,5 +1,5 @@
-import databaseClient from "../../../database/client";
 import type { Result, Rows } from "../../../database/client";
+import databaseClient from "../../../database/client";
 
 export type User = {
   role: string;

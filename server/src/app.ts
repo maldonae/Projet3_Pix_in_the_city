@@ -86,6 +86,7 @@ app.use(express.json());
 /* ************************************************************************* */
 
 app.use(cookieParser());
+
 // Import the API router
 import router from "./router";
 
@@ -103,7 +104,6 @@ app.use(router);
 // - Redirecting unhandled requests (e.g., all requests not matching a defined API route) to the client's index.html. This allows the client to handle client-side routing.
 
 import fs from "node:fs";
-import path from "node:path";
 
 // Serve server resources avec headers CORS
 const publicFolderPath = "/var/www/server/public";
@@ -148,11 +148,7 @@ if (fs.existsSync(clientBuildPath)) {
 import type { ErrorRequestHandler } from "express";
 
 // Define a middleware function to log errors
-const logErrors: ErrorRequestHandler = (err, req, res, next) => {
-  // Log the error to the console for debugging purposes
-  console.error(err);
-  console.error("on req:", req.method, req.path);
-
+const logErrors: ErrorRequestHandler = (err, _req, _res, next) => {
   // Pass the error to the next middleware in the stack
   next(err);
 };

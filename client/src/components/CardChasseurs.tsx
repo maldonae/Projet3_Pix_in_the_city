@@ -67,16 +67,14 @@ function CardChasseurs() {
         const response = await fetch(
           `${import.meta.env.VITE_API_URL}/api/photos`,
           {
-            credentials: 'include'
-          }
+            credentials: "include",
+          },
         );
         if (!response.ok)
           throw new Error("Erreur lors de la récupération des photos.");
         const data = await response.json();
         setPhotos(data);
-      } catch (error) {
-        console.error("Erreur de chargement des photos :", error);
-      }
+      } catch (_error) {}
     };
     fetchPhotos();
   }, []);
@@ -87,7 +85,7 @@ function CardChasseurs() {
         `${import.meta.env.VITE_API_URL}/api/photos/${photoId}`,
         {
           method: "DELETE",
-          credentials: 'include'
+          credentials: "include",
         },
       );
       if (!response.ok) throw new Error("Échec de la suppression");
@@ -95,15 +93,14 @@ function CardChasseurs() {
         prevPhotos.filter((photo) => photo.id !== photoId),
       );
       toast.success("Photo supprimée !");
-    } catch (error) {
-      console.error("Erreur lors de la suppression :", error);
+    } catch (_error) {
       toast.error("Erreur lors de la suppression");
     }
   };
 
   const handleDelete = (photoId: number) => {
     toast.info(
-      ({ closeToast }) => (
+      ({ closeToast }: { closeToast: () => void }) => (
         <div>
           <p>
             Êtes-vous sûr·e de vouloir supprimer cette photo ? Cette action est
@@ -188,21 +185,22 @@ function CardChasseurs() {
             <p className="photo_content">{photo.content}</p>
             <div className="delete_photo_content">
               <p className="date_content">{formatDate(photo.dateoftheday)}</p>
-              {isAuthenticated && (user?.is_admin || user?.role === 'admin') && (
-                <button
-                  type="button"
-                  className="delete-photo-button"
-                  onClick={() => handleDelete(photo.id)}
-                  onKeyDown={(event) => {
-                    if (event.key === "Enter" || event.key === " ") {
-                      handleDelete(photo.id);
-                    }
-                  }}
-                  aria-label={`Supprimer la photo ${photo.title}`}
-                >
-                  Supprimer
-                </button>
-              )}
+              {isAuthenticated &&
+                (user?.is_admin || user?.role === "admin") && (
+                  <button
+                    type="button"
+                    className="delete-photo-button"
+                    onClick={() => handleDelete(photo.id)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter" || event.key === " ") {
+                        handleDelete(photo.id);
+                      }
+                    }}
+                    aria-label={`Supprimer la photo ${photo.title}`}
+                  >
+                    Supprimer
+                  </button>
+                )}
             </div>
           </section>
         ))}
@@ -213,7 +211,18 @@ function CardChasseurs() {
           onClose={() => setSelectedPhoto(null)}
         />
       )}
-      <ToastContainer />
+      <ToastContainer
+        position="bottom-right"
+        aria-label="Notifications"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </section>
   );
 }

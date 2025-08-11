@@ -12,8 +12,8 @@ body.login-page {
 
 /* Page de login */
 .loginPage {
-  background: url("../../assets/images/backgroundstreet.jpg") center / cover
-    fixed;
+  background:
+    url("../../assets/images/backgroundstreet.jpg") center / cover fixed;
   color: white;
   font-family: "pixeleum", sans-serif;
   display: flex;
@@ -149,15 +149,15 @@ body.login-page .sidebar {
   }
 
   .loginPage {
-    background: url("../../assets/images/backgroundcity.jpg") center / cover
-      fixed;
+    background:
+      url("../../assets/images/backgroundcity.jpg") center / cover fixed;
   }
 }
 
 /* Tablet (768px - 1024px) */
 @media (min-width: 768px) and (max-width: 1024px) {
   .loginPage {
-    background: url("../../assets/images/backgroundcity.jpg") center / cover
-      fixed;
+    background:
+      url("../../assets/images/backgroundcity.jpg") center / cover fixed;
   }
 }

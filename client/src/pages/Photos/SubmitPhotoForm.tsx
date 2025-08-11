@@ -60,8 +60,6 @@ function SubmitPhotoForm({
       // Vérifier les nouveaux badges après succès
       await checkForNewBadges();
     } catch (error: unknown) {
-      console.error("Error uploading photo:", error);
-
       let errorMessage = "❌ Erreur lors de l'upload de la photo";
 
       if (error instanceof Error && error.message) {
@@ -126,9 +124,7 @@ function SubmitPhotoForm({
           });
         }
       }
-    } catch (error) {
-      console.error("Error checking badges:", error);
-    }
+    } catch (_error) {}
   };
 
   return (

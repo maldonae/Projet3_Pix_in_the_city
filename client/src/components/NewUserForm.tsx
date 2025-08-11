@@ -83,7 +83,7 @@ function NewUserForm({ children, defaultValue, onSubmit }: CreaProfilType) {
             return;
           }
           const passwordRegex =
-            /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).+$/;
+            /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).+$/;
           if (!passwordRegex.test(password)) {
             toast.error(
               "Le mot de passe doit contenir au moins une lettre majuscule, un chiffre et un caractère spécial.",
@@ -267,7 +267,18 @@ function NewUserForm({ children, defaultValue, onSubmit }: CreaProfilType) {
             <p>RETOUR VERS LE HAUT</p>
           </button>
         </div>
-        <ToastContainer position="bottom-center" />
+        <ToastContainer
+          position="bottom-center"
+          aria-label="Notifications de création de profil"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </form>
     </section>
   );

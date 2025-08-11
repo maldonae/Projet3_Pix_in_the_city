@@ -76,14 +76,17 @@ img.icon_footer {
   background-image: url("../../assets/images/footer_icons/icon_camera_background.png");
   background-size: cover;
   background-position: bottom;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
   box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
   cursor: pointer;
 }
 
 .button_camera:hover {
-  box-shadow: 0 0 25px rgba(255, 255, 255, 0.8), 0 0 50px
-    rgba(255, 255, 255, 0.5);
+  box-shadow:
+    0 0 25px rgba(255, 255, 255, 0.8),
+    0 0 50px rgba(255, 255, 255, 0.5);
 }
 
 .button_camera:active {
@@ -101,8 +104,8 @@ img.icon_camera {
 /* Pour les tablettes (768px à 1024px) */
 @media (min-width: 768px) and (max-width: 1024px) {
   footer {
-    background: url("../../assets/images/backgroundcity.jpg") center / cover
-      fixed;
+    background:
+      url("../../assets/images/backgroundcity.jpg") center / cover fixed;
   }
 
   .button_footer {

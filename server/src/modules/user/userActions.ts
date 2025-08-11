@@ -18,14 +18,14 @@ type User = {
 
 // Import access to data
 // The B of BREAD - Browse (Read All) operation
-const browse: RequestHandler = async (req, res, next) => {
+const browse: RequestHandler = async (_req, res, next) => {
   try {
     // Fetch tous les users
     const users = await userRepository.readAll();
 
     // ✅ CORRECTION: Supprimer les mots de passe des réponses
     const usersWithoutPasswords = users.map((user) => {
-      const { hashed_password, ...userWithoutPassword } = user;
+      const { hashed_password: _, ...userWithoutPassword } = user;
       return userWithoutPassword;
     });
 
@@ -55,7 +55,7 @@ const read: RequestHandler = async (req, res, next) => {
     if (user == null) {
       res.sendStatus(404);
     } else {
-      const { hashed_password, ...userWithoutPassword } = user;
+      const { hashed_password: _, ...userWithoutPassword } = user;
       res.json(userWithoutPassword);
     }
   } catch (err) {
@@ -123,7 +123,6 @@ const edit: RequestHandler = async (req, res, next) => {
     // CORRECTION - Renvoie status 204 comme attendu par le frontend
     res.sendStatus(204);
   } catch (err) {
-    console.error("❌ Error in userActions.edit:", err);
     next(err);
   }
 };
@@ -230,7 +229,6 @@ const updateRole: RequestHandler = async (req, res, next) => {
 
     res.sendStatus(204);
   } catch (err) {
-    console.error("❌ Error in userActions.updateRole:", err);
     next(err);
   }
 };

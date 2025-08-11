@@ -16,7 +16,7 @@ interface BadgeCondition {
 
 // Import access to data
 // The B of BREAD - Browse (Read All) operation
-const browse: RequestHandler = async (req, res, next) => {
+const browse: RequestHandler = async (_req, res, next) => {
   try {
     // Fetch all photos
     const photos = await photoRepository.readAll();
@@ -120,10 +120,7 @@ const add: RequestHandler = async (req, res, next) => {
 
       // Vérifier et attribuer de nouveaux badges
       newBadges = await badgeService.onPhotoAdded(reqWithFile.user.id);
-    } catch (badgeError) {
-      // En cas d'erreur avec les badges, on continue mais on log l'erreur
-      console.error("Error processing badges:", badgeError);
-    }
+    } catch (_badgeError) {}
 
     // Réponse enrichie avec informations des badges
     res.status(201).json({

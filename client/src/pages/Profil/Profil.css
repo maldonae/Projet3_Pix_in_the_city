@@ -15,7 +15,8 @@ body {
 }
 
 .profil_container {
-  background: url("../../assets/images/backgroundstars.jpg") center / cover fixed;
+  background:
+    url("../../assets/images/backgroundstars.jpg") center / cover fixed;
   margin-top: 10%;
   text-align: center;
   height: 100vh;
@@ -83,7 +84,7 @@ h1#username {
 }
 
 #user_badges_number {
-  color: #FFD700;
+  color: #ffd700;
   font-family: "Pixeleum", sans-serif;
   font-size: 120%;
 }
@@ -94,7 +95,7 @@ h1#username {
 }
 
 .btn-classement {
-  background: linear-gradient(45deg, #FFD700, #FFA500);
+  background: linear-gradient(45deg, #ffd700, #ffa500);
   color: black;
   border: none;
   padding: 12px 24px;
@@ -102,7 +103,9 @@ h1#username {
   font-family: "Pixeleum", sans-serif;
   font-weight: bold;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
   text-transform: uppercase;
   font-size: 0.9em;
   margin: 10px 0;
@@ -129,7 +132,7 @@ h1#username {
 
 .user-badges-section h2 {
   font-family: "Pixeleum", sans-serif;
-  color: #FFD700;
+  color: #ffd700;
   font-size: 1.1em;
   margin-bottom: 10px;
   text-transform: uppercase;
@@ -159,7 +162,7 @@ h1#username {
 }
 
 .badge-item.rare {
-  background: linear-gradient(45deg, #FFD700, #FFA500);
+  background: linear-gradient(45deg, #ffd700, #ffa500);
   color: black;
   font-weight: bold;
 }
@@ -242,7 +245,7 @@ h1#username {
 }
 
 .no-contributions a {
-  color: #FFD700;
+  color: #ffd700;
   text-decoration: none;
   font-family: "Pixeleum", sans-serif;
   text-transform: uppercase;

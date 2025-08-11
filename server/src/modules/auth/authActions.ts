@@ -60,7 +60,6 @@ const login: RequestHandler = async (req, res, next) => {
       res.status(401).json({ error: "Invalid credentials" });
     }
   } catch (err) {
-    console.error("Login error:", err);
     next(err);
   }
 };
@@ -90,7 +89,7 @@ const hashPassword: RequestHandler = async (req, res, next) => {
   }
 };
 
-const verifyToken: RequestHandler = (req, res, next) => {
+const verifyToken: RequestHandler = (req, res, _next) => {
   const { authToken } = req.cookies;
 
   try {
@@ -112,7 +111,7 @@ const verifyToken: RequestHandler = (req, res, next) => {
     } else {
       res.status(401).json({ message: "No token provided" });
     }
-  } catch (err) {
+  } catch (_err) {
     // Token invalide ou expiré
     res.clearCookie("authToken");
     res.status(401).json({ message: "Invalid or expired token" });
@@ -140,7 +139,7 @@ const verifyAuth: RequestHandler = (req, res, next) => {
     };
 
     next();
-  } catch (error) {
+  } catch (_error) {
     res.status(401).json({ message: "Token invalide" });
   }
 };
@@ -206,7 +205,7 @@ const requireSelfOrAdmin: RequestHandler = (
   next();
 };
 
-const logout: RequestHandler = async (req, res, next) => {
+const logout: RequestHandler = async (_req, res, next) => {
   try {
     res.clearCookie("authToken", {
       httpOnly: true,

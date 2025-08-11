@@ -10,7 +10,7 @@ import { useUser } from "../../hooks/useUser";
 function Login() {
   const emailRef = useRef<HTMLInputElement>(null);
   const [password, setPassword] = useState<string>("");
-  const { setIsAuthenticated, isAuthenticated } = useUser(); // Utilisation d'une valeur par défaut (vide) si UserContext est undefined
+  const { setIsAuthenticated } = useUser(); // Utilisation d'une valeur par défaut (vide) si UserContext est undefined
   const navigate = useNavigate();
 
   const handleSubmit: FormEventHandler = async (event) => {
@@ -43,14 +43,22 @@ function Login() {
           autoClose: 3000,
         });
       }
-    } catch (err) {
-      console.error(err);
-    }
+    } catch (_err) {}
   };
-  console.info(isAuthenticated);
   return (
     <>
-      <ToastContainer position="bottom-left" />
+      <ToastContainer
+        position="bottom-left"
+        aria-label="Notifications"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <section className="loginPage">
         <Link to="/">
           <img src={Logo} alt="Logo" id="logo_login" />
