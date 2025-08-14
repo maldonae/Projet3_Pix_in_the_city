@@ -2,7 +2,7 @@ import { type ReactNode, useState } from "react";
 
 import { ToastContainer, toast } from "react-toastify"; // Import de toastify
 import "react-toastify/dist/ReactToastify.css"; // Import des styles de Toastify
-import arrowUp from "../../assets/images/arrow_up.png";
+import arrowUp from "../assets/images/arrow_up.png";
 
 import "./NewUserForm.css";
 import { Link } from "react-router-dom";
