@@ -2,6 +2,7 @@ import { type ReactNode, useState } from "react";
 
 import { ToastContainer, toast } from "react-toastify"; // Import de toastify
 import "react-toastify/dist/ReactToastify.css"; // Import des styles de Toastify
+import arrowUp from "../../assets/images/arrow_up.png";
 
 import "./NewUserForm.css";
 import { Link } from "react-router-dom";
@@ -259,11 +260,7 @@ function NewUserForm({ children, defaultValue, onSubmit }: CreaProfilType) {
             id="button_up"
             onClick={scrollToTop} // Ajout du gestionnaire d'événement
           >
-            <img
-              src={"/src/assets/images/arrow_up.png"}
-              alt="Retour_vers_le_haut"
-              id="arrow_up"
-            />
+            <img src={arrowUp} alt="Retour_vers_le_haut" id="arrow_up" />
             <p>RETOUR VERS LE HAUT</p>
           </button>
         </div>
