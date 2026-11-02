@@ -18,7 +18,7 @@
     "express": "^5.1.0",
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.2",
-    "multer": "^2.0.2",
+    "multer": "^2.5.0",
     "mysql2": "^3.11.3",
     "validate-image-type": "^3.0.0"
   },
