@@ -19,7 +19,7 @@
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.2",
     "multer": "^2.5.0",
-    "mysql2": "^3.11.3",
+    "mysql2": "^3.23.1",
     "validate-image-type": "^3.0.0"
   },
   "devDependencies": {
